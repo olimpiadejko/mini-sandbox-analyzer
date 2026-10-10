@@ -96,14 +96,14 @@
       // 1. Ukrywamy ikonę folderu
       document.getElementById('preview-icon').style.display = 'none';
 
-      // 2. Wpisujemy ścieżkę do Twojego zdjęcia i je pokazujemy
+      // 2. Wpisujemy ścieżkę do zdjęcia i je pokazujemy
       const image = document.getElementById('image-preview');
-      image.src = 'cam.jpg'; // <-- TUTAJ WPISZ NAZWĘ/ŚCIEŻKĘ DO ZDJĘCIA
+      image.src = 'cam.jpg';
       image.style.display = 'flex';
       image.style.justifyContent = 'center';
 
       // 3. Zmieniamy tekst nagłówka
-      document.getElementById('upload-status').textContent = 'Tak to wygląda na ten tydzień :)'; // <-- TUTAJ WPISZ NAPIS
+      document.getElementById('upload-status').textContent = 'Tak to wygląda na ten tydzień :)'; 
 
       // 4. Ukrywamy podtekst "aby wyświetlić podgląd"
       document.getElementById('upload-subtext').style.display = 'none';
