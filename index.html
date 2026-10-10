@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Sandbox Web</title>
+
+</head>
+
+<body>
+
+  <header>
+    <h1>🛡️ Mini Sandbox Web</h1>
+    <nav>
+      <a href="#">Historia</a>
+      <a href="#">Ustawienia</a>
+      <a href="#">API Documentation</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Panel Uploadu -->
+    <div class="upload-card" id="drop-zone">
+      <div class="upload-icon" id="preview-icon">📁</div>
+      <img id="image-preview" class="hidden-preview" src="" alt="Podgląd zdjęcia">
+      <h3 id="upload-status">Przeciągnij plik tutaj lub</h3>
+      <p class="upload-subtext" id="upload-subtext">wybierz plik z komputera</p>
+      <br>
+      <button class="btn-submit" id="show-btn" onclick="pokazZdjecie()">Wybierz plik</button>
+    </div>
+
+    <!-- Kod z wyborem pliku z komputera-->
+    <!--<div class="upload-card" id="drop-zone">
+      <div class="upload-icon">📁</div>
+      <h3>Przeciągnij i upuść plik .exe tutaj</h3>
+      <p style="color: var(--text-muted); margin-top: 5px;">lub kliknij, aby wybrać z komputera</p>
+      <input type="file" id="file-input" style="display: none;" accept=".exe">
+      <br>
+      <button class="btn-submit" onclick="document.getElementById('file-input').click()">Wybierz plik</button>
+    </div>-->
+
+
+    <!-- Pasek Postępu Analizy -->
+    <div class="status-card">
+      <div class="status-header">
+        <span>Status: 🟡 Analizowanie pliku test.exe...</span>
+        <span>45%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Zakładki -->
+    <div class="tabs">
+      <button class="tab-btn active">Wszystkie akcje</button>
+      <button class="tab-btn">Pliki (1)</button>
+      <button class="tab-btn">Procesy (2)</button>
+      <button class="tab-btn">Sieć (0)</button>
+    </div>
+
+    <!-- Tabela z Wynikami na Żywo -->
+    <div class="results-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Czas</th>
+            <th>Zdarzenie</th>
+            <th>Kategoria</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>20:48:02</td>
+            <td>Uruchomiono proces <b>test.exe</b> (PID: 1234)</td>
+            <td><span class="tag tag-process">Proces</span></td>
+          </tr>
+          <tr>
+            <td>20:48:05</td>
+            <td>Utworzono plik: <code>new_file.txt</code></td>
+            <td><span class="tag tag-file">Plik</span></td>
+          </tr>
+          <tr>
+            <td>20:48:10</td>
+            <td>Zużycie zasobów: RAM 45 MB | CPU 12%</td>
+            <td><span class="tag tag-process">Zasoby</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <script>
+    function pokazZdjecie() {
+      // 1. Ukrywamy ikonę folderu
+      document.getElementById('preview-icon').style.display = 'none';
+
+      // 2. Wpisujemy ścieżkę do Twojego zdjęcia i je pokazujemy
+      const image = document.getElementById('image-preview');
+      image.src = 'cam.jpg'; // <-- TUTAJ WPISZ NAZWĘ/ŚCIEŻKĘ DO ZDJĘCIA
+      image.style.display = 'flex';
+      image.style.justifyContent = 'center';
+
+      // 3. Zmieniamy tekst nagłówka
+      document.getElementById('upload-status').textContent = 'Tak to wygląda na ten tydzień :)'; // <-- TUTAJ WPISZ NAPIS
+
+      // 4. Ukrywamy podtekst "aby wyświetlić podgląd"
+      document.getElementById('upload-subtext').style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>
