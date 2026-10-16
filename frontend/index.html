@@ -22,24 +22,22 @@
 
   <main>
     <!-- Panel Uploadu -->
-    <div class="upload-card" id="drop-zone">
-      <div class="upload-icon" id="preview-icon">📁</div>
-      <img id="image-preview" class="hidden-preview" src="" alt="Podgląd zdjęcia">
-      <h3 id="upload-status">Przeciągnij plik tutaj lub</h3>
-      <p class="upload-subtext" id="upload-subtext">wybierz plik z komputera</p>
-      <br>
-      <button class="btn-submit" id="show-btn" onclick="pokazZdjecie()">Wybierz plik</button>
-    </div>
-
-    <!-- Kod z wyborem pliku z komputera-->
-    <!--<div class="upload-card" id="drop-zone">
+    <div class="upload-card" id="upload-container">
       <div class="upload-icon">📁</div>
+
       <h3>Przeciągnij i upuść plik .exe tutaj</h3>
+
       <p style="color: var(--text-muted); margin-top: 5px;">lub kliknij, aby wybrać z komputera</p>
+
       <input type="file" id="file-input" style="display: none;" accept=".exe">
       <br>
-      <button class="btn-submit" onclick="document.getElementById('file-input').click()">Wybierz plik</button>
-    </div>-->
+      <div class="upload-actions">
+        <button type="button" class="btn-submit" id="show-btn"
+          onclick="document.getElementById('file-input').click()">Wybierz plik</button>
+
+        <button type="button" class="btn-submit" id="start-analysis-btn" hidden>Rozpocznij analizę</button>
+      </div>
+    </div>
 
 
     <!-- Pasek Postępu Analizy -->
@@ -91,24 +89,7 @@
       </table>
     </div>
   </main>
-  <script>
-    function pokazZdjecie() {
-      // 1. Ukrywamy ikonę folderu
-      document.getElementById('preview-icon').style.display = 'none';
-
-      // 2. Wpisujemy ścieżkę do zdjęcia i je pokazujemy
-      const image = document.getElementById('image-preview');
-      image.src = 'cam.jpg';
-      image.style.display = 'flex';
-      image.style.justifyContent = 'center';
-
-      // 3. Zmieniamy tekst nagłówka
-      document.getElementById('upload-status').textContent = 'Tak to wygląda na ten tydzień :)';
-
-      // 4. Ukrywamy podtekst "aby wyświetlić podgląd"
-      document.getElementById('upload-subtext').style.display = 'none';
-    }
-  </script>
+  <script src="app.js"></script>
 </body>
 
 </html>

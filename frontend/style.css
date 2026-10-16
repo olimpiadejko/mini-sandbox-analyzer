@@ -227,3 +227,78 @@ tr:last-child td {
   margin-right: auto;
   margin-bottom: 15px;
 }
+
+/* Karta wybranego pliku */
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 500px;
+  margin: 28px auto 0;
+  padding: 16px 20px;
+
+  background-color: #0f172a;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.file-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.file-info {
+  min-width: 0;
+}
+
+.file-info h4 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+
+.file-info p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* Mniejszy odstęp między przyciskiem a kartą */
+#upload-container .btn-submit {
+  margin-bottom: 0;
+}
+
+/* Wygląd panelu podczas przeciągania pliku */
+#upload-container.dragover {
+  border-color: var(--accent-color);
+  background-color: #263750;
+}
+
+.upload-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.upload-actions .btn-submit {
+  margin-top: 0;
+}
+
+#start-analysis-btn[hidden] {
+  display: none;
+}
+
+#selected-file-status,
+#demo-status {
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}

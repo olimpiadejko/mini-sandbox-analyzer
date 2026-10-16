@@ -38,6 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Funkcja generująca i wyświetlająca kartę pliku
   function displayFileCard(file) {
+    const startButton = document.getElementById("start-analysis-btn");
+
+    if (!file.name.toLowerCase().endsWith(".exe")) {
+      startButton.hidden = true;
+      alert("Wybierz plik z rozszerzeniem .exe.");
+      return;
+    }
+
+    startButton.hidden = false;
     // Sprawdzamy czy karta już istnieje, jak tak - usuwamy ją
     let existingCard = document.querySelector(".file-card");
     if (existingCard) {
