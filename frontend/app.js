@@ -47,6 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     startButton.hidden = false;
+    const showBtn = document.getElementById("show-btn");
+    if (showBtn) {
+      showBtn.textContent = "Zmień plik";
+    }
     // Sprawdzamy czy karta już istnieje, jak tak - usuwamy ją
     let existingCard = document.querySelector(".file-card");
     if (existingCard) {
