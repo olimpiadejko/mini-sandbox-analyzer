@@ -35,3 +35,33 @@ async def serve_js():
 @app.get("/api/status")
 async def get_status():
     return {"status": "online", "message": "Mini Dynamic Analyzer działa poprawnie!"}
+
+
+@app.get("/api/demo-analysis")
+async def demo_analysis():
+    from datetime import datetime
+
+    current_time = datetime.now().strftime("%H:%M:%S")
+
+    return {
+        "status": "completed",
+        "message": "Analiza demonstracyjna zakończona",
+        "events": [
+            {
+                "time": current_time,
+                "message": "Rozpoczęto analizę demonstracyjną",
+                "type": "Status"
+            },
+            {
+                "time": current_time,
+                "message": "Sprawdzono podstawowe informacje o pliku",
+                "type": "Plik"
+            },
+            {
+                "time": current_time,
+                "message": "Zakończono symulację analizy",
+                "type": "Status"
+            }
+        ]
+    }
+

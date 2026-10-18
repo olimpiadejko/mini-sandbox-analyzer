@@ -43,11 +43,11 @@
     <!-- Pasek Postępu Analizy -->
     <div class="status-card">
       <div class="status-header">
-        <span>Status: 🟡 Analizowanie pliku test.exe...</span>
-        <span>45%</span>
+        <span id="analysis-status">Status: ⚪ Oczekiwanie na analizę</span>
+        <span id="analysis-progress-text">0%</span>
       </div>
       <div class="progress-bar-bg">
-        <div class="progress-bar-fill"></div>
+        <div class="progress-bar-fill" id="analysis-progress-bar" style="width: 0%;"></div>
       </div>
     </div>
 
@@ -69,23 +69,7 @@
             <th>Kategoria</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>20:48:02</td>
-            <td>Uruchomiono proces <b>test.exe</b> (PID: 1234)</td>
-            <td><span class="tag tag-process">Proces</span></td>
-          </tr>
-          <tr>
-            <td>20:48:05</td>
-            <td>Utworzono plik: <code>new_file.txt</code></td>
-            <td><span class="tag tag-file">Plik</span></td>
-          </tr>
-          <tr>
-            <td>20:48:10</td>
-            <td>Zużycie zasobów: RAM 45 MB | CPU 12%</td>
-            <td><span class="tag tag-process">Zasoby</span></td>
-          </tr>
-        </tbody>
+        <tbody id="events-body"></tbody>
       </table>
     </div>
   </main>

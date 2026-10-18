@@ -131,8 +131,7 @@ main {
 
 .progress-bar-fill {
   height: 100%;
-  width: 45%;
-  /* Przykładowy postęp */
+  width: 0%;
   background-color: var(--warning);
   border-radius: 5px;
   transition: width 0.4s ease;
