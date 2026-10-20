@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import FileResponse
 import os
 
@@ -62,6 +62,47 @@ async def demo_analysis():
                 "message": "Zakończono symulację analizy",
                 "type": "Status"
             }
-        ]
+        ]    
     }
 
+
+@app.post("/api/analyze")
+async def analyze_file(file: UploadFile = File(...)):
+    # Sprawdzamy, czy przesłany plik ma nazwę.
+    if not file.filename:
+        raise HTTPException(
+            status_code=400,
+            detail="Nie podano nazwy pliku."
+        )
+
+    # Akceptujemy wyłącznie nazwy z rozszerzeniem .exe.
+    if not file.filename.lower().endswith(".exe"):
+        raise HTTPException(
+            status_code=400,
+            detail="Dozwolone są wyłącznie pliki z rozszerzeniem .exe."
+        )
+
+    # Odczytujemy plik w pamięci, ale go nie uruchamiamy.
+    content = await file.read()
+
+    # Ograniczamy rozmiar do 20 MiB.
+    max_size = 20 * 1024 * 1024
+
+    if len(content) > max_size:
+        raise HTTPException(
+            status_code=413,
+            detail="Plik przekracza limit 20 MiB."
+        )
+
+    if len(content) == 0:
+        raise HTTPException(
+            status_code=400,
+            detail="Przesłany plik jest pusty."
+        )
+
+    return {
+        "status": "received",
+        "message": "Plik odebrano. Nie został uruchomiony.",
+        "filename": os.path.basename(file.filename),
+        "size_bytes": len(content)
+    }

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  let selectedFile = null;
   // Pobieramy istniejący input pliku oraz kontener uploadu z index.html
   const fileInput = document.getElementById("file-input");
   const uploadContainer = document.getElementById("upload-container");
@@ -41,10 +42,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const startButton = document.getElementById("start-analysis-btn");
 
     if (!file.name.toLowerCase().endsWith(".exe")) {
+      selectedFile = null;
       startButton.hidden = true;
       alert("Wybierz plik z rozszerzeniem .exe.");
       return;
     }
+    selectedFile = file;
 
     // Resetujemy status i pasek po wybraniu nowego pliku
     const analysisStatus = document.getElementById("analysis-status");
@@ -125,39 +128,51 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const response = await fetch("/api/demo-analysis");
-
-        if (!response.ok) {
-          throw new Error(`Błąd serwera: ${response.status}`);
+        if (!selectedFile) {
+          throw new Error("Najpierw wybierz plik EXE.");
         }
 
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        const response = await fetch("/api/analyze", {
+          method: "POST",
+          body: formData
+        });
+
         const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.detail || `Błąd serwera: ${response.status}`);
+        }
 
         if (analysisStatus) {
           analysisStatus.textContent = "Status: 🟢 " + data.message;
         }
+
         if (progressText) {
           progressText.textContent = "100%";
         }
+
         if (progressBar) {
           progressBar.style.width = "100%";
         }
 
-        data.events.forEach((event) => {
-          const row = document.createElement("tr");
+        const row = document.createElement("tr");
 
-          const timeCell = document.createElement("td");
-          timeCell.textContent = event.time;
+        const timeCell = document.createElement("td");
+        timeCell.textContent = new Date().toLocaleTimeString();
 
-          const messageCell = document.createElement("td");
-          messageCell.textContent = event.message;
+        const messageCell = document.createElement("td");
+        messageCell.textContent =
+          `${data.filename} — odebrano ${data.size_bytes} bajtów`;
 
-          const typeCell = document.createElement("td");
-          typeCell.textContent = event.type;
+        const typeCell = document.createElement("td");
+        typeCell.textContent = "Plik";
 
-          row.append(timeCell, messageCell, typeCell);
-          eventsBody.appendChild(row);
-        });
+        row.append(timeCell, messageCell, typeCell);
+        eventsBody.appendChild(row);
+
       } catch (error) {
         console.error("Błąd podczas pobierania danych:", error);
 
@@ -175,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const row = document.createElement("tr");
         const cell = document.createElement("td");
         cell.colSpan = 3;
-        cell.textContent = "Nie udało się pobrać danych z serwera.";
+        cell.textContent = error.message || "Wystąpił błąd podczas przesyłania pliku.";
         row.appendChild(cell);
         eventsBody.appendChild(row);
       } finally {
