@@ -69,11 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
       showBtn.textContent = "Zmień plik";
     }
 
-    // Przywracamy widoczność ikony i napisów w razie wyboru innego pliku
-    const uploadIcon = uploadContainer.querySelector(".upload-icon");
+    // Przywracamy widoczność napisów w razie ponownego wyboru pliku
     const uploadTitle = uploadContainer.querySelector("h3");
     const uploadSubtitle = uploadContainer.querySelector("p");
-    if (uploadIcon) uploadIcon.style.display = "";
     if (uploadTitle) uploadTitle.style.display = "";
     if (uploadSubtitle) uploadSubtitle.style.display = "";
 
@@ -127,11 +125,9 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error("Najpierw wybierz plik EXE.");
         }
 
-        // UKRYWAMY zarówno ikonę folderu, jak i wszystkie napisy instrukcyjne po kliknięciu startu
-        const uploadIcon = uploadContainer.querySelector(".upload-icon");
+        // UKRYWAMY TYLKO NAPISY, ikona folderu zostaje na swoim miejscu
         const uploadTitle = uploadContainer.querySelector("h3");
         const uploadSubtitle = uploadContainer.querySelector("p");
-        if (uploadIcon) uploadIcon.style.display = "none";
         if (uploadTitle) uploadTitle.style.display = "none";
         if (uploadSubtitle) uploadSubtitle.style.display = "none";
 
