@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   let selectedFile = null;
-  // Pobieramy istniejący input pliku oraz kontener uploadu z index.html
   const fileInput = document.getElementById("file-input");
   const uploadContainer = document.getElementById("upload-container");
 
@@ -9,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Gdy użytkownik wybierze plik przez okno dialogowe
   fileInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -17,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Obsługa przeciągania pliku (Drag & Drop)
   uploadContainer.addEventListener("dragover", (e) => {
     e.preventDefault();
     uploadContainer.style.borderColor = "var(--accent-color)";
@@ -37,53 +34,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Funkcja generująca i wyświetlająca kartę pliku
   function displayFileCard(file) {
     const startButton = document.getElementById("start-analysis-btn");
 
     if (!file.name.toLowerCase().endsWith(".exe")) {
       selectedFile = null;
-      startButton.hidden = true;
+      if (startButton) startButton.hidden = true;
       alert("Wybierz plik z rozszerzeniem .exe.");
       return;
     }
     selectedFile = file;
 
-    // Resetujemy status i pasek po wybraniu nowego pliku
     const analysisStatus = document.getElementById("analysis-status");
     const progressText = document.getElementById("analysis-progress-text");
     const progressBar = document.getElementById("analysis-progress-bar");
     const eventsBody = document.getElementById("events-body");
 
-    if (analysisStatus) {
-      analysisStatus.textContent = "Status: ⚪ Oczekiwanie na analizę";
+    if (analysisStatus) analysisStatus.textContent = "Status: ⚪ Oczekiwanie na analizę";
+    if (progressText) progressText.textContent = "0%";
+    if (progressBar) progressBar.style.width = "0%";
+    if (eventsBody) eventsBody.replaceChildren();
+
+    if (startButton) {
+      startButton.hidden = false;
+      startButton.textContent = "Rozpocznij analizę";
     }
 
-    if (progressText) {
-      progressText.textContent = "0%";
-    }
+    const reportBtn = document.getElementById("download-report-btn");
+    if (reportBtn) reportBtn.remove();
 
-    if (progressBar) {
-      progressBar.style.width = "0%";
-    }
-
-    if (eventsBody) {
-      eventsBody.replaceChildren();
-    }
-
-
-    startButton.hidden = false;
     const showBtn = document.getElementById("show-btn");
     if (showBtn) {
+      showBtn.style.display = "inline-block";
       showBtn.textContent = "Zmień plik";
     }
-    // Sprawdzamy czy karta już istnieje, jak tak - usuwamy ją
-    let existingCard = document.querySelector(".file-card");
-    if (existingCard) {
-      existingCard.remove();
-    }
 
-    // Formatujemy rozmiar pliku na czytelny format (KB / MB)
+    // Przywracamy widoczność ikony i napisów w razie wyboru innego pliku
+    const uploadIcon = uploadContainer.querySelector(".upload-icon");
+    const uploadTitle = uploadContainer.querySelector("h3");
+    const uploadSubtitle = uploadContainer.querySelector("p");
+    if (uploadIcon) uploadIcon.style.display = "";
+    if (uploadTitle) uploadTitle.style.display = "";
+    if (uploadSubtitle) uploadSubtitle.style.display = "";
+
+    let existingCard = document.querySelector(".file-card");
+    if (existingCard) existingCard.remove();
+
     let formattedSize = "";
     if (file.size < 1024 * 1024) {
       formattedSize = (file.size / 1024).toFixed(1) + " KB";
@@ -91,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
       formattedSize = (file.size / (1024 * 1024)).toFixed(1) + " MB";
     }
 
-    // Tworzymy element karty
     const fileCard = document.createElement("div");
     fileCard.className = "file-card";
     fileCard.innerHTML = `
@@ -101,8 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Rozmiar: ${formattedSize} | Typ: ${file.type || "Aplikacja wykonywalna (.exe)"}</p>
         </div>
     `;
-
-    // Wstawiamy kartę do kontenera uploadu
     uploadContainer.appendChild(fileCard);
   }
 
@@ -112,33 +105,55 @@ document.addEventListener("DOMContentLoaded", () => {
   const progressText = document.getElementById("analysis-progress-text");
   const progressBar = document.getElementById("analysis-progress-bar");
 
+  function updateProgress(percent, statusMessage) {
+    if (progressText) progressText.textContent = percent + "%";
+    if (progressBar) progressBar.style.width = percent + "%";
+    if (analysisStatus && statusMessage) analysisStatus.textContent = statusMessage;
+  }
+
   if (startButton && eventsBody) {
     startButton.addEventListener("click", async () => {
-      eventsBody.replaceChildren(); // Czyści poprzednie logi
-      startButton.disabled = true; // Blokuje przycisk, aby uniknąć wielokrotnego kliknięcia
+      if (startButton.textContent.includes("Wybierz inny")) {
+        fileInput.value = "";
+        fileInput.click();
+        return;
+      }
 
-      if (analysisStatus) {
-        analysisStatus.textContent = "Status: 🟡 Pobieranie wyników...";
-      }
-      if (progressText) {
-        progressText.textContent = "0%";
-      }
-      if (progressBar) {
-        progressBar.style.width = "0%";
-      }
+      eventsBody.replaceChildren();
+      startButton.disabled = true;
 
       try {
         if (!selectedFile) {
           throw new Error("Najpierw wybierz plik EXE.");
         }
 
+        // UKRYWAMY zarówno ikonę folderu, jak i wszystkie napisy instrukcyjne po kliknięciu startu
+        const uploadIcon = uploadContainer.querySelector(".upload-icon");
+        const uploadTitle = uploadContainer.querySelector("h3");
+        const uploadSubtitle = uploadContainer.querySelector("p");
+        if (uploadIcon) uploadIcon.style.display = "none";
+        if (uploadTitle) uploadTitle.style.display = "none";
+        if (uploadSubtitle) uploadSubtitle.style.display = "none";
+
+        updateProgress(15, "Status: 🟡 Przygotowanie pliku do analizy...");
+        await new Promise(r => setTimeout(r, 200));
+
         const formData = new FormData();
         formData.append("file", selectedFile);
+
+        updateProgress(40, `Status: 🟡 Przesyłanie pliku ${selectedFile.name} na serwer...`);
 
         const response = await fetch("/api/analyze", {
           method: "POST",
           body: formData
         });
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error(`Serwer zwrócił nieprawidłową odpowiedź (status: ${response.status})`);
+        }
+
+        updateProgress(75, "Status: 🟡 Wykonywanie analizy statycznej i nagłówka PE...");
 
         const data = await response.json();
 
@@ -146,60 +161,97 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(data.detail || `Błąd serwera: ${response.status}`);
         }
 
-        if (analysisStatus) {
-          analysisStatus.textContent = "Status: 🟢 " + data.message;
+        updateProgress(100, "Status: 🟢 " + data.message);
+
+        data.events.forEach((event) => {
+          const row = document.createElement("tr");
+
+          const timeCell = document.createElement("td");
+          timeCell.textContent = event.time;
+
+          const messageCell = document.createElement("td");
+          messageCell.innerHTML = event.message;
+
+          const typeCell = document.createElement("td");
+          const tagSpan = document.createElement("span");
+          tagSpan.className = "tag";
+
+          if (event.type === "Proces") {
+            tagSpan.classList.add("tag-process");
+          } else if (event.type === "Plik") {
+            tagSpan.classList.add("tag-file");
+          } else if (event.type === "Sieć") {
+            tagSpan.classList.add("tag-network");
+          } else {
+            tagSpan.classList.add("tag-process");
+          }
+
+          tagSpan.textContent = event.type;
+          typeCell.appendChild(tagSpan);
+
+          row.append(timeCell, messageCell, typeCell);
+          eventsBody.appendChild(row);
+        });
+
+        startButton.textContent = "Wybierz inny program do analizy";
+
+        const showBtn = document.getElementById("show-btn");
+        if (showBtn) showBtn.style.display = "none";
+
+        let reportBtn = document.getElementById("download-report-btn");
+        if (!reportBtn) {
+          reportBtn = document.createElement("button");
+          reportBtn.type = "button";
+          reportBtn.id = "download-report-btn";
+          reportBtn.className = "btn-submit";
+          reportBtn.style.backgroundColor = "var(--success)";
+          reportBtn.textContent = "Pobierz raport analizy";
+
+          reportBtn.addEventListener("click", () => {
+            alert("Funkcja pobierania raportu będzie dostępna w kolejnych etapach!");
+          });
+
+          startButton.parentElement.appendChild(reportBtn);
         }
-
-        if (progressText) {
-          progressText.textContent = "100%";
-        }
-
-        if (progressBar) {
-          progressBar.style.width = "100%";
-        }
-
-        const row = document.createElement("tr");
-
-        const timeCell = document.createElement("td");
-        timeCell.textContent = new Date().toLocaleTimeString();
-
-        const messageCell = document.createElement("td");
-        messageCell.textContent =
-          `${data.filename} — odebrano ${data.size_bytes} bajtów`;
-
-        const typeCell = document.createElement("td");
-        typeCell.textContent = "Plik";
-
-        row.append(timeCell, messageCell, typeCell);
-        eventsBody.appendChild(row);
 
       } catch (error) {
-        console.error("Błąd podczas pobierania danych:", error);
-
-        if (analysisStatus) {
-          analysisStatus.textContent = "Status: 🔴 Wystąpił błąd podczas pobierania danych.";
-        }
-
-        if (progressText) {
-          progressText.textContent = "Błąd";
-        }
-        if (progressBar) {
-          progressBar.style.width = "0%";
-        }
+        console.error("Błąd podczas analizy:", error);
+        if (analysisStatus) analysisStatus.textContent = "Status: 🔴 Wystąpił błąd podczas analizy.";
+        if (progressText) progressText.textContent = "Błąd";
+        if (progressBar) progressBar.style.width = "0%";
 
         const row = document.createElement("tr");
         const cell = document.createElement("td");
         cell.colSpan = 3;
-        cell.textContent = error.message || "Wystąpił błąd podczas przesyłania pliku.";
+        cell.textContent = error.message || "Wystąpił błąd podczas komunikacji z serwerem.";
         row.appendChild(cell);
         eventsBody.appendChild(row);
       } finally {
-        startButton.disabled = false; // Odblokowuje przycisk po zakończeniu analizy
+        startButton.disabled = false;
       }
     });
   }
 
+  // Obsługa zakładek (filtrowanie tabeli)
+  const tabBtns = document.querySelectorAll(".tab-btn");
+  tabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tabBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
 
+      const filter = btn.textContent.trim().split(" ")[0];
+      const rows = document.querySelectorAll("#events-body tr");
 
-
+      rows.forEach(row => {
+        const typeCell = row.querySelector("td:nth-child(3)");
+        if (!typeCell) return;
+        const typeText = typeCell.textContent.trim();
+        if (filter === "Wszystkie" || typeText.includes(filter)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    });
+  });
 });
