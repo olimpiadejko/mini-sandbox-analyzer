@@ -85,28 +85,78 @@ async def analyze_file(file: UploadFile = File(...)):
                 "type": "Proces"
             })
             
-            # Sprawdzanie importów
-            imports_found = False
+            # Analiza importowanych bibliotek i funkcji
+            network_imports = []
+            process_imports = []
+            file_imports = []
+            all_imports = []
+
             if hasattr(pe, 'DIRECTORY_ENTRY_IMPORT'):
                 for entry in pe.DIRECTORY_ENTRY_IMPORT:
-                    if entry.dll:
-                        dll_name = entry.dll.decode('utf-8', errors='ignore').lower()
-                        if 'ws2_32' in dll_name or 'wininet' in dll_name:
-                            imports_found = True
-                            break
-            
-            if imports_found:
-                events.append({
-                    "time": current_time,
-                    "message": "Wykryto biblioteki sieciowe w importach (potencjalna aktywność sieciowa)",
-                    "type": "Sieć"
-                })
-            else:
-                events.append({
-                    "time": current_time,
-                    "message": "Brak wykrytych bezpośrednich bibliotek sieciowych w nagłówku",
-                    "type": "Sieć"
-                })
+                    dll_name = entry.dll.decode('utf-8', errors='ignore')
+                    dll_lower = dll_name.lower()
+
+                    for imported_function in entry.imports:
+                        if imported_function.name:
+                            function_name = imported_function.name.decode(
+                                'utf-8', errors='ignore'
+                            )
+                        else:
+                            function_name = f"Ordinal {imported_function.ordinal}"
+
+                        all_imports.append(f"{dll_name}: {function_name}")
+                        function_lower = function_name.lower()
+
+                        if any(name in dll_lower for name in (
+                            'ws2_32', 'wininet', 'winhttp', 'urlmon'
+                        )):
+                            network_imports.append(
+                                f"{dll_name}: {function_name}"
+                            )
+
+                        if any(name in function_lower for name in (
+                            'createprocess', 'shellexecute', 'winexec'
+                        )):
+                            process_imports.append(
+                                f"{dll_name}: {function_name}"
+                            )
+
+                        if any(name in function_lower for name in (
+                            'createfile', 'writefile', 'deletefile',
+                            'movefile', 'copyfile'
+                        )):
+                            file_imports.append(
+                                f"{dll_name}: {function_name}"
+                            )
+
+            events.append({
+                "time": current_time,
+                "message": f"Liczba wykrytych importów: {len(all_imports)}",
+                "type": "Plik"
+            })
+
+            for category, found, description in [
+                ("Sieć", network_imports, "funkcji związanych z siecią"),
+                ("Proces", process_imports, "funkcji związanych z uruchamianiem procesów"),
+                ("Plik", file_imports, "funkcji związanych z operacjami na plikach"),
+            ]:
+                if found:
+                    preview = ", ".join(found[:5])
+                    if len(found) > 5:
+                        preview += f" i {len(found) - 5} kolejnych"
+
+                    events.append({
+                        "time": current_time,
+                        "message": f"Wykryto {description}: {preview}",
+                        "type": category
+                    })
+                else:
+                    events.append({
+                        "time": current_time,
+                        "message": f"Nie wykryto importów {description}",
+                        "type": category
+                    })
+
             
             pe.close()
 
