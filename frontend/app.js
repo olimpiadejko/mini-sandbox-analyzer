@@ -87,13 +87,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const fileCard = document.createElement("div");
     fileCard.className = "file-card";
-    fileCard.innerHTML = `
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <h4>${file.name}</h4>
-            <p>Rozmiar: ${formattedSize} | Typ: ${file.type || "Aplikacja wykonywalna (.exe)"}</p>
-        </div>
-    `;
+
+    const fileIcon = document.createElement("div");
+    fileIcon.className = "file-icon";
+    fileIcon.textContent = "📄";
+
+    const fileInfo = document.createElement("div");
+    fileInfo.className = "file-info";
+
+    const fileName = document.createElement("h4");
+    fileName.textContent = file.name;
+
+    const fileDetails = document.createElement("p");
+    fileDetails.textContent = `Rozmiar: ${formattedSize} | Typ: ${file.type || "Aplikacja wykonywalna (.exe)"}`;
+
+    fileInfo.append(fileName, fileDetails);
+    fileCard.append(fileIcon, fileInfo);
     uploadContainer.appendChild(fileCard);
   }
 
@@ -108,6 +117,36 @@ document.addEventListener("DOMContentLoaded", () => {
     if (progressBar) progressBar.style.width = percent + "%";
     if (analysisStatus && statusMessage) analysisStatus.textContent = statusMessage;
   }
+
+
+  function updateTabCounts() {
+    const rows = [...eventsBody.querySelectorAll("tr")];
+
+    const counts = {
+      all: rows.length,
+      files: 0,
+      processes: 0,
+      network: 0
+    };
+
+    rows.forEach((row) => {
+      const category = row.querySelector("td:nth-child(3) .tag");
+
+      if (!category) return;
+
+      const type = category.textContent.trim();
+
+      if (type === "Plik") counts.files++;
+      else if (type === "Proces") counts.processes++;
+      else if (type === "Sieć") counts.network++;
+    });
+
+    document.getElementById("count-all").textContent = counts.all;
+    document.getElementById("count-files").textContent = counts.files;
+    document.getElementById("count-processes").textContent = counts.processes;
+    document.getElementById("count-network").textContent = counts.network;
+  }
+
 
   if (startButton && eventsBody) {
     startButton.addEventListener("click", async () => {
@@ -166,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
           timeCell.textContent = event.time;
 
           const messageCell = document.createElement("td");
-          messageCell.innerHTML = event.message;
+          messageCell.textContent = event.message;
 
           const typeCell = document.createElement("td");
           const tagSpan = document.createElement("span");
@@ -188,6 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
           row.append(timeCell, messageCell, typeCell);
           eventsBody.appendChild(row);
         });
+
+        updateTabCounts();
 
         startButton.textContent = "Wybierz inny program do analizy";
 
@@ -228,21 +269,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
   // Obsługa zakładek (filtrowanie tabeli)
   const tabBtns = document.querySelectorAll(".tab-btn");
-  tabBtns.forEach(btn => {
+
+  tabBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      tabBtns.forEach(b => b.classList.remove("active"));
+      tabBtns.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
 
-      const filter = btn.textContent.trim().split(" ")[0];
+      const filter = btn.dataset.filter;
       const rows = document.querySelectorAll("#events-body tr");
 
-      rows.forEach(row => {
-        const typeCell = row.querySelector("td:nth-child(3)");
-        if (!typeCell) return;
-        const typeText = typeCell.textContent.trim();
-        if (filter === "Wszystkie" || typeText.includes(filter)) {
+      rows.forEach((row) => {
+        const tag = row.querySelector("td:nth-child(3) .tag");
+        const type = tag ? tag.textContent.trim() : "";
+
+        if (
+          filter === "all" ||
+          (filter === "Plik" && type === "Plik") ||
+          (filter === "Proces" && type === "Proces") ||
+          (filter === "Sieć" && type === "Sieć")
+        ) {
           row.style.display = "";
         } else {
           row.style.display = "none";
