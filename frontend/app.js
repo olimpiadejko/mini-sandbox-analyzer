@@ -2,10 +2,24 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedFile = null;
   const fileInput = document.getElementById("file-input");
   const uploadContainer = document.getElementById("upload-container");
+  const showBtn = document.getElementById("show-btn");
+  const startButton = document.getElementById("start-analysis-btn");
+  const eventsBody = document.getElementById("events-body");
+  const analysisStatus = document.getElementById("analysis-status");
+  const progressText = document.getElementById("analysis-progress-text");
+  const progressBar = document.getElementById("analysis-progress-bar");
 
   if (!fileInput || !uploadContainer) {
     console.error("Nie znaleziono elementów input lub upload-container!");
     return;
+  }
+
+  // Kliknięcie w przycisk "Wybierz plik" zawsze otwiera okno wyboru
+  if (showBtn) {
+    showBtn.addEventListener("click", () => {
+      fileInput.value = ""; // Resetujemy input, aby można było wybrać ten sam plik ponownie
+      fileInput.click();
+    });
   }
 
   fileInput.addEventListener("change", (event) => {
@@ -35,20 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function displayFileCard(file) {
-    const startButton = document.getElementById("start-analysis-btn");
+    // Zawsze dbamy o to, aby przycisk wyboru pliku był widoczny
+    if (showBtn) showBtn.style.display = "inline-block";
 
     if (!file.name.toLowerCase().endsWith(".exe")) {
       selectedFile = null;
       if (startButton) startButton.hidden = true;
-      alert("Wybierz plik z rozszerzeniem .exe.");
+
+      // Usuwamy przycisk raportu, jeśli istniał
+      const reportBtn = document.getElementById("download-report-btn");
+      if (reportBtn) reportBtn.remove();
+
+      showError("Dozwolone są wyłącznie pliki z rozszerzeniem .exe.");
       return;
     }
     selectedFile = file;
-
-    const analysisStatus = document.getElementById("analysis-status");
-    const progressText = document.getElementById("analysis-progress-text");
-    const progressBar = document.getElementById("analysis-progress-bar");
-    const eventsBody = document.getElementById("events-body");
 
     if (analysisStatus) analysisStatus.textContent = "Status: ⚪ Oczekiwanie na analizę";
     if (progressText) progressText.textContent = "0%";
@@ -63,13 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const reportBtn = document.getElementById("download-report-btn");
     if (reportBtn) reportBtn.remove();
 
-    const showBtn = document.getElementById("show-btn");
-    if (showBtn) {
-      showBtn.style.display = "inline-block";
-      showBtn.textContent = "Zmień plik";
-    }
-
-    // Przywracamy widoczność napisów w razie ponownego wyboru pliku
+    // Przywracamy widoczność napisów instrukcyjnych
     const uploadTitle = uploadContainer.querySelector("h3");
     const uploadSubtitle = uploadContainer.querySelector("p");
     if (uploadTitle) uploadTitle.style.display = "";
@@ -106,18 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
     uploadContainer.appendChild(fileCard);
   }
 
-  const startButton = document.getElementById("start-analysis-btn");
-  const eventsBody = document.getElementById("events-body");
-  const analysisStatus = document.getElementById("analysis-status");
-  const progressText = document.getElementById("analysis-progress-text");
-  const progressBar = document.getElementById("analysis-progress-bar");
-
   function updateProgress(percent, statusMessage) {
     if (progressText) progressText.textContent = percent + "%";
     if (progressBar) progressBar.style.width = percent + "%";
     if (analysisStatus && statusMessage) analysisStatus.textContent = statusMessage;
   }
-
 
   function updateTabCounts() {
     const rows = [...eventsBody.querySelectorAll("tr")];
@@ -126,36 +128,36 @@ document.addEventListener("DOMContentLoaded", () => {
       all: rows.length,
       files: 0,
       processes: 0,
-      network: 0
+      network: 0,
+      resources: 0
     };
 
     rows.forEach((row) => {
       const category = row.querySelector("td:nth-child(3) .tag");
-
       if (!category) return;
-
       const type = category.textContent.trim();
 
       if (type === "Plik") counts.files++;
       else if (type === "Proces") counts.processes++;
       else if (type === "Sieć") counts.network++;
+      else if (type === "Zasoby") counts.resources++;
     });
 
-    document.getElementById("count-all").textContent = counts.all;
-    document.getElementById("count-files").textContent = counts.files;
-    document.getElementById("count-processes").textContent = counts.processes;
-    document.getElementById("count-network").textContent = counts.network;
-  }
+    const countAll = document.getElementById("count-all");
+    const countFiles = document.getElementById("count-files");
+    const countProcesses = document.getElementById("count-processes");
+    const countNetwork = document.getElementById("count-network");
+    const countResources = document.getElementById("count-resources");
 
+    if (countAll) countAll.textContent = counts.all;
+    if (countFiles) countFiles.textContent = counts.files;
+    if (countProcesses) countProcesses.textContent = counts.processes;
+    if (countNetwork) countNetwork.textContent = counts.network;
+    if (countResources) countResources.textContent = counts.resources;
+  }
 
   if (startButton && eventsBody) {
     startButton.addEventListener("click", async () => {
-      if (startButton.textContent.includes("Wybierz inny")) {
-        fileInput.value = "";
-        fileInput.click();
-        return;
-      }
-
       eventsBody.replaceChildren();
       startButton.disabled = true;
 
@@ -164,7 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error("Najpierw wybierz plik EXE.");
         }
 
-        // UKRYWAMY TYLKO NAPISY, ikona folderu zostaje na swoim miejscu
         const uploadTitle = uploadContainer.querySelector("h3");
         const uploadSubtitle = uploadContainer.querySelector("p");
         if (uploadTitle) uploadTitle.style.display = "none";
@@ -230,10 +231,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateTabCounts();
 
-        startButton.textContent = "Wybierz inny program do analizy";
-
-        const showBtn = document.getElementById("show-btn");
-        if (showBtn) showBtn.style.display = "none";
+        // Po zakończeniu analizy ukrywamy przycisk startu, a pokazujemy przycisk wyboru innego pliku
+        startButton.hidden = true;
+        if (showBtn) {
+          showBtn.style.display = "inline-block";
+          showBtn.textContent = "Wybierz inny program";
+        }
 
         let reportBtn = document.getElementById("download-report-btn");
         if (!reportBtn) {
@@ -245,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
           reportBtn.textContent = "Pobierz raport analizy";
 
           reportBtn.addEventListener("click", () => {
-            alert("Funkcja pobierania raportu będzie dostępna w kolejnych etapach!");
+            showError("Funkcja pobierania raportu będzie dostępna w kolejnych etapach!");
           });
 
           startButton.parentElement.appendChild(reportBtn);
@@ -257,18 +260,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (progressText) progressText.textContent = "Błąd";
         if (progressBar) progressBar.style.width = "0%";
 
-        const row = document.createElement("tr");
-        const cell = document.createElement("td");
-        cell.colSpan = 3;
-        cell.textContent = error.message || "Wystąpił błąd podczas komunikacji z serwerem.";
-        row.appendChild(cell);
-        eventsBody.appendChild(row);
+        showError(error.message || "Wystąpił błąd podczas komunikacji z serwerem.");
+
+        if (startButton) {
+          startButton.hidden = false;
+          startButton.textContent = "Rozpocznij analizę";
+        }
+        if (showBtn) showBtn.style.display = "inline-block";
       } finally {
         startButton.disabled = false;
       }
     });
   }
-
 
   // Obsługa zakładek (filtrowanie tabeli)
   const tabBtns = document.querySelectorAll(".tab-btn");
@@ -289,7 +292,8 @@ document.addEventListener("DOMContentLoaded", () => {
           filter === "all" ||
           (filter === "Plik" && type === "Plik") ||
           (filter === "Proces" && type === "Proces") ||
-          (filter === "Sieć" && type === "Sieć")
+          (filter === "Sieć" && type === "Sieć") ||
+          (filter === "Zasoby" && type === "Zasoby")
         ) {
           row.style.display = "";
         } else {
@@ -299,3 +303,55 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+function showError(message) {
+  // Usuwamy poprzedni błąd, jeśli już istnieje
+  const existingError = document.querySelector(".error-banner");
+  if (existingError) existingError.remove();
+
+  const uploadContainer = document.getElementById("upload-container");
+  if (!uploadContainer) return;
+
+  const errorBanner = document.createElement("div");
+  errorBanner.className = "error-banner";
+  errorBanner.innerHTML = `
+    <div class="error-banner-content">
+      <span>❌</span>
+      <span>${message}</span>
+    </div>
+    <button class="error-close-btn" onclick="this.parentElement.remove()">&times;</button>
+  `;
+
+  uploadContainer.appendChild(errorBanner);
+
+  // AUTOMATYCZNE ZNIKANIE Z PŁYNNYM WYGASZANIEM PO 5 SEKUNDACH
+  setTimeout(() => {
+    // Dodajemy klasę uruchamiającą animację znikania
+    errorBanner.classList.add("fade-out");
+
+    // Czekamy 300ms (tyle co animacja CSS) i dopiero wtedy usuwamy element z DOM
+    setTimeout(() => {
+      if (errorBanner.parentElement) {
+        errorBanner.remove();
+      }
+    }, 300);
+
+  }, 5000);
+}
+
+
+const historyLink = document.getElementById("nav-history");
+if (historyLink) {
+  historyLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    showError("Panel Historii będzie dostępny w kolejnych etapach!");
+  });
+}
+
+const settingsLink = document.getElementById("nav-settings");
+if (settingsLink) {
+  settingsLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    showError("Panel Ustawień będzie dostępny w kolejnych etapach!");
+  });
+}

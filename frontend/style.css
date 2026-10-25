@@ -301,3 +301,59 @@ tr:last-child td {
   font-size: 0.9rem;
   overflow-wrap: anywhere;
 }
+
+.error-banner {
+  background-color: rgba(248, 81, 73, 0.15);
+  border: 1px solid rgba(248, 81, 73, 0.4);
+  color: #ff7b72;
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  font-size: 0.95rem;
+  animation: fadeIn 0.3s ease-in-out;
+  max-width: 80%;
+  margin: 15px auto 0;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.error-banner.fade-out {
+  opacity: 0;
+  transform: translateY(-5px);
+}
+
+.error-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-close-btn {
+  background: none;
+  border: none;
+  color: #ff7b72;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+.error-close-btn:hover {
+  color: #ffa198;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

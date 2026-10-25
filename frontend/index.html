@@ -14,19 +14,17 @@
   <header>
     <h1>🛡️ Mini Dynamic Analyzer</h1>
     <nav>
-      <a href="#">Historia</a>
-      <a href="#">Ustawienia</a>
-      <a href="#">API Documentation</a>
+      <a href="#" id="nav-history">Historia</a>
+      <a href="#" id="nav-settings">Ustawienia</a>
+      <a href="/docs" target="_blank">Dokumentacja API</a>
     </nav>
   </header>
 
   <main>
-    <!-- Panel Uploadu -->
     <div class="upload-card" id="upload-container">
       <div class="upload-icon">📁</div>
 
       <h3>Przeciągnij i upuść plik .exe tutaj</h3>
-
       <p style="color: var(--text-muted); margin-top: 5px;">lub kliknij, aby wybrać z komputera</p>
 
       <input type="file" id="file-input" style="display: none;" accept=".exe">
@@ -39,8 +37,6 @@
       </div>
     </div>
 
-
-    <!-- Pasek Postępu Analizy -->
     <div class="status-card">
       <div class="status-header">
         <span id="analysis-status">Status: ⚪ Oczekiwanie na analizę</span>
@@ -51,8 +47,6 @@
       </div>
     </div>
 
-
-    <!-- Zakładki -->
     <div class="tabs">
       <button class="tab-btn active" data-filter="all">
         Wszystkie akcje (<span id="count-all">0</span>)
@@ -66,10 +60,11 @@
       <button class="tab-btn" data-filter="Sieć">
         Sieć (<span id="count-network">0</span>)
       </button>
+      <button class="tab-btn" data-filter="Zasoby">
+        Zasoby (<span id="count-resources">0</span>)
+      </button>
     </div>
 
-
-    <!-- Tabela z Wynikami na Żywo -->
     <div class="results-card">
       <table>
         <thead>

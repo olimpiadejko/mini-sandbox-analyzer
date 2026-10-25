@@ -33,8 +33,8 @@ async def analyze_file(file: UploadFile = File(...)):
             raise HTTPException(status_code=400, detail="Dozwolone są wyłącznie pliki z rozszerzeniem .exe.")
 
         content = await file.read()
-        if len(content) == 0 or len(content) > 150 * 1024 * 1024:
-            raise HTTPException(status_code=400, detail="Plik przekracza dozwolony limit rozmiaru (maksymalnie 150 MB).")
+        if len(content) == 0 or len(content) > 100 * 1024 * 1024:
+            raise HTTPException(status_code=400, detail="Plik przekracza dozwolony limit rozmiaru (maksymalnie 100 MB).")
 
         # Generujemy bezpieczną nazwę pliku za pomocą UUID, aby uniknąć błędów ze znakami specjalnymi w ścieżce
         safe_filename = f"{uuid.uuid4()}.exe"
