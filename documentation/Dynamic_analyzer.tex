@@ -1,0 +1,122 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\selecthyphenation{polish}
+
+\usepackage{amsmath}
+\usepackage{hyperref} 
+\usepackage{xcolor}
+
+\hyphenpenalty=10000 % wyłącza dzielenie wyrazów na końcu linii
+
+\title{\textbf{Dynamic analyzer}}
+\author{Olimpia Dejko \\ Natalia Bardadyn }
+\date{pażdziernik 2026}
+
+\begin{document}
+\maketitle
+
+\section{Temat projektu}
+\label{sec:temat}
+Projekt polega na stworzeniu aplikacji umożliwiającej przeprowadzanie podstawowej dynamicznej analizy oprogramowania. Aplikacja będzie uruchamiać przygotowane programy testowe, obserwować wybrane zdarzenia występujące podczas ich działania oraz prezentować zebrane informacje w czytelnym raporcie.
+
+\section{Cel projektu}
+\label{sec:cel}
+Celem projektu jest opracowanie uproszczonego narzędzia demonstracyjnego, które pozwoli zapoznać się z praktycznymi metodami dynamicznej analizy oprogramowania. 
+Aplikacja ma umożliwiać obserwowanie zachowania programu podczas jego wykonywania, zamiast ograniczać się wyłącznie do analizy jego kodu źródłowego. 
+Projekt ma również pomóc w zrozumieniu, w jaki sposób można wykorzystywać informacje o procesach, operacjach na plikach i połączeniach sieciowych do analizy zachowania programów. 
+
+\section{Główne funkcjonalności}
+\label{sec:funkcjonalosci}
+Planowane funkcjonalności aplikacji: 
+\begin{enumerate}
+\item \textbf{Wybór programu testowego} - wskazanie programu lub scenariusza przeznaczonego do analizy. 
+\item \textbf{Uruchomienie analizy} - rozpoczęcie kontrolowanego wykonania wybranego programu. 
+\item \textbf{Monitorowanie plików} - wykrywanie wybranych operacji, takich jak tworzenie i modyfikowanie plików w obserwowanym katalogu. 
+\item \textbf{Monitorowanie procesów} - zbieranie podstawowych informacji o analizowanym procesie oraz wybranych procesach potomnych. 
+\item \textbf{Monitorowanie sieci} - rejestrowanie kontrolowanych połączeń sieciowych wykonywanych przez program testowy. 
+\item \textbf{Prezentacja wyników} - wyświetlanie wykrytych zdarzeń w tabeli z informacją o czasie, kategorii i opisie zdarzenia. 
+\item \textbf{Generowanie raportu} - przygotowanie podsumowania przeprowadzonej analizy. 
+\item \textbf{Ocena ryzyka} - przypisywanie punktów wybranym zdarzeniom na podstawie jawnie zdefiniowanych reguł.
+\end{enumerate}
+
+\section{Technologie}
+\label{sec:technologie}
+Do realizacji projektu planujemy wykorzystać: 
+\begin{itemize}
+\item \textbf{HTML} - strukturę interfejsu użytkownika. 
+\item \textbf{CSS} - wygląd i układ aplikacji. 
+\item \textbf{JavaScript} - obsługę interakcji użytkownika i aktualizację widoku. 
+\item \textbf{Python} - implementację logiki analizatora, uruchamianie programów testowych i opracowywanie wyników. 
+\begin{itemize}
+\item \textbf{FastAPI} - nowoczesny, szybki framework webowy do budowy API.
+\item \textbf{pefile} - biblioteka do parsowania i analizy struktur plików PE (Portable Executable), używana do odczytu nagłówków, sekcji i tabeli importów.
+\item \textbf{Hashlib} - wbudowany moduł do obliczania kryptograficznych sum kontrolnych (MD5, SHA-256).
+\item \textbf{UUID (Universally Unique Identifier)} - standard generowania unikalnych identyfikatorów używany do bezpiecznego przechowywania wgrywanych plików na serwerze.
+\end{itemize}
+\item \textbf{Git i GitHub} - wersjonowanie kodu oraz współpracę nad projektem. 
+\end{itemize}
+
+\section{Architektura systemu i przepływ danych}
+\label{sec:architektura}
+Opis modelu klient-serwer, na którym opiera się aplikacja:
+\begin{itemize}
+\item \textbf{Backend (FastAPI/Python):} Odpowiada za odbieranie żądań HTTP, walidację strumienia plików, zarządzanie bezpiecznym katalogiem tymczasowym oraz parsowanie nagłówków PE za pomocą biblioteki pefile.
+\item \textbf{Frontend (HTML/CSS/JavaScript):} Odpowiada za interakcję z użytkownikiem, obsługę przeciągania plików (drag-and-drop), dynamiczne renderowanie tabeli zdarzeń, filtrowanie za pomocą zakładek oraz wizualizację postępu analizy.
+\item \textbf{Przepływ danych (Workflow):} Opis krokowy \\użytkownik wskazuje plik .exe $\rightarrow$ frontend pakuje go do obiektu FormData i wysyła metodą POST do endpointu /api/analyze $\rightarrow$ backend generuje sumy kontrolne (MD5/SHA-256), bada tablicę importów i sekcje $\rightarrow$ zwraca sformatowaną tablicę zdarzeń w formacie JSON.
+\end{itemize}
+
+\section{Napotkane błędy i sposoby ich rozwiązania}
+\label{sec:bledy}
+Podczas implementacji kolejnych funkcji projektu napotkano na kilka wyzwań związanych ze stanem interfejsu (UI) oraz synchronizacją kodu. Poniżej zebrano najważniejsze z nich wraz z zastosowanymi poprawkami:
+\begin{enumerate}
+\item \textbf{Przeciążenie serwera przez pliki o niestandardowym rozmiarze}\\
+\textbf{Opis:} Przesłanie skrajnie dużego pliku mogłoby doprowadzić do wyczerpania pamięci RAM serwera lub nadmiernego obciążenia procesora podczas parsowania struktury PE.\\
+\textbf{Rozwiązanie:} Wprowadzono restrykcyjną walidację rozmiaru przesyłanego strumienia danych po stronie backendu (maksymalnie 150 MB), odrzucającą nieodpowiednie pliki na samym początku żądania HTTP.
+
+\item \textbf{Znikanie przycisku wyboru pliku po błędnej walidacji lub niepowodzeniu analizy} \\
+\textbf{Opis:} Gdy użytkownik przesłał plik niebędący plikiem .exe lub gdy wystąpił błąd komunikacji z serwerem, kluczowe elementy interfejsu (takie jak przycisk wyboru/zmiany pliku) znikały, pozostawiając interfejs w zablokowanym stanie.\\
+\textbf{Rozwiązanie:} Zmodyfikowano logikę w pliku app.js, rozdzielając przycisk wyboru pliku od stanu analizy. Zapewniono, że przycisk wyboru pliku jest zawsze widoczny, niezależnie od wystąpienia błędu czy statusu przesłanego pliku.
+
+\item \textbf{Zagrożenie związane ze znakami specjalnymi w nazwach plików}\\
+\textbf{Opis:} Użytkownicy mogli przesyłać pliki zawierające spacje, polskie znaki diakrytyczne lub znaki specjalne, co na backendzie mogłoby prowadzić do błędów ścieżek lub podatności bezpieczeństwa.\\
+\textbf{Rozwiązanie:} Zastosowano generowanie losowych, unikalnych nazw tymczasowych przy użyciu standardu UUID dla każdego wgrywanego pliku. Dzięki temu operacje plikowe na serwerze są przewidywalne i bezpieczne.
+
+\item \textbf{Surowe powiadomienia systemowe zaburzające estetykę}\\
+\textbf{Opis:} Komunikaty o błędach (np. nieprawidłowe rozszerzenie pliku lub funkcja w budowie) były obsługiwane przez standardowe okienka alert(), co psuło spójność ciemnego, nowoczesnego motywu aplikacji.\\
+\textbf{Rozwiązanie:} Zaimplementowano dedykowany komponent baneru powiadomień  stylizowany w CSS na wzór powiadomień typu toast. Dodano węższą, wyśrodkowaną formę oraz płynne animacje pojawiania się i wygaszania, dzięki czemu błędy znikają samoczynnie po kilku sekundach lub po kliknięciu krzyżyka.
+\end{enumerate}
+
+\section{Bezpieczeństwo, walidacja i architektura proaktywna}
+\label{sec:bezpieczenstwo}
+Opis mechanizmów chroniących aplikację i serwer przed niepożądanym zachowaniem:
+\begin{itemize}
+\item \textbf{Walidacja rozszerzeń i typów:} Restrykcyjne sprawdzenie, czy przesyłany plik posiada rozszerzenie .exe zarówno po stronie klienta, jak i serwera.
+\item \textbf{Ochrona przed Path Traversal i kolizjami nazw:} Zastosowanie losowych identyfikatorów UUID do nadawania nazw plikom w folderze roboczym serwera, co uniezależnia system od znaków specjalnych i spacji w oryginalnej nazwie pliku.
+\item \textbf{Kontrola rozmiaru danych:} Wprowadzenie twardego limitu rozmiaru pliku (maksymalnie 150 MB), zapobiegającego wyczerpaniu pamięci RAM serwera.
+\end{itemize}
+
+
+\section{Plan realizacji}
+\label{sec:plan}
+Harmonogram prac obejmuje następujące etapy:
+\begin{enumerate}
+\item Przygotowanie interfejsu HTML i CSS oraz podstawowej obsługi przycisków. 
+\item Implementacja backendu w Pythonie i połączenie go z interfejsem. 
+\item Przygotowanie bezpiecznych programów testowych. 
+\item Implementacja pierwszego modułu monitorowania i prezentacji wykrytych zdarzeń. 
+\item Rozbudowa o kolejne moduły monitorowania. 
+\item Opracowanie raportowania i ewentualnej oceny ryzyka. 
+\item Przeprowadzenie testów, przygotowanie dokumentacji końcowej i prezentacji projektu. 
+\end{enumerate}
+
+\section{Oczekiwany rezultat}
+\label{sec:rezultat}
+Rezultatem projektu ma być działająca aplikacja z interfejsem graficznym, która umożliwi uruchamianie przygotowanych programów testowych, rejestrowanie wybranych zdarzeń podczas ich działania oraz prezentowanie wyników w postaci czytelnego raportu. 
+Projekt ma również umożliwić praktyczne zaprezentowanie podstaw dynamicznej analizy oprogramowania i sposobów wykorzystania informacji o zachowaniu programu w kontekście cyberbezpieczeństwa.
+
+%\newpage
+\tableofcontents
+
+\end{document}
