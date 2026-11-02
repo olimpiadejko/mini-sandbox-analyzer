@@ -193,8 +193,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const data = await response.json();
 
-        if (!response.ok) {
-          throw new Error(data.detail || `Błąd serwera: ${response.status}`);
+        // Obsługa karty ryzyka w UI (napis biały, wynik w kolorze)
+        const riskBox = document.getElementById("risk-card-box");
+        const riskLevelText = document.getElementById("risk-card-level");
+        const riskDescText = document.getElementById("risk-card-desc");
+        const riskIconBox = document.getElementById("risk-card-icon");
+
+        if (riskBox && riskLevelText) {
+          riskBox.style.display = "flex";
+          riskBox.className = "risk-card-container"; // reset klas
+
+          if (data.risk_level === "Niskie") {
+            riskBox.classList.add("risk-card-low");
+            riskLevelText.innerHTML = 'Poziom ryzyka: <span style="color: var(--success);">Niskie</span>';
+            riskIconBox.textContent = "✅";
+            riskDescText.textContent = "Plik nie wykazuje cech złośliwości. Standardowe struktury PE i bezpieczne importy.";
+          } else if (data.risk_level === "Średnie") {
+            riskBox.classList.add("risk-card-medium");
+            riskLevelText.innerHTML = 'Poziom ryzyka: <span style="color: var(--warning);">Średnie</span>';
+            riskIconBox.textContent = "⚠️";
+            riskDescText.textContent = "Wykryto funkcje dynamicznego ładowania API lub podwyższoną entropię sekcji. Zalecana ostrożność.";
+          } else {
+            riskBox.classList.add("risk-card-high");
+            riskLevelText.innerHTML = 'Poziom ryzyka: <span style="color: #f87171;">Wysokie!</span>';
+            riskIconBox.textContent = "🚨";
+            riskDescText.textContent = "Wykryto potencjalnie niebezpieczne mechanizmy (np. iniekcje kodu, wysoka entropia packerów).";
+          }
         }
 
         updateProgress(100, "Status: 🟢 " + data.message);
@@ -218,6 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
             tagSpan.classList.add("tag-file");
           } else if (event.type === "Sieć") {
             tagSpan.classList.add("tag-network");
+          } else if (event.type === "Zasoby") {
+            tagSpan.classList.add("tag-resources");
           } else {
             tagSpan.classList.add("tag-process");
           }

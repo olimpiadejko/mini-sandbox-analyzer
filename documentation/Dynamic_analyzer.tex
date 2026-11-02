@@ -12,33 +12,46 @@
 
 \title{\textbf{Dynamic analyzer}}
 \author{Olimpia Dejko \\ Natalia Bardadyn }
-\date{pażdziernik 2026}
+\date{listopad 2026}
 
 \begin{document}
 \maketitle
 
+\tableofcontents
+\newpage
+
 \section{Temat projektu}
 \label{sec:temat}
-Projekt polega na stworzeniu aplikacji umożliwiającej przeprowadzanie podstawowej dynamicznej analizy oprogramowania. Aplikacja będzie uruchamiać przygotowane programy testowe, obserwować wybrane zdarzenia występujące podczas ich działania oraz prezentować zebrane informacje w czytelnym raporcie.
+Projekt polega na stworzeniu zaawansowanej aplikacji internetowej o charakterze badawczo-demonstracyjnym, umożliwiającej przeprowadzanie automatycznej hybrydowej (statycznej i dynamicznej) analizy plików wykonywalnych w formacie PE (\textit{Portable~Executable}) przeznaczonych dla systemu Microsoft Windows. \\
+Aplikacja integruje inspekcję strukturalną kodu, wyliczanie kryptograficznych sum kontrolnych, badanie matematycznej entropii danych, klasyfikację wywołań funkcji systemowych API oraz próbne, kontrolowane uruchomienie procesu w środowisku izolowanym z limitowanym czasem wykonania.
 
 \section{Cel projektu}
 \label{sec:cel}
-Celem projektu jest opracowanie uproszczonego narzędzia demonstracyjnego, które pozwoli zapoznać się z praktycznymi metodami dynamicznej analizy oprogramowania. 
-Aplikacja ma umożliwiać obserwowanie zachowania programu podczas jego wykonywania, zamiast ograniczać się wyłącznie do analizy jego kodu źródłowego. 
-Projekt ma również pomóc w zrozumieniu, w jaki sposób można wykorzystywać informacje o procesach, operacjach na plikach i połączeniach sieciowych do analizy zachowania programów. 
+Głównym celem projektu jest opracowanie nowoczesnego, zintegrowanego narzędzia do analizy bezpieczeństwa oprogramowania, które pozwala na:
+\begin{itemize}
+\item Zapoznanie się z praktycznymi metodami statycznej oraz dynamicznej detekcji potencjalnie złośliwego oprogramowania.
+\item Zrozumienie wewnętrznej budowy plików binarnych systemu Windows (nagłówki PE, tablica importów, struktury sekcji).
+\item Zastosowanie metod matematycznych (entropia Shannona) do automatycznego wykrywania technik zaciemniania kodu (obfuskacji), pakowania oraz szyfrowania nagłówków.
+\item Automatyczne szacowanie poziomu zagrożenia (\textit{Risk Scoring Engine}) na podstawie heurystyk bez konieczności ręcznej interpretacji surowych logów przez analityka.
+\end{itemize}
 
 \section{Główne funkcjonalności}
 \label{sec:funkcjonalosci}
 Planowane funkcjonalności aplikacji: 
 \begin{enumerate}
-\item \textbf{Wybór programu testowego} - wskazanie programu lub scenariusza przeznaczonego do analizy. 
-\item \textbf{Uruchomienie analizy} - rozpoczęcie kontrolowanego wykonania wybranego programu. 
-\item \textbf{Monitorowanie plików} - wykrywanie wybranych operacji, takich jak tworzenie i modyfikowanie plików w obserwowanym katalogu. 
-\item \textbf{Monitorowanie procesów} - zbieranie podstawowych informacji o analizowanym procesie oraz wybranych procesach potomnych. 
-\item \textbf{Monitorowanie sieci} - rejestrowanie kontrolowanych połączeń sieciowych wykonywanych przez program testowy. 
-\item \textbf{Prezentacja wyników} - wyświetlanie wykrytych zdarzeń w tabeli z informacją o czasie, kategorii i opisie zdarzenia. 
-\item \textbf{Generowanie raportu} - przygotowanie podsumowania przeprowadzonej analizy. 
-\item \textbf{Ocena ryzyka} - przypisywanie punktów wybranym zdarzeniom na podstawie jawnie zdefiniowanych reguł.
+\item \textbf{Wybór programu testowego:} Interfejs webowy umożliwiający wskazanie pliku wykonywalnego za pomocą przeciągania (drag-and-drop) lub okna wyboru systemu.
+\item \textbf{Uruchomienie analizy:} rozpoczęcie kontrolowanego wykonania wybranego programu. 
+\item \textbf{Obliczanie sum kontrolnych:} Automatyczne generowanie unikalnych kryptograficznych identyfikatorów pliku w standardzie MD5 oraz SHA-256.
+\item \textbf{Monitorowanie plików:} wykrywanie wybranych operacji, takich jak tworzenie i modyfikowanie plików w obserwowanym katalogu. 
+\item \textbf{Inspekcja struktury PE (Portable Executable):} Odczyt nagłówków, liczby sekcji oraz daty kompilacji pliku za pomocą biblioteki \texttt{pefile}.
+\item \textbf{Monitorowanie procesów:} zbieranie podstawowych informacji o analizowanym procesie oraz wybranych procesach potomnych. 
+\item \textbf{Monitorowanie sieci:} rejestrowanie kontrolowanych połączeń sieciowych wykonywanych przez program testowy. 
+\item \textbf{Analiza entropii Shannona:} Matematyczne badanie rozkładu bajtów w sekcjach pliku w zakresie od $0.0$ do $8.0$ w celu wykrycia upakowania, zaciemnienia lub szyfrowania kodu (próg alarmowy $H(X) > 7.2$).
+\item \textbf{Kategoryzacja i detekcja niebezpiecznych API:} Skanowanie tabeli importów pod kątem obecności funkcji wysokiego ryzyka (np. iniekcje kodu takie jak \texttt{VirtualAlloc}, \texttt{CreateRemoteThread}, \texttt{LoadLibraryW}).
+\item \textbf{Ocena ryzyka:} Algorytm sumujący punkty zagrożenia z analizy statycznej i klasyfikujący plik do odpowiedniego poziomu: \textit{Niskie}, \textit{Średnie} lub \textit{Wysokie}. 
+\item \textbf{Kontrolowane uruchomienie z mechanizmem Timeout} - Uruchamianie procesu via subprocess.run z 3-sekundowym limitem czasowym zapobiegającym zawieszeniu serwera. 
+\item \textbf{Prezentacja wyników i wizualizacja:} Interaktywna tabela zdarzeń z podziałem na kategorie (\textit{Pliki}, \textit{Procesy}, \textit{Sieć}, \textit{Zasoby}) oraz nowoczesna, kolorowa karta oceny ryzyka w interfejsie.
+\item \textbf{Generowanie raportu:} przygotowanie podsumowania przeprowadzonej analizy.      
 \end{enumerate}
 
 \section{Technologie}
@@ -54,6 +67,8 @@ Do realizacji projektu planujemy wykorzystać:
 \item \textbf{pefile} - biblioteka do parsowania i analizy struktur plików PE (Portable Executable), używana do odczytu nagłówków, sekcji i tabeli importów.
 \item \textbf{Hashlib} - wbudowany moduł do obliczania kryptograficznych sum kontrolnych (MD5, SHA-256).
 \item \textbf{UUID (Universally Unique Identifier)} - standard generowania unikalnych identyfikatorów używany do bezpiecznego przechowywania wgrywanych plików na serwerze.
+\item \textbf{math} - wykorzystywany do obliczania entropii Shannona ($\log_2$).   
+\item \textbf{subprocess} - wbudowany moduł służący do kontrolowanego, dynamicznego uruchamiania procesów w odizolowanym środowisku. 
 \end{itemize}
 \item \textbf{Git i GitHub} - wersjonowanie kodu oraz współpracę nad projektem. 
 \end{itemize}
@@ -63,8 +78,26 @@ Do realizacji projektu planujemy wykorzystać:
 Opis modelu klient-serwer, na którym opiera się aplikacja:
 \begin{itemize}
 \item \textbf{Backend (FastAPI/Python):} Odpowiada za odbieranie żądań HTTP, walidację strumienia plików, zarządzanie bezpiecznym katalogiem tymczasowym oraz parsowanie nagłówków PE za pomocą biblioteki pefile.
+\begin{enumerate}
+\item Odbiór i walidacja pliku (rozszerzenie .exe, limit 150 MB).   
+\item Zapis tymczasowy w folderze /uploads pod unikalną nazwą UUID.   
+\item Analiza statyczna: obliczenie MD5 i SHA-256.   Inspekcja struktury PE: odczyt nagłówka, daty kompilacji, wyliczenie entropii dla każdej sekcji, kategoryzacja importów DLL/API.   
+\item Obliczenie punktacji ryzyka i przypisanie etykiety słownej.   
+\item Analiza dynamiczna: wywołanie subprocess.run(timeout=3) i przechwycenie returncode.   
+\item Bezpieczne usunięcie pliku tymczasowego (os.remove).   
+\item Zwrócenie odpowiedzi JSON zawierającej listę zdarzeń (events) oraz poziom ryzyka (risklevel) do frontendu.  
+\end{enumerate}
 \item \textbf{Frontend (HTML/CSS/JavaScript):} Odpowiada za interakcję z użytkownikiem, obsługę przeciągania plików (drag-and-drop), dynamiczne renderowanie tabeli zdarzeń, filtrowanie za pomocą zakładek oraz wizualizację postępu analizy.
-\item \textbf{Przepływ danych (Workflow):} Opis krokowy \\użytkownik wskazuje plik .exe $\rightarrow$ frontend pakuje go do obiektu FormData i wysyła metodą POST do endpointu /api/analyze $\rightarrow$ backend generuje sumy kontrolne (MD5/SHA-256), bada tablicę importów i sekcje $\rightarrow$ zwraca sformatowaną tablicę zdarzeń w formacie JSON.
+\item \textbf{Szczegółowy przepływ danych (Workflow):}
+\begin{enumerate}
+\item Użytkownik przesyła plik \texttt{.exe} poprzez interfejs przeglądarkowy.
+\item Skrypt kliencki pakuje plik do obiektu \texttt{FormData} i przesyła go do endpointu \texttt{/api/analyze}.
+\item Serwer zapisuje plik tymczasowo w folderze \texttt{uploads/} pod losową nazwą UUID, eliminując ryzyko błędów ścieżek wynikających ze znaków specjalnych.
+\item Moduł oblicza hashe MD5 i SHA-256 oraz parsije nagłówek PE, wyznaczając entropię sekcji oraz analizując tablicę importów DLL.
+\item Algorytm oceny ryzyka wyznacza punktację (\textit{risk\_score}) i przypisuje poziom zagrożenia.
+\item Uruchamiany jest proces testowy w trybie kontrolowanym (\texttt{subprocess.run}), a uzyskany kod powrotu i zużycie zasobów (RAM/CPU) trafiają do rejestru zdarzeń.
+\item Plik tymczasowy jest automatycznie usuwany z dysku serwera (\texttt{os.remove}), a wynik w formacie JSON jest zwracany do frontendu w celu natychmiastowej wizualizacji.
+\end{enumerate}
 \end{itemize}
 
 \section{Napotkane błędy i sposoby ich rozwiązania}
@@ -79,7 +112,7 @@ Podczas implementacji kolejnych funkcji projektu napotkano na kilka wyzwań zwi�
 \textbf{Opis:} Gdy użytkownik przesłał plik niebędący plikiem .exe lub gdy wystąpił błąd komunikacji z serwerem, kluczowe elementy interfejsu (takie jak przycisk wyboru/zmiany pliku) znikały, pozostawiając interfejs w zablokowanym stanie.\\
 \textbf{Rozwiązanie:} Zmodyfikowano logikę w pliku app.js, rozdzielając przycisk wyboru pliku od stanu analizy. Zapewniono, że przycisk wyboru pliku jest zawsze widoczny, niezależnie od wystąpienia błędu czy statusu przesłanego pliku.
 
-\item \textbf{Zagrożenie związane ze znakami specjalnymi w nazwach plików}\\
+\item \textbf{Znaki specjalne w nazwach plików}\\
 \textbf{Opis:} Użytkownicy mogli przesyłać pliki zawierające spacje, polskie znaki diakrytyczne lub znaki specjalne, co na backendzie mogłoby prowadzić do błędów ścieżek lub podatności bezpieczeństwa.\\
 \textbf{Rozwiązanie:} Zastosowano generowanie losowych, unikalnych nazw tymczasowych przy użyciu standardu UUID dla każdego wgrywanego pliku. Dzięki temu operacje plikowe na serwerze są przewidywalne i bezpieczne.
 
@@ -100,15 +133,15 @@ Opis mechanizmów chroniących aplikację i serwer przed niepożądanym zachowan
 
 \section{Plan realizacji}
 \label{sec:plan}
-Harmonogram prac obejmuje następujące etapy:
+Harmonogram prac nad projektem obejmuje następujące etapy:
 \begin{enumerate}
-\item Przygotowanie interfejsu HTML i CSS oraz podstawowej obsługi przycisków. 
-\item Implementacja backendu w Pythonie i połączenie go z interfejsem. 
-\item Przygotowanie bezpiecznych programów testowych. 
-\item Implementacja pierwszego modułu monitorowania i prezentacji wykrytych zdarzeń. 
-\item Rozbudowa o kolejne moduły monitorowania. 
-\item Opracowanie raportowania i ewentualnej oceny ryzyka. 
-\item Przeprowadzenie testów, przygotowanie dokumentacji końcowej i prezentacji projektu. 
+\item \textbf{Projekt interfejsu i warstwy wizualnej:} Przygotowanie struktury HTML oraz stylów CSS dla motywu ciemnego, uwzględniając responsywność i obsługę zdarzeń przeciągania plików (drag-and-drop).
+\item \textbf{Implementacja rdzenia backendu:} Uruchomienie serwera opartego o framework FastAPI w języku Python oraz konfiguracja bezpiecznego katalogu tymczasowego z obsługą identyfikatorów UUID.
+\item \textbf{Moduł analizy statycznej PE:} Integracja biblioteki \texttt{pefile} w celu odczytu nagłówków, sekcji, daty kompilacji oraz tabeli importów.
+\item \textbf{Zaawansowana detekcja statyczna:} Implementacja obliczania entropii Shannona dla sekcji pliku ($H(X) > 7.2$) oraz wykrywania podejrzanych funkcji API (iniekcje pamięci, dynamiczne ładowanie).
+\item \textbf{Moduł analizy dynamicznej i piaskownicy:} Wdrożenie kontrolowanego uruchamiania procesu za pomocą modułu \texttt{subprocess} z limitem czasowym (\textit{timeout}) zapobiegającym blokowaniu serwera.
+\item \textbf{Silnik oceny ryzyka i powiadomienia UI:} Stworzenie algorytmu wyznaczającego poziom zagrożenia (\textit{Niskie}, \textit{Średnie}, \textit{Wysokie}) oraz zaprojektowanie nowoczesnej karty ryzyka i powiadomień typu \textit{toast}.
+\item \textbf{Testy, dokumentacja i finalizacja:} Przeprowadzenie testów integracyjnych na plikach wykonywalnych, przygotowanie pełnej dokumentacji technicznej w formacie LaTeX oraz finalizacja aplikacji.
 \end{enumerate}
 
 \section{Oczekiwany rezultat}
@@ -116,7 +149,5 @@ Harmonogram prac obejmuje następujące etapy:
 Rezultatem projektu ma być działająca aplikacja z interfejsem graficznym, która umożliwi uruchamianie przygotowanych programów testowych, rejestrowanie wybranych zdarzeń podczas ich działania oraz prezentowanie wyników w postaci czytelnego raportu. 
 Projekt ma również umożliwić praktyczne zaprezentowanie podstaw dynamicznej analizy oprogramowania i sposobów wykorzystania informacji o zachowaniu programu w kontekście cyberbezpieczeństwa.
 
-%\newpage
-\tableofcontents
 
 \end{document}

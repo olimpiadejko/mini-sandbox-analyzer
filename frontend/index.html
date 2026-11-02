@@ -40,13 +40,27 @@
     <div class="status-card">
       <div class="status-header">
         <span id="analysis-status">Status: ⚪ Oczekiwanie na analizę</span>
+        <span id="risk-display" style="display: none;">Ryzyko: <span id="risk-badge-text"
+            class="risk-badge risk-low">Niskie</span></span>
         <span id="analysis-progress-text">0%</span>
       </div>
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="analysis-progress-bar" style="width: 0%;"></div>
       </div>
     </div>
-
+    <!-- Nowa dedykowana Karta Ryzyka -->
+    <div id="risk-card-box" class="risk-card-container" style="display: none;">
+      <div class="risk-info-left">
+        <div class="risk-icon-box" id="risk-card-icon">🛡️</div>
+        <div>
+          <div class="risk-title">Ocena Zagrożenia Pliku</div>
+          <div class="risk-value-text" id="risk-card-level">Niskie ryzyko</div>
+        </div>
+      </div>
+      <div class="risk-description" id="risk-card-desc">
+        Analiza strukturalna i behawioralna nie wykryła krytycznych anomalii.
+      </div>
+    </div>
     <div class="tabs">
       <button class="tab-btn active" data-filter="all">
         Wszystkie akcje (<span id="count-all">0</span>)
