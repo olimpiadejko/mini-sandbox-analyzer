@@ -47,6 +47,18 @@ Planowane funkcjonalności aplikacji:
 \item \textbf{Monitorowanie procesów:} zbieranie podstawowych informacji o analizowanym procesie oraz wybranych procesach potomnych. 
 \item \textbf{Monitorowanie sieci:} rejestrowanie kontrolowanych połączeń sieciowych wykonywanych przez program testowy. 
 \item \textbf{Analiza entropii Shannona:} Matematyczne badanie rozkładu bajtów w sekcjach pliku w zakresie od $0.0$ do $8.0$ w celu wykrycia upakowania, zaciemnienia lub szyfrowania kodu (próg alarmowy $H(X) > 7.2$).
+
+\begin{equation}
+    H(X) = -\sum_{i=1}^{n} P(x_i) \log_2 P(x_i)
+\end{equation}
+Gdzie poszczególne symbole oznaczają:
+\begin{itemize}
+    \item \textbf{$H(X)$} – całkowita wartość entropii danej sekcji, wyrażana w skali od $0.0$ do $8.0$. Wartości powyżej $7.2$ wskazują na wysokie prawdopodobieństwo wystąpienia kodu spakowanego lub zaszyfrowanego.
+    \item \textbf{$n$} – liczba możliwych stanów dyskretnych (w przypadku analizy bajtowej pliku $n = 256$, ponieważ bajt może przyjmować wartości od $0$ do $255$).
+    \item \textbf{$P(x_i)$} – prawdopodobieństwo wystąpienia $i$-tego bajtu (o wartości $x_i$) w badanej sekcji. Oblicza się je jako stosunek liczby wystąpień danego bajtu do całkowitej liczby bajtów w tej sekcji.
+    \item \textbf{$\log_2$} – logarytm o podstawie 2, który decyduje o tym, że wynik wyrażony jest w bitach.
+\end{itemize}
+
 \item \textbf{Kategoryzacja i detekcja niebezpiecznych API:} Skanowanie tabeli importów pod kątem obecności funkcji wysokiego ryzyka (np. iniekcje kodu takie jak \texttt{VirtualAlloc}, \texttt{CreateRemoteThread}, \texttt{LoadLibraryW}).
 \item \textbf{Ocena ryzyka:} Algorytm sumujący punkty zagrożenia z analizy statycznej i klasyfikujący plik do odpowiedniego poziomu: \textit{Niskie}, \textit{Średnie} lub \textit{Wysokie}. 
 \item \textbf{Kontrolowane uruchomienie z mechanizmem Timeout} - Uruchamianie procesu via subprocess.run z 3-sekundowym limitem czasowym zapobiegającym zawieszeniu serwera. 
