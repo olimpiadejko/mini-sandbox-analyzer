@@ -91,6 +91,52 @@
         <tbody id="events-body"></tbody>
       </table>
     </div>
+    <!-- MODAL HISTORII -->
+    <div id="history-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>📜 Historia Analiz</h3>
+          <button class="error-close-btn" onclick="closeModals()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Nazwa pliku</th>
+                    <th>Rozmiar</th>
+                    <th style="text-align: center;">Ryzyko</th>
+                    <th style="text-align: center;">Akcja</th>
+                  </tr>
+                </thead>
+            <tbody id="history-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL USTAWIENÍ -->
+    <div id="settings-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>⚙️ Ustawienia Analizatora</h3>
+          <button class="error-close-btn" onclick="closeModals()">&times;</button>
+        </div>
+        <div class="modal-body settings-form">
+          <label>
+            Limit czasu analizy dynamicznej (sekundy):
+            <input type="number" id="setting-timeout" value="3" min="1" max="10">
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="setting-autodelete" unchecked> Automatycznie usuwaj pliki po analizie
+          </label>
+          <button type="button" class="btn-submit" onclick="saveSettings()">Zapisz ustawienia</button>
+        </div>
+      </div>
+    </div>
   </main>
   <script src="app.js"></script>
 </body>

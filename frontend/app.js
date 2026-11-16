@@ -264,6 +264,9 @@ document.addEventListener("DOMContentLoaded", () => {
           showBtn.textContent = "Wybierz inny program";
         }
 
+        // Zmienna przechowująca ID ostatniej analizy
+        let lastAnalysisId = data.id;
+
         let reportBtn = document.getElementById("download-report-btn");
         if (!reportBtn) {
           reportBtn = document.createElement("button");
@@ -271,10 +274,23 @@ document.addEventListener("DOMContentLoaded", () => {
           reportBtn.id = "download-report-btn";
           reportBtn.className = "btn-submit";
           reportBtn.style.backgroundColor = "var(--success)";
-          reportBtn.textContent = "Pobierz raport analizy";
+          reportBtn.textContent = "Pobierz raport PDF";
 
-          reportBtn.addEventListener("click", () => {
-            showError("Funkcja pobierania raportu będzie dostępna w kolejnych etapach!");
+          reportBtn.addEventListener("click", async () => {
+            try {
+              // Pobieramy najnowsze ID z historii z backendu, żeby mieć 100% pewności
+              const res = await fetch("/api/history");
+              const histData = await res.json();
+
+              if (histData.history && histData.history.length > 0) {
+                const latestId = histData.history[0].id;
+                window.open(`/api/report/${latestId}`, "_blank");
+              } else {
+                showError("Nie znaleznio żadnej historii analiz.");
+              }
+            } catch (err) {
+              showError("Nie udało się pobrać raportu.");
+            }
           });
 
           startButton.parentElement.appendChild(reportBtn);
@@ -365,12 +381,56 @@ function showError(message) {
   }, 5000);
 }
 
+const historyModal = document.getElementById("history-modal");
+const settingsModal = document.getElementById("settings-modal");
 
 const historyLink = document.getElementById("nav-history");
 if (historyLink) {
-  historyLink.addEventListener("click", (e) => {
+  historyLink.addEventListener("click", async (e) => {
     e.preventDefault();
-    showError("Panel Historii będzie dostępny w kolejnych etapach!");
+    if (historyModal) historyModal.style.display = "flex";
+
+    // Pobieramy historię z backendu
+    try {
+      const response = await fetch("/api/history");
+      const data = await response.json();
+      const historyBody = document.getElementById("history-body");
+      if (historyBody) {
+        historyBody.replaceChildren();
+
+        if (data.history.length === 0) {
+          const row = document.createElement("tr");
+          row.innerHTML = `<td colspan="5" style="text-align: center; color: var(--text-muted);">Brak zapisanych analiz w historii.</td>`;
+          historyBody.appendChild(row);
+          return;
+        }
+
+        data.history.forEach(item => {
+          const row = document.createElement("tr");
+
+          // Dobieramy odpowiednią klasę koloru w zależności od poziomu ryzyka
+          let riskClass = "risk-low-text";
+          if (item.risk_level === "Średnie") riskClass = "risk-medium-text";
+          if (item.risk_level === "Wysokie") riskClass = "risk-high-text";
+
+          // Przykład fragmentu kodu w app.js budującego wiersz historii:
+          row.innerHTML = `
+  <td>${item.timestamp}</td>
+  <td><strong>${item.filename}</strong></td>
+  <td>${item.size_mb} MB</td>
+  <td style="text-align: center;"><span class="${riskClass}">${item.risk_level}</span></td>
+  <td style="text-align: center;">
+  <a href="/api/report/${item.id}" class="btn-submit" style="padding: 4px 10px; font-size: 0.8rem; text-decoration: none; display: inline-block; margin-top: 0;" download>
+    Pobierz raport PDF
+  </a>
+  </td>
+`;
+          historyBody.appendChild(row);
+        });
+      }
+    } catch (err) {
+      console.error("Błąd pobierania historii:", err);
+    }
   });
 }
 
@@ -378,6 +438,25 @@ const settingsLink = document.getElementById("nav-settings");
 if (settingsLink) {
   settingsLink.addEventListener("click", (e) => {
     e.preventDefault();
-    showError("Panel Ustawień będzie dostępny w kolejnych etapach!");
+    if (settingsModal) settingsModal.style.display = "flex";
   });
+}
+
+function closeModals() {
+  if (historyModal) historyModal.style.display = "none";
+  if (settingsModal) settingsModal.style.display = "none";
+}
+
+function saveSettings() {
+  const timeout = document.getElementById("setting-timeout").value;
+  const entropy = document.getElementById("setting-entropy").value;
+  const autoDelete = document.getElementById("setting-autodelete").checked;
+
+  // Tutaj możesz zapisać do localStorage lub wysłać do backendu
+  localStorage.setItem("analyzer_timeout", timeout);
+  localStorage.setItem("analyzer_entropy", entropy);
+  localStorage.setItem("analyzer_autodelete", autoDelete);
+
+  closeModals();
+  showError("Ustawienia zostały pomyślnie zapisane!");
 }
