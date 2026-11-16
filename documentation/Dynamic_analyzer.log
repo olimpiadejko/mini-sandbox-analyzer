@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.10.7)  2 NOV 2026 11:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.10.7)  16 NOV 2026 14:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -434,238 +434,252 @@ LaTeX Font Info:    External font `plex10' loaded for size
 LaTeX Font Info:    External font `plex10' loaded for size
 (Font)              <5> on input line 49.
 
-Overfull \hbox (3.2571pt too wide) in paragraph at lines 51--52
+Overfull \hbox (22.00066pt too wide) in paragraph at lines 56--57
+\OT4/cmr/m/n/10 0\OML/plm/m/it/10 :\OT4/cmr/m/n/10 0$ do $8\OML/plm/m/it/10 :\O
+T4/cmr/m/n/10 0$. War-to-±ci po-wy-»ej $7\OML/plm/m/it/10 :\OT4/cmr/m/n/10 2$ w
+ska-zu-j¡ na wy-so-kie praw-do-po-do-bie«-stwo
+ []
+
+
+Overfull \hbox (11.78072pt too wide) in paragraph at lines 57--58
+[]$\OML/plm/m/it/10 n$ \OT4/cmr/m/n/10 { licz-ba mo»-li-wych sta-nów dys-kret-n
+ych (w przy-pad-ku ana-li-zy baj-to-wej
+ []
+
+
+Overfull \hbox (3.2571pt too wide) in paragraph at lines 63--64
 []\OT4/cmr/bx/n/10 Ocena ry-zy-ka: \OT4/cmr/m/n/10 Al-go-rytm su-mu-j¡-cy punk-
 ty za-gro-»e-nia z ana-li-zy sta-tycz-nej
  []
 
 
-Overfull \hbox (4.95683pt too wide) in paragraph at lines 51--52
+Overfull \hbox (4.95683pt too wide) in paragraph at lines 63--64
 \OT4/cmr/m/n/10 i kla-sy-fi-ku-j¡-cy plik do od-po-wied-nie-go po-zio-mu: \OT4/
 cmr/m/it/10 Ni-skie\OT4/cmr/m/n/10 , \OT4/cmr/m/it/10 ‘red-nie \OT4/cmr/m/n/10 
 lub \OT4/cmr/m/it/10 Wy-so-kie\OT4/cmr/m/n/10 . 
  []
 
 
-Overfull \hbox (14.10986pt too wide) in paragraph at lines 52--53
+Overfull \hbox (14.10986pt too wide) in paragraph at lines 64--65
 []\OT4/cmr/bx/n/10 Kontrolowane uru-cho-mie-nie z me-cha-ni-zmem Ti-me-out \OT4
 /cmr/m/n/10 - Uru-cha-mia-nie
  []
 
 
-Overfull \hbox (21.25067pt too wide) in paragraph at lines 52--53
+Overfull \hbox (21.25067pt too wide) in paragraph at lines 64--65
 \OT4/cmr/m/n/10 pro-ce-su via sub-pro-cess.run z 3-sekundowym li-mi-tem cza-so-
 wym za-po-bie-ga-j¡-cym
  []
 
-
-Overfull \hbox (23.76431pt too wide) in paragraph at lines 64--65
+[3{C:/Program Files/MiKTeX/fonts/enc/dvips/pl/pltt.enc}{C:/Program Files/MiKTeX
+/fonts/enc/dvips/pl/plmi.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips/pl/plms.e
+nc}{C:/Program Files/MiKTeX/fonts/enc/dvips/pl/plme.enc}]
+Overfull \hbox (23.76431pt too wide) in paragraph at lines 76--77
 []\OT4/cmr/bx/n/10 Python \OT4/cmr/m/n/10 - im-ple-men-ta-cj¦ lo-gi-ki ana-li-z
 a-to-ra, uru-cha-mia-nie pro-gra-mów te-sto-wych
  []
 
 
-Overfull \hbox (8.08267pt too wide) in paragraph at lines 67--68
+Overfull \hbox (8.08267pt too wide) in paragraph at lines 79--80
 []\OT4/cmr/bx/n/10 pefile \OT4/cmr/m/n/10 - bi-blio-te-ka do par-so-wa-nia i an
 a-li-zy struk-tur pli-ków PE (Por-ta-ble
  []
 
 
-Overfull \hbox (3.63954pt too wide) in paragraph at lines 67--68
+Overfull \hbox (3.63954pt too wide) in paragraph at lines 79--80
 \OT4/cmr/m/n/10 Exe-cu-ta-ble), u»y-wa-na do od-czy-tu na-gªów-ków, sek-cji i t
 a-be-li im-por-tów. 
  []
 
 
-Overfull \hbox (2.05615pt too wide) in paragraph at lines 69--70
+Overfull \hbox (2.05615pt too wide) in paragraph at lines 81--82
 \OT4/cmr/m/n/10 uni-kal-nych iden-ty-fi-ka-to-rów u»y-wa-ny do bez-piecz-ne-go 
 prze-cho-wy-wa-nia
  []
 
-[3{C:/Program Files/MiKTeX/fonts/enc/dvips/pl/pltt.enc}{C:/Program Files/MiKTeX
-/fonts/enc/dvips/pl/plmi.enc}]
-Overfull \hbox (28.32391pt too wide) in paragraph at lines 71--72
+
+Overfull \hbox (28.32391pt too wide) in paragraph at lines 83--84
 []\OT4/cmr/bx/n/10 subprocess \OT4/cmr/m/n/10 - wbu-do-wa-ny mo-duª sªu-»¡-cy d
 o kon-tro-lo-wa-ne-go, dy-na-micz-ne-go
  []
 
 
-Overfull \hbox (23.77846pt too wide) in paragraph at lines 80--81
+Overfull \hbox (23.77846pt too wide) in paragraph at lines 92--93
 \OT4/cmr/m/n/10 wa-li-da-cj¦ stru-mie-nia pli-ków, za-rz¡-dza-nie bez-piecz-nym
  ka-ta-lo-giem tym-cza-so-wym
  []
 
 
-Overfull \hbox (30.05623pt too wide) in paragraph at lines 86--87
+Overfull \hbox (30.05623pt too wide) in paragraph at lines 98--99
 []\OT4/cmr/m/n/10 Analiza dy-na-micz-na: wy-wo-ªa-nie sub-pro-cess.run(timeout=
 3) i prze-chwy-ce-nie
  []
 
 
-Overfull \hbox (44.74246pt too wide) in paragraph at lines 90--91
+Overfull \hbox (44.74246pt too wide) in paragraph at lines 102--103
 []\OT4/cmr/bx/n/10 Frontend (HTML/CSS/JavaScript): \OT4/cmr/m/n/10 Od-po-wia-da
  za in-te-rak-cj¦ z u»yt-kow-ni-kiem,
  []
 
-
-Overfull \hbox (9.19499pt too wide) in paragraph at lines 95--96
+[4]
+Overfull \hbox (9.19499pt too wide) in paragraph at lines 107--108
 \OT4/cmr/m/n/10 na-zw¡ UUID, eli-mi-nu-j¡c ry-zy-ko bª¦-dów ±cie-»ek wy-ni-ka-j
 ¡-cych ze zna-ków
  []
 
 
-Overfull \hbox (35.77763pt too wide) in paragraph at lines 98--99
+Overfull \hbox (35.77763pt too wide) in paragraph at lines 110--111
 []\OT4/cmr/m/n/10 Uruchamiany jest pro-ces te-sto-wy w try-bie kon-tro-lo-wa-ny
 m (\OT4/cmtt/m/n/10 subprocess.run\OT4/cmr/m/n/10 ),
  []
 
-[4]
-Overfull \hbox (26.11119pt too wide) in paragraph at lines 99--100
+
+Overfull \hbox (26.11119pt too wide) in paragraph at lines 111--112
 []\OT4/cmr/m/n/10 Plik tym-cza-so-wy jest au-to-ma-tycz-nie usu-wa-ny z dys-ku 
 ser-we-ra (\OT4/cmtt/m/n/10 os.remove\OT4/cmr/m/n/10 ),
  []
 
 
-Overfull \hbox (33.16617pt too wide) in paragraph at lines 99--100
+Overfull \hbox (33.16617pt too wide) in paragraph at lines 111--112
 \OT4/cmr/m/n/10 a wy-nik w for-ma-cie JSON jest zwra-ca-ny do fron-ten-du w ce-
 lu na-tych-mia-sto-wej
  []
 
 
-Overfull \hbox (10.2588pt too wide) in paragraph at lines 107--110
+Overfull \hbox (10.2588pt too wide) in paragraph at lines 119--122
 \OT4/cmr/bx/n/10 Opis: \OT4/cmr/m/n/10 Prze-sªa-nie skraj-nie du-»e-go pli-ku m
 o-gªo-by do-pro-wa-dzi¢ do wy-czer-pa-nia
  []
 
 
-Overfull \hbox (26.91618pt too wide) in paragraph at lines 107--110
+Overfull \hbox (26.91618pt too wide) in paragraph at lines 119--122
 \OT4/cmr/m/n/10 pa-mi¦-ci RAM ser-we-ra lub nad-mier-ne-go ob-ci¡-»e-nia pro-ce
 -so-ra pod-czas par-so-wa-nia
  []
 
 
-Overfull \hbox (7.021pt too wide) in paragraph at lines 107--110
+Overfull \hbox (7.021pt too wide) in paragraph at lines 119--122
 \OT4/cmr/bx/n/10 Rozwi¡zanie: \OT4/cmr/m/n/10 Wpro-wa-dzo-no re-stryk-cyj-n¡ wa
 -li-da-cj¦ roz-mia-ru prze-sy-ªa-ne-go
  []
 
 
-Overfull \hbox (6.77849pt too wide) in paragraph at lines 107--110
+Overfull \hbox (6.77849pt too wide) in paragraph at lines 119--122
 \OT4/cmr/m/n/10 stru-mie-nia da-nych po stro-nie bac-ken-du (mak-sy-mal-nie 150
  MB), od-rzu-ca-j¡-c¡
  []
 
 
-Overfull \hbox (36.80228pt too wide) in paragraph at lines 111--114
+Overfull \hbox (36.80228pt too wide) in paragraph at lines 123--126
 []\OT4/cmr/bx/n/10 Znikanie przy-ci-sku wy-bo-ru pli-ku po bª¦d-nej wa-li-da-cj
 i lub nie-po-wo-dze-niu
  []
 
 
-Overfull \hbox (6.24501pt too wide) in paragraph at lines 111--114
+Overfull \hbox (6.24501pt too wide) in paragraph at lines 123--126
 \OT4/cmr/bx/n/10 Opis: \OT4/cmr/m/n/10 Gdy u»yt-kow-nik prze-sªaª plik nie-b¦-d
 ¡-cy pli-kiem .exe lub gdy wy-st¡-piª
  []
 
 
-Overfull \hbox (10.86172pt too wide) in paragraph at lines 111--114
+Overfull \hbox (10.86172pt too wide) in paragraph at lines 123--126
 \OT4/cmr/m/n/10 bª¡d ko-mu-ni-ka-cji z ser-we-rem, klu-czo-we ele-men-ty in-ter
 -fej-su (ta-kie jak przy-cisk
  []
 
-
-Overfull \hbox (38.90984pt too wide) in paragraph at lines 115--118
+[5]
+Overfull \hbox (38.90984pt too wide) in paragraph at lines 127--130
 \OT4/cmr/bx/n/10 Rozwi¡zanie: \OT4/cmr/m/n/10 Za-sto-so-wa-no ge-ne-ro-wa-nie l
 o-so-wych, uni-kal-nych nazw tym-cza-so-wych
  []
 
 
-Overfull \hbox (29.2433pt too wide) in paragraph at lines 119--122
+Overfull \hbox (29.2433pt too wide) in paragraph at lines 131--134
 \OT4/cmr/bx/n/10 Rozwi¡zanie: \OT4/cmr/m/n/10 Za-im-ple-men-to-wa-no de-dy-ko-w
 a-ny kom-po-nent ba-ne-ru po-wia-do-mie«
  []
 
 
-Overfull \hbox (8.75073pt too wide) in paragraph at lines 119--122
+Overfull \hbox (8.75073pt too wide) in paragraph at lines 131--134
 \OT4/cmr/m/n/10 dzi¦-ki cze-mu bª¦-dy zni-ka-j¡ sa-mo-czyn-nie po kil-ku se-kun
 -dach lub po klik-ni¦-ciu
  []
 
-[5]
-Overfull \hbox (46.99779pt too wide) in paragraph at lines 124--124
+
+Overfull \hbox (46.99779pt too wide) in paragraph at lines 136--136
 []\OT4/cmr/bx/n/14.4 Bezpiecze«stwo, wa-li-da-cja i ar-chi-tek-tu-ra pro-ak-tyw
 -na 
  []
 
 
-Overfull \hbox (19.11171pt too wide) in paragraph at lines 126--127
+Overfull \hbox (19.11171pt too wide) in paragraph at lines 138--139
 \OT4/cmr/m/n/10 Opis me-cha-ni-zmów chro-ni¡-cych apli-ka-cj¦ i ser-wer przed n
 ie-po-»¡-da-nym za-cho-wa-niem: 
  []
 
 
-Overfull \hbox (7.3759pt too wide) in paragraph at lines 128--129
+Overfull \hbox (7.3759pt too wide) in paragraph at lines 140--141
 []\OT4/cmr/bx/n/10 Walidacja roz-sze-rze« i ty-pów: \OT4/cmr/m/n/10 Re-stryk-cy
 j-ne spraw-dze-nie, czy prze-sy-ªa-ny
  []
 
 
-Overfull \hbox (12.74329pt too wide) in paragraph at lines 129--130
+Overfull \hbox (12.74329pt too wide) in paragraph at lines 141--142
 []\OT4/cmr/bx/n/10 Ochrona przed Path Tra-ver-sal i ko-li-zja-mi nazw: \OT4/cmr
 /m/n/10 Za-sto-so-wa-nie lo-so-wych
  []
 
 
-Overfull \hbox (5.36166pt too wide) in paragraph at lines 129--130
+Overfull \hbox (5.36166pt too wide) in paragraph at lines 141--142
 \OT4/cmr/m/n/10 ser-we-ra, co unie-za-le»-nia sys-tem od zna-ków spe-cjal-nych 
 i spa-cji w ory-gi-nal-nej
  []
 
 
-Overfull \hbox (8.47061pt too wide) in paragraph at lines 138--139
+Overfull \hbox (8.47061pt too wide) in paragraph at lines 150--151
 \OT4/cmr/m/n/10 HTML oraz sty-lów CSS dla mo-ty-wu ciem-ne-go, uwzgl¦d-nia-j¡c 
 re-spon-syw-no±¢
  []
 
-
-Overfull \hbox (6.33792pt too wide) in paragraph at lines 142--143
+[6]
+Overfull \hbox (6.33792pt too wide) in paragraph at lines 154--155
 []\OT4/cmr/bx/n/10 Moduª ana-li-zy dy-na-micz-nej i pia-skow-ni-cy: \OT4/cmr/m/
 n/10 Wdro-»e-nie kon-tro-lo-wa-ne-go
  []
 
 
-Overfull \hbox (0.75012pt too wide) in paragraph at lines 142--143
+Overfull \hbox (0.75012pt too wide) in paragraph at lines 154--155
 \OT4/cmr/m/n/10 uru-cha-mia-nia pro-ce-su za po-mo-c¡ mo-du-ªu \OT4/cmtt/m/n/10
  subprocess \OT4/cmr/m/n/10 z li-mi-tem cza-so-wym
  []
 
 
-Overfull \hbox (43.7145pt too wide) in paragraph at lines 143--144
+Overfull \hbox (43.7145pt too wide) in paragraph at lines 155--156
 []\OT4/cmr/bx/n/10 Silnik oce-ny ry-zy-ka i po-wia-do-mie-nia UI: \OT4/cmr/m/n/
 10 Stwo-rze-nie al-go-ryt-mu wy-zna-cza-j¡-ce-go
  []
 
 
-Overfull \hbox (23.37337pt too wide) in paragraph at lines 143--144
+Overfull \hbox (23.37337pt too wide) in paragraph at lines 155--156
 \OT4/cmr/m/n/10 po-ziom za-gro-»e-nia (\OT4/cmr/m/it/10 Ni-skie\OT4/cmr/m/n/10 
 , \OT4/cmr/m/it/10 ‘red-nie\OT4/cmr/m/n/10 , \OT4/cmr/m/it/10 Wy-so-kie\OT4/cmr
 /m/n/10 ) oraz za-pro-jek-to-wa-nie no-wo-cze-snej
  []
 
 
-Overfull \hbox (13.94513pt too wide) in paragraph at lines 144--145
+Overfull \hbox (13.94513pt too wide) in paragraph at lines 156--157
 []\OT4/cmr/bx/n/10 Testy, do-ku-men-ta-cja i fi-na-li-za-cja: \OT4/cmr/m/n/10 P
 rze-pro-wa-dze-nie te-stów in-te-gra-cyj-nych
  []
 
 
-Overfull \hbox (1.44514pt too wide) in paragraph at lines 144--145
+Overfull \hbox (1.44514pt too wide) in paragraph at lines 156--157
 \OT4/cmr/m/n/10 na pli-kach wy-ko-ny-wal-nych, przy-go-to-wa-nie peª-nej do-ku-
 men-ta-cji tech-nicz-nej
  []
 
-[6]
-Overfull \hbox (14.50081pt too wide) in paragraph at lines 149--151
+
+Overfull \hbox (14.50081pt too wide) in paragraph at lines 161--163
 \OT4/cmr/m/n/10 pod-staw dy-na-micz-nej ana-li-zy opro-gra-mo-wa-nia i spo-so-b
 ów wy-ko-rzy-sta-nia in-for-ma-cji
  []
@@ -675,27 +689,34 @@ Overfull \hbox (14.50081pt too wide) in paragraph at lines 149--151
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-09-09>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `Dynamic_analyzer.out' has not changed.
 (rerunfilecheck)             Checksum: 8FD8B27ED107EF8B2142A1F50ABED371;1580.
  ) 
 Here is how much of TeX's memory you used:
- 9618 strings out of 467392
- 146357 string characters out of 5415748
+ 9623 strings out of 467392
+ 146443 string characters out of 5415748
  577605 words of memory out of 5000000
- 38813 multiletter control sequences out of 15000+600000
+ 38815 multiletter control sequences out of 15000+600000
  636329 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 74i,5n,79p,370b,631s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,5n,79p,370b,567s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\48730\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Program Files/MiKTeX/fonts/type1/public/pl/plbx10.pfb><C:/Program F
 iles/MiKTeX/fonts/type1/public/pl/plbx12.pfb><C:/Program Files/MiKTeX/fonts/typ
-e1/public/pl/plmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/pl/plr10.pf
-b><C:/Program Files/MiKTeX/fonts/type1/public/pl/plr12.pfb><C:/Program Files/Mi
-KTeX/fonts/type1/public/pl/plr7.pfb><C:/Program Files/MiKTeX/fonts/type1/public
-/pl/plti10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/pl/pltt10.pfb>
-Output written on Dynamic_analyzer.pdf (7 pages, 113460 bytes).
+e1/public/pl/plex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/pl/plmi10.p
+fb><C:/Program Files/MiKTeX/fonts/type1/public/pl/plmi7.pfb><C:/Program Files/M
+iKTeX/fonts/type1/public/pl/plr10.pfb><C:/Program Files/MiKTeX/fonts/type1/publ
+ic/pl/plr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/pl/plr7.pfb><C:/Pro
+gram Files/MiKTeX/fonts/type1/public/pl/plsy10.pfb><C:/Program Files/MiKTeX/fon
+ts/type1/public/pl/plti10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/pl/pl
+tt10.pfb>
+Output written on Dynamic_analyzer.pdf (7 pages, 127970 bytes).
 PDF statistics:
- 183 PDF objects out of 1000 (max. 8388607)
- 56 named destinations out of 1000 (max. 500000)
+ 201 PDF objects out of 1000 (max. 8388607)
+ 57 named destinations out of 1000 (max. 500000)
  73 words of extra memory for PDF output out of 10000 (max. 10000000)
 
