@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import FileResponse
 import os
 import hashlib
@@ -57,7 +57,11 @@ def calculate_section_entropy(data):
     return entropy
 
 @app.post("/api/analyze")
-async def analyze_file(file: UploadFile = File(...)):
+async def analyze_file(
+    file: UploadFile = File(...),
+    custom_apis: str = Form(""),
+    timeout: int = Form(5)
+):
     try:
         if not file.filename or not file.filename.lower().endswith(".exe"):
             raise HTTPException(status_code=400, detail="Dozwolone są wyłącznie pliki z rozszerzeniem .exe.")
@@ -136,6 +140,11 @@ async def analyze_file(file: UploadFile = File(...)):
             suspicious_imports = []
             all_imports = []
 
+            if custom_apis.strip():
+                target_apis = tuple(api.strip().lower() for api in custom_apis.split(",") if api.strip())
+            else:
+                target_apis = ('virtualalloc', 'virtualprotect', 'createremotethread', 'writeprocessmemory', 'loadlibrary', 'getprocaddress')
+
             if hasattr(pe, 'DIRECTORY_ENTRY_IMPORT'):
                 for entry in pe.DIRECTORY_ENTRY_IMPORT:
                     dll_name = entry.dll.decode('utf-8', errors='ignore')
@@ -159,7 +168,7 @@ async def analyze_file(file: UploadFile = File(...)):
                         if any(name in function_lower for name in ('createfile', 'writefile', 'deletefile', 'movefile', 'copyfile')):
                             file_imports.append(f"{dll_name}: {function_name}")
 
-                        if any(name in function_lower for name in ('virtualalloc', 'virtualprotect', 'createremotethread', 'writeprocessmemory', 'loadlibrary', 'getprocaddress')):
+                        if any(name in function_lower for name in target_apis):
                             suspicious_imports.append(f"{dll_name}: {function_name}")
 
             if suspicious_imports:
@@ -213,7 +222,7 @@ async def analyze_file(file: UploadFile = File(...)):
             })
 
             start_vm()
-            time.sleep(5) # Czas na działanie pliku w piaskownicy
+            time.sleep(max(1, min(timeout, 60)))
 
             events.append({
                 "time": datetime.now().strftime("%H:%M:%S"),
@@ -305,10 +314,16 @@ async def download_report(analysis_id: str):
         template_content = f.read()
         
     # Generowanie wierszy tabeli ze zdarzeniami
-    events_rows = "".join([
-        f"<tr><td>{e['time']}</td><td>{e['message']}</td><td>{e['type']}</td></tr>"
-        for e in target['events']
-    ])
+    events_rows = ""
+    for e in target['events']:
+        tag_class = "tag-process"
+        if e['type'] == "Plik":
+            tag_class = "tag-file"
+        elif e['type'] == "Sieć":
+            tag_class = "tag-network"
+        elif e['type'] == "Zasoby":
+            tag_class = "tag-resources"
+        events_rows += f"<tr><td>{e['time']}</td><td>{e['message']}</td><td><span class='tag {tag_class}'>{e['type']}</span></td></tr>"
     
     # Dobór klasy koloru paska ryzyka
     risk_class = "risk-low"

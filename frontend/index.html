@@ -128,10 +128,22 @@
         <div class="modal-body settings-form">
           <label>
             Limit czasu analizy dynamicznej (sekundy):
-            <input type="number" id="setting-timeout" value="3" min="1" max="10">
+            <input type="number" id="setting-timeout" value="5" min="1" max="60">
+          </label>
+          <label>
+            Podejrzane funkcje API (oddzielone przecinkami):
+            <input type="text" id="setting-suspicious-apis"
+              value="VirtualAlloc, VirtualProtect, CreateRemoteThread, WriteProcessmemory, LoadLibrary, GetProcAddress"
+              placeholder="np. VirtualAlloc, RegSetValueEx">
           </label>
           <label class="checkbox-label">
-            <input type="checkbox" id="setting-autodelete" unchecked> Automatycznie usuwaj pliki po analizie
+            <input type="checkbox" id="setting-autodelete" checked> Automatycznie usuwaj pliki po analizie
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="setting-autoreport"> Automatycznie otwieraj raport po analizie
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="setting-sound" checked> Dźwięk powiadomienia po zakończeniu analizy
           </label>
           <button type="button" class="btn-submit" onclick="saveSettings()">Zapisz ustawienia</button>
         </div>

@@ -484,12 +484,14 @@ tr:last-child td {
   color: var(--text-muted);
 }
 
-.settings-form input[type="number"] {
-  padding: 8px;
+.settings-form input[type="number"],
+.settings-form input[type="text"] {
+  padding: 10px;
   background-color: var(--bg-color);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   color: var(--text-main);
+  font-size: 0.9rem;
 }
 
 .checkbox-label {

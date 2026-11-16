@@ -176,6 +176,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const formData = new FormData();
         formData.append("file", selectedFile);
+        formData.append("custom_apis", localStorage.getItem("analyzer_apis") || "");
+        formData.append("timeout", localStorage.getItem("analyzer_timeout") || "5");
 
         updateProgress(40, `Status: 🟡 Przesyłanie pliku ${selectedFile.name} na serwer...`);
 
@@ -257,6 +259,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateTabCounts();
 
+        if (localStorage.getItem("analyzer_sound") !== "false") {
+          playNotificationSound();
+        }
+
+        // Automatyczne otwieranie raportu, jeśli włączone w ustawieniach
+        if (localStorage.getItem("analyzer_autoreport") === "true" && data.id) {
+          window.open(`/api/report/${data.id}`, "_blank");
+        }
+
         // Po zakończeniu analizy ukrywamy przycisk startu, a pokazujemy przycisk wyboru innego pliku
         startButton.hidden = true;
         if (showBtn) {
@@ -274,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
           reportBtn.id = "download-report-btn";
           reportBtn.className = "btn-submit";
           reportBtn.style.backgroundColor = "var(--success)";
-          reportBtn.textContent = "Pobierz raport PDF";
+          reportBtn.textContent = "Pobierz raport analizy";
 
           reportBtn.addEventListener("click", async () => {
             try {
@@ -421,7 +432,7 @@ if (historyLink) {
   <td style="text-align: center;"><span class="${riskClass}">${item.risk_level}</span></td>
   <td style="text-align: center;">
   <a href="/api/report/${item.id}" class="btn-submit" style="padding: 4px 10px; font-size: 0.8rem; text-decoration: none; display: inline-block; margin-top: 0;" download>
-    Pobierz raport PDF
+    Pobierz raport
   </a>
   </td>
 `;
@@ -447,16 +458,60 @@ function closeModals() {
   if (settingsModal) settingsModal.style.display = "none";
 }
 
+// Wczytywanie zapisanych ustawień przy starcie strony
+window.addEventListener("load", () => {
+  if (localStorage.getItem("analyzer_timeout")) {
+    document.getElementById("setting-timeout").value = localStorage.getItem("analyzer_timeout");
+  }
+  if (localStorage.getItem("analyzer_apis") !== null) {
+    document.getElementById("setting-suspicious-apis").value = localStorage.getItem("analyzer_apis");
+  }
+  if (localStorage.getItem("analyzer_autodelete") !== null) {
+    document.getElementById("setting-autodelete").checked = localStorage.getItem("analyzer_autodelete") === "true";
+  }
+  if (localStorage.getItem("analyzer_autoreport") !== null) {
+    document.getElementById("setting-autoreport").checked = localStorage.getItem("analyzer_autoreport") === "true";
+  }
+  if (localStorage.getItem("analyzer_sound") !== null) {
+    document.getElementById("setting-sound").checked = localStorage.getItem("analyzer_sound") === "true";
+  }
+});
+
 function saveSettings() {
   const timeout = document.getElementById("setting-timeout").value;
-  const entropy = document.getElementById("setting-entropy").value;
+  const suspiciousApis = document.getElementById("setting-suspicious-apis").value;
   const autoDelete = document.getElementById("setting-autodelete").checked;
+  const autoReport = document.getElementById("setting-autoreport").checked;
+  const sound = document.getElementById("setting-sound").checked;
 
-  // Tutaj możesz zapisać do localStorage lub wysłać do backendu
   localStorage.setItem("analyzer_timeout", timeout);
-  localStorage.setItem("analyzer_entropy", entropy);
+  localStorage.setItem("analyzer_apis", suspiciousApis);
   localStorage.setItem("analyzer_autodelete", autoDelete);
+  localStorage.setItem("analyzer_autoreport", autoReport);
+  localStorage.setItem("analyzer_sound", sound);
 
   closeModals();
   showError("Ustawienia zostały pomyślnie zapisane!");
+}
+
+function playNotificationSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const notes = [523.25, 659.25, 783.99];
+    notes.forEach((freq, index) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      const startTime = ctx.currentTime + index * 0.1;
+      osc.frequency.setValueAtTime(freq, startTime);
+      gain.gain.setValueAtTime(0.12, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.4);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + 0.4);
+    });
+  } catch (e) {
+    console.warn("Przeglądarka zablokowała dźwięk:", e);
+  }
 }
