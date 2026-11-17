@@ -14,8 +14,11 @@ from backend.sandbox.virtualbox import (
     restore_snapshot,
     start_vm,
     shutdown_vm,
-    poweroff_vm,  
-    get_vm_state
+    poweroff_vm,
+    get_vm_state,
+    copy_file_to_guest,
+    run_sample_in_guest,
+    export_and_fetch_sysmon_json
 )
 
 app = FastAPI(title="Mini Dynamic Analyzer", version="1.0")
@@ -28,21 +31,26 @@ os.makedirs(UPLOADS_DIR, exist_ok=True)
 # Globalna lista przechowująca historię analiz
 ANALYSIS_HISTORY = []
 
+
 @app.get("/")
 async def serve_index():
     return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+
 
 @app.get("/style.css")
 async def serve_css():
     return FileResponse(os.path.join(FRONTEND_DIR, "style.css"))
 
+
 @app.get("/app.js")
 async def serve_js():
     return FileResponse(os.path.join(FRONTEND_DIR, "app.js"))
 
+
 @app.get("/report_style.css")
 async def serve_report_css():
     return FileResponse(os.path.join(BASE_DIR, "report_style.css"))
+
 
 def calculate_section_entropy(data):
     """Oblicza entropię Shannona dla danych sekcji pliku PE (zakres 0.0 - 8.0)."""
@@ -55,6 +63,7 @@ def calculate_section_entropy(data):
         if p_x > 0:
             entropy += -p_x * math.log2(p_x)
     return entropy
+
 
 @app.post("/api/analyze")
 async def analyze_file(
@@ -73,7 +82,7 @@ async def analyze_file(
         # Generujemy bezpieczną nazwę pliku za pomocą UUID
         safe_filename = f"{uuid.uuid4()}.exe"
         file_path = os.path.join(UPLOADS_DIR, safe_filename)
-        
+
         with open(file_path, "wb") as f:
             f.write(content)
 
@@ -84,7 +93,7 @@ async def analyze_file(
         # 1. Hashowanie
         md5_hash = hashlib.md5(content).hexdigest()
         sha256_hash = hashlib.sha256(content).hexdigest()
-        
+
         events.append({
             "time": current_time,
             "message": f"Wgrano plik ({file.filename}). SHA-256: {sha256_hash[:16]}...",
@@ -101,9 +110,9 @@ async def analyze_file(
         try:
             pe = pefile.PE(file_path, fast_load=True)
             pe.parse_data_directories(directories=[pefile.DIRECTORY_ENTRY['IMAGE_DIRECTORY_ENTRY_IMPORT']])
-            
+
             sections_count = len(pe.sections) if hasattr(pe, 'sections') else 0
-            
+
             if hasattr(pe, 'FILE_HEADER') and hasattr(pe.FILE_HEADER, 'TimeDateStamp'):
                 timestamp = pe.FILE_HEADER.TimeDateStamp
                 compile_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(timestamp))
@@ -118,14 +127,14 @@ async def analyze_file(
                 "message": f"Przeanalizowano nagłówek PE. Liczba sekcji: {sections_count}",
                 "type": "Proces"
             })
-            
+
             # Analiza entropii sekcji
             if hasattr(pe, 'sections'):
                 for section in pe.sections:
                     sec_name = section.Name.decode('utf-8', errors='ignore').strip('\x00')
                     sec_data = section.get_data()
                     entropy = calculate_section_entropy(sec_data)
-                    
+
                     if entropy > 7.2:
                         risk_score += 2
                         events.append({
@@ -133,7 +142,7 @@ async def analyze_file(
                             "message": f"Sekcja '{sec_name}': Entropia = {entropy:.2f} - ⚠️ WYSOKA (Możliwy packer)",
                             "type": "Zasoby"
                         })
-            
+
             network_imports = []
             process_imports = []
             file_imports = []
@@ -185,13 +194,13 @@ async def analyze_file(
                 "message": f"Liczba wykrytych importów łącznie: {len(all_imports)}",
                 "type": "Plik"
             })
-            
+
             pe.close()
 
         except Exception as pe_err:
             events.append({
                 "time": current_time,
-                "message": f"Ostrzeżenie strukturalne PE: Plik ma niestandardową strukturę nagłówka.",
+                "message": "Ostrzeżenie strukturalne PE: Plik ma niestandardową strukturę nagłówka.",
                 "type": "Zasoby"
             })
 
@@ -211,26 +220,81 @@ async def analyze_file(
             })
 
             if get_vm_state() != "poweroff":
-                shutdown_vm()
-            
-            restore_snapshot("CzystyStan_Sysmon") # Upewnij się, że tak nazywa się Twój snapshot
+                poweroff_vm()
+
+            restore_snapshot("CzystyStan_Sysmon")
+            start_vm()
+            time.sleep(5)  # Czas na inicjalizację usług Guest Additions
+
+            guest_exe = f"C:\\Temp\\{safe_filename}"
+            copy_file_to_guest(file_path, "C:\\Temp\\")
 
             events.append({
                 "time": datetime.now().strftime("%H:%M:%S"),
-                "message": "Uruchamianie środowiska izolowanego (VirtualBox)...",
+                "message": f"Uruchamianie próbki {file.filename} w izolowanej piaskownicy...",
                 "type": "Proces"
             })
+            run_sample_in_guest(guest_exe)
 
-            start_vm()
+            # Obserwacja zachowania próbki przez zadany timeout
             time.sleep(max(1, min(timeout, 60)))
 
-            events.append({
-                "time": datetime.now().strftime("%H:%M:%S"),
-                "message": "Zatrzymywanie środowiska testowego i zbieranie logów...",
-                "type": "Proces"
-            })
+            local_json_path = os.path.join(UPLOADS_DIR, f"sysmon_{uuid.uuid4()}.json")
+            export_and_fetch_sysmon_json(local_json_path)
 
             poweroff_vm()
+
+            # Odczyt i filtrowanie zdarzeń z pliku JSON Sysmona
+            if os.path.exists(local_json_path):
+                with open(local_json_path, "r", encoding="utf-8-sig") as jf:
+                    sysmon_events = json.load(jf)
+                    if isinstance(sysmon_events, dict):
+                        sysmon_events = [sysmon_events]
+
+                    for ev in sysmon_events:
+                        ev_id = ev.get("EventId")
+                        ev_data = ev.get("EventData", {})
+                        image = ev_data.get("Image", "")
+                        parent = ev_data.get("ParentImage", "")
+
+                        if safe_filename.lower() not in image.lower() and safe_filename.lower() not in parent.lower():
+                            continue
+
+                        now_s = datetime.now().strftime("%H:%M:%S")
+                        if ev_id == 1:
+                            events.append({
+                                "time": now_s,
+                                "message": f"[Sysmon] Uruchomiono proces: {os.path.basename(image)}",
+                                "type": "Proces"
+                            })
+                        elif ev_id == 3:
+                            risk_score += 2
+                            events.append({
+                                "time": now_s,
+                                "message": f"[Sysmon] Połączenie sieciowe: {ev_data.get('DestinationIp')}:{ev_data.get('DestinationPort')}",
+                                "type": "Sieć"
+                            })
+                        elif ev_id == 11:
+                            events.append({
+                                "time": now_s,
+                                "message": f"[Sysmon] Utworzono plik: {ev_data.get('TargetFilename')}",
+                                "type": "Plik"
+                            })
+                        elif ev_id == 22:
+                            risk_score += 1
+                            events.append({
+                                "time": now_s,
+                                "message": f"[Sysmon] Zapytanie DNS: {ev_data.get('QueryName')}",
+                                "type": "Sieć"
+                            })
+
+                os.remove(local_json_path)
+
+            # Przeliczenie poziomu ryzyka po analizie dynamicznej
+            if 3 <= risk_score < 6:
+                risk_level = "Średnie"
+            elif risk_score >= 6:
+                risk_level = "Wysokie"
 
             events.append({
                 "time": datetime.now().strftime("%H:%M:%S"),
@@ -285,6 +349,7 @@ async def analyze_file(
         print(f"BŁĄD SERWERA: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Błąd wewnętrzny serwera: {str(e)}")
 
+
 @app.get("/api/history")
 async def get_history():
     summary_history = [
@@ -299,20 +364,21 @@ async def get_history():
     ]
     return {"history": summary_history}
 
+
 @app.get("/api/report/{analysis_id}")
 async def download_report(analysis_id: str):
     target = next((item for item in ANALYSIS_HISTORY if item["id"] == analysis_id), None)
     if not target:
         raise HTTPException(status_code=404, detail="Nie znaleziono raportu o takim ID.")
-    
+
     report_filename = f"raport_{target['filename']}_{target['id']}.html"
     report_path = os.path.join(UPLOADS_DIR, report_filename)
-    
+
     # Wczytujemy osobny szablon HTML
     template_path = os.path.join(BASE_DIR, "report_template.html")
     with open(template_path, "r", encoding="utf-8") as f:
         template_content = f.read()
-        
+
     # Generowanie wierszy tabeli ze zdarzeniami
     events_rows = ""
     for e in target['events']:
@@ -324,7 +390,7 @@ async def download_report(analysis_id: str):
         elif e['type'] == "Zasoby":
             tag_class = "tag-resources"
         events_rows += f"<tr><td>{e['time']}</td><td>{e['message']}</td><td><span class='tag {tag_class}'>{e['type']}</span></td></tr>"
-    
+
     # Dobór klasy koloru paska ryzyka
     risk_class = "risk-low"
     if target['risk_level'] == "Średnie":
@@ -340,8 +406,8 @@ async def download_report(analysis_id: str):
                                  .replace("{risk_level}", target['risk_level']) \
                                  .replace("{risk_class}", risk_class) \
                                  .replace("{events_rows}", events_rows)
-    
+
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(final_html)
-        
+
     return FileResponse(report_path, media_type="text/html", filename=report_filename)

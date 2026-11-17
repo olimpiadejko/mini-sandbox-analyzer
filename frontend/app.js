@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Kliknięcie w przycisk "Wybierz plik" zawsze otwiera okno wyboru
   if (showBtn) {
     showBtn.addEventListener("click", () => {
-      fileInput.value = ""; // Resetujemy input, aby można było wybrać ten sam plik ponownie
+      fileInput.value = "";
       fileInput.click();
     });
   }
@@ -49,20 +49,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function displayFileCard(file) {
-    // Zawsze dbamy o to, aby przycisk wyboru pliku był widoczny
     if (showBtn) showBtn.style.display = "inline-block";
 
     if (!file.name.toLowerCase().endsWith(".exe")) {
       selectedFile = null;
       if (startButton) startButton.hidden = true;
 
-      // Usuwamy przycisk raportu, jeśli istniał
       const reportBtn = document.getElementById("download-report-btn");
       if (reportBtn) reportBtn.remove();
 
       showError("Dozwolone są wyłącznie pliki z rozszerzeniem .exe.");
       return;
     }
+
+    const maxSizeBytes = 150 * 1024 * 1024; // 150 MB
+    if (file.size === 0 || file.size > maxSizeBytes) {
+      selectedFile = null;
+      if (startButton) startButton.hidden = true;
+
+      const reportBtn = document.getElementById("download-report-btn");
+      if (reportBtn) reportBtn.remove();
+
+      showError("Plik jest pusty lub przekracza dozwolony limit rozmiaru (maksymalnie 150 MB).");
+      return;
+    }
+
     selectedFile = file;
 
     if (analysisStatus) analysisStatus.textContent = "Status: ⚪ Oczekiwanie na analizę";
@@ -78,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const reportBtn = document.getElementById("download-report-btn");
     if (reportBtn) reportBtn.remove();
 
-    // Przywracamy widoczność napisów instrukcyjnych
     const uploadTitle = uploadContainer.querySelector("h3");
     const uploadSubtitle = uploadContainer.querySelector("p");
     if (uploadTitle) uploadTitle.style.display = "";
@@ -191,11 +201,14 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(`Serwer zwrócił nieprawidłową odpowiedź (status: ${response.status})`);
         }
 
-        updateProgress(75, "Status: 🟡 Wykonywanie analizy statycznej i nagłówka PE...");
-
         const data = await response.json();
 
-        // Obsługa karty ryzyka w UI (napis biały, wynik w kolorze)
+        if (!response.ok) {
+          throw new Error(data.detail || `Błąd serwera (status: ${response.status})`);
+        }
+
+        updateProgress(75, "Status: 🟡 Wykonywanie analizy statycznej i nagłówka PE...");
+
         const riskBox = document.getElementById("risk-card-box");
         const riskLevelText = document.getElementById("risk-card-level");
         const riskDescText = document.getElementById("risk-card-desc");
@@ -203,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (riskBox && riskLevelText) {
           riskBox.style.display = "flex";
-          riskBox.className = "risk-card-container"; // reset klas
+          riskBox.className = "risk-card-container";
 
           if (data.risk_level === "Niskie") {
             riskBox.classList.add("risk-card-low");
@@ -263,20 +276,15 @@ document.addEventListener("DOMContentLoaded", () => {
           playNotificationSound();
         }
 
-        // Automatyczne otwieranie raportu, jeśli włączone w ustawieniach
         if (localStorage.getItem("analyzer_autoreport") === "true" && data.id) {
           window.open(`/api/report/${data.id}`, "_blank");
         }
 
-        // Po zakończeniu analizy ukrywamy przycisk startu, a pokazujemy przycisk wyboru innego pliku
         startButton.hidden = true;
         if (showBtn) {
           showBtn.style.display = "inline-block";
           showBtn.textContent = "Wybierz inny program";
         }
-
-        // Zmienna przechowująca ID ostatniej analizy
-        let lastAnalysisId = data.id;
 
         let reportBtn = document.getElementById("download-report-btn");
         if (!reportBtn) {
@@ -289,7 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
           reportBtn.addEventListener("click", async () => {
             try {
-              // Pobieramy najnowsze ID z historii z backendu, żeby mieć 100% pewności
               const res = await fetch("/api/history");
               const histData = await res.json();
 
@@ -297,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const latestId = histData.history[0].id;
                 window.open(`/api/report/${latestId}`, "_blank");
               } else {
-                showError("Nie znaleznio żadnej historii analiz.");
+                showError("Nie znaleziono żadnej historii analiz.");
               }
             } catch (err) {
               showError("Nie udało się pobrać raportu.");
@@ -326,7 +333,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Obsługa zakładek (filtrowanie tabeli)
   const tabBtns = document.querySelectorAll(".tab-btn");
 
   tabBtns.forEach((btn) => {
@@ -357,19 +363,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function showError(message) {
-  // Usuwamy poprzedni błąd, jeśli już istnieje
+function showError(message, isSuccess = false) {
   const existingError = document.querySelector(".error-banner");
   if (existingError) existingError.remove();
 
   const uploadContainer = document.getElementById("upload-container");
   if (!uploadContainer) return;
 
+  const icon = isSuccess ? "✅" : "❌";
+  const bannerClass = isSuccess ? "error-banner success-banner" : "error-banner";
+
   const errorBanner = document.createElement("div");
-  errorBanner.className = "error-banner";
+  errorBanner.className = bannerClass;
   errorBanner.innerHTML = `
     <div class="error-banner-content">
-      <span>❌</span>
+      <span>${icon}</span>
       <span>${message}</span>
     </div>
     <button class="error-close-btn" onclick="this.parentElement.remove()">&times;</button>
@@ -377,18 +385,13 @@ function showError(message) {
 
   uploadContainer.appendChild(errorBanner);
 
-  // AUTOMATYCZNE ZNIKANIE Z PŁYNNYM WYGASZANIEM PO 5 SEKUNDACH
   setTimeout(() => {
-    // Dodajemy klasę uruchamiającą animację znikania
     errorBanner.classList.add("fade-out");
-
-    // Czekamy 300ms (tyle co animacja CSS) i dopiero wtedy usuwamy element z DOM
     setTimeout(() => {
       if (errorBanner.parentElement) {
         errorBanner.remove();
       }
     }, 300);
-
   }, 5000);
 }
 
@@ -401,7 +404,6 @@ if (historyLink) {
     e.preventDefault();
     if (historyModal) historyModal.style.display = "flex";
 
-    // Pobieramy historię z backendu
     try {
       const response = await fetch("/api/history");
       const data = await response.json();
@@ -419,23 +421,21 @@ if (historyLink) {
         data.history.forEach(item => {
           const row = document.createElement("tr");
 
-          // Dobieramy odpowiednią klasę koloru w zależności od poziomu ryzyka
           let riskClass = "risk-low-text";
           if (item.risk_level === "Średnie") riskClass = "risk-medium-text";
           if (item.risk_level === "Wysokie") riskClass = "risk-high-text";
 
-          // Przykład fragmentu kodu w app.js budującego wiersz historii:
           row.innerHTML = `
-  <td>${item.timestamp}</td>
-  <td><strong>${item.filename}</strong></td>
-  <td>${item.size_mb} MB</td>
-  <td style="text-align: center;"><span class="${riskClass}">${item.risk_level}</span></td>
-  <td style="text-align: center;">
-  <a href="/api/report/${item.id}" class="btn-submit" style="padding: 4px 10px; font-size: 0.8rem; text-decoration: none; display: inline-block; margin-top: 0;" download>
-    Pobierz raport
-  </a>
-  </td>
-`;
+            <td>${item.timestamp}</td>
+            <td><strong>${item.filename}</strong></td>
+            <td>${item.size_mb} MB</td>
+            <td style="text-align: center;"><span class="${riskClass}">${item.risk_level}</span></td>
+            <td style="text-align: center;">
+              <a href="/api/report/${item.id}" class="btn-submit" style="padding: 4px 10px; font-size: 0.8rem; text-decoration: none; display: inline-block; margin-top: 0;" download>
+                Pobierz raport
+              </a>
+            </td>
+          `;
           historyBody.appendChild(row);
         });
       }
@@ -458,7 +458,6 @@ function closeModals() {
   if (settingsModal) settingsModal.style.display = "none";
 }
 
-// Wczytywanie zapisanych ustawień przy starcie strony
 window.addEventListener("load", () => {
   if (localStorage.getItem("analyzer_timeout")) {
     document.getElementById("setting-timeout").value = localStorage.getItem("analyzer_timeout");
@@ -491,7 +490,7 @@ function saveSettings() {
   localStorage.setItem("analyzer_sound", sound);
 
   closeModals();
-  showError("Ustawienia zostały pomyślnie zapisane!");
+  showError("Ustawienia zostały zapisane pomyślnie!", true);
 }
 
 function playNotificationSound() {

@@ -2,15 +2,17 @@ import json
 import subprocess
 import time
 from pathlib import Path
-
+import os
 
 # Ścieżka do programu VBoxManage
 VBOXMANAGE = Path(
     r"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
 )
 
-# Nazwa maszyny wirtualnej
+# Nazwa maszyny wirtualnej oraz dane logowania do systemu gościa
 VM_NAME = "MiniSandbox-Windows"
+GUEST_USER = "SandboxUser"
+GUEST_PASS = "DAO2026!"
 
 
 class VirtualBoxError(Exception):
@@ -46,7 +48,7 @@ def run_vbox_command(*args: str) -> str:
             [str(VBOXMANAGE), *args],
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=60,
             check=True
         )
         return result.stdout
@@ -57,6 +59,79 @@ def run_vbox_command(*args: str) -> str:
         raise VirtualBoxError(message) from exc
     except OSError as exc:
         raise VirtualBoxError(f"Nie udało się uruchomić VBoxManage: {exc}") from exc
+
+
+def wait_for_guest_additions(timeout: int = 60) -> bool:
+    """Czeka, aż Windows i usługa VirtualBox Guest Additions będą gotowe na polecenia."""
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        try:
+            run_vbox_command(
+                "guestcontrol", VM_NAME, "run",
+                "--username", GUEST_USER,
+                "--password", GUEST_PASS,
+                "--exe", "C:\\Windows\\System32\\cmd.exe",
+                "--", "cmd.exe", "/c", "echo ready"
+            )
+            return True
+        except VirtualBoxError:
+            time.sleep(2)
+    raise VirtualBoxError("Usługi Guest Additions w VM nie uruchomiły się w wyznaczonym czasie.")
+
+
+def copy_file_to_guest(host_path: str, guest_path: str = "C:\\Temp\\"):
+    """Kopiuje badaną próbkę z hosta do maszyny wirtualnej."""
+    wait_for_guest_additions(timeout=60)
+    run_vbox_command(
+        "guestcontrol", VM_NAME, "copyto",
+        "--username", GUEST_USER,
+        "--password", GUEST_PASS,
+        "--target-directory", guest_path,
+        host_path
+    )
+
+
+def run_sample_in_guest(guest_exe_path: str):
+    """Uruchamia badaną próbkę wewnątrz VM w tle."""
+    cmd = [
+        str(VBOXMANAGE), "guestcontrol", VM_NAME, "start",
+        "--username", GUEST_USER,
+        "--password", GUEST_PASS,
+        "--exe", guest_exe_path
+    ]
+    subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def export_and_fetch_sysmon_json(host_dest_json: str):
+    """Uruchamia Export-Sysmon.ps1 w VM i kopiuje wynikowy plik JSON na hosta."""
+    # 1. Uruchomienie skryptu PowerShell w VM (tworzy JSON w E:\AnalysisResults\Sysmon)
+    run_vbox_command(
+        "guestcontrol", VM_NAME, "run",
+        "--username", GUEST_USER,
+        "--password", GUEST_PASS,
+        "--exe", "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "--", "powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
+        "-File", "C:\\SandboxTools\\Export-Sysmon.ps1"
+    )
+
+    # 2. Skopiowanie najnowszego wygenerowanego pliku JSON pod stałą nazwę latest.json
+    run_vbox_command(
+        "guestcontrol", VM_NAME, "run",
+        "--username", GUEST_USER,
+        "--password", GUEST_PASS,
+        "--exe", "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "--", "powershell.exe", "-Command",
+        "Get-ChildItem 'E:\\AnalysisResults\\Sysmon\\*.json' | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | Copy-Item -Destination 'E:\\AnalysisResults\\Sysmon\\latest.json' -Force"
+    )
+
+    # 3. Pobranie latest.json z VM na komputer główny
+    run_vbox_command(
+        "guestcontrol", VM_NAME, "copyfrom",
+        "--username", GUEST_USER,
+        "--password", GUEST_PASS,
+        "--target-directory", host_dest_json,
+        "E:\\AnalysisResults\\Sysmon\\latest.json"
+    )
 
 
 def get_vm_info() -> dict:
@@ -130,7 +205,7 @@ def poweroff_vm() -> str:
     state = get_vm_state()
     if state == "poweroff":
         return "Maszyna jest już wyłączona."
-    
+
     run_vbox_command("controlvm", VM_NAME, "poweroff")
     time.sleep(2)
     return "Maszyna wirtualna została twardo wyłączona."
@@ -146,8 +221,4 @@ def restore_snapshot(snapshot_name: str) -> str:
         raise VirtualBoxError(f"Maszyna musi być wyłączona. Aktualny stan: {state}")
 
     run_vbox_command("snapshot", VM_NAME, "restore", snapshot_name.strip())
-
-    if get_vm_state() != "poweroff":
-        raise VirtualBoxError("Po przywróceniu snapshotu VM nie jest wyłączona.")
-
     return f"Przywrócono snapshot: {snapshot_name.strip()}."
