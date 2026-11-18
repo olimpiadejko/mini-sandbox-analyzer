@@ -1,22 +1,33 @@
 import json
+from pathlib import Path
 import subprocess
 import time
-from pathlib import Path
-import os
-
-# Ścieżka do programu VBoxManage
-VBOXMANAGE = Path(
-    r"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
+from .config import (
+    VBOXMANAGE,
+    VM_NAME,
+    VM_START_TIMEOUT,
+    VM_SHUTDOWN_TIMEOUT,
+    VM_STATE_TIMEOUT,
+    VBOX_COMMAND_TIMEOUT
 )
 
-# Nazwa maszyny wirtualnej oraz dane logowania do systemu gościa
-VM_NAME = "MiniSandbox-Windows"
+# Dane logowania do systemu gościa
 GUEST_USER = "SandboxUser"
 GUEST_PASS = "DAO2026!"
 
 
 class VirtualBoxError(Exception):
     """Błąd komunikacji z VirtualBox."""
+    pass
+
+
+class VirtualBoxCommandError(VirtualBoxError):
+    """Polecenie VBoxManage zakończyło się błędem."""
+    pass
+
+
+class VirtualBoxTimeoutError(VirtualBoxError):
+    """Przekroczono czas oczekiwania na polecenie."""
     pass
 
 
@@ -48,22 +59,34 @@ def run_vbox_command(*args: str) -> str:
             [str(VBOXMANAGE), *args],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=VBOX_COMMAND_TIMEOUT,
             check=True
         )
         return result.stdout
+
     except subprocess.TimeoutExpired as exc:
-        raise VirtualBoxError("Przekroczono czas oczekiwania na VirtualBox.") from exc
+        raise VirtualBoxTimeoutError(
+            "Przekroczono czas oczekiwania na VirtualBox."
+        ) from exc
+
     except subprocess.CalledProcessError as exc:
-        message = exc.stderr.strip() or exc.stdout.strip() or "Polecenie VirtualBox nie powiodło się."
-        raise VirtualBoxError(message) from exc
+        message = (
+            exc.stderr.strip()
+            or exc.stdout.strip()
+            or "Polecenie VirtualBox nie powiodło się."
+        )
+        raise VirtualBoxCommandError(message) from exc
+
     except OSError as exc:
-        raise VirtualBoxError(f"Nie udało się uruchomić VBoxManage: {exc}") from exc
+        raise VirtualBoxError(
+            f"Nie udało się uruchomić VBoxManage: {exc}"
+        ) from exc
 
 
 def wait_for_guest_additions(timeout: int = 60) -> bool:
-    """Czeka, aż Windows i usługa VirtualBox Guest Additions będą gotowe na polecenia."""
+    """Czeka, aż Windows i Guest Additions będą gotowe na polecenia."""
     deadline = time.monotonic() + timeout
+
     while time.monotonic() < deadline:
         try:
             run_vbox_command(
@@ -74,37 +97,68 @@ def wait_for_guest_additions(timeout: int = 60) -> bool:
                 "--", "cmd.exe", "/c", "echo ready"
             )
             return True
-        except VirtualBoxError:
+
+        except VirtualBoxTimeoutError:
             time.sleep(2)
-    raise VirtualBoxError("Usługi Guest Additions w VM nie uruchomiły się w wyznaczonym czasie.")
+
+        except VirtualBoxCommandError as exc:
+            # Błąd polecenia może być przejściowy podczas uruchamiania Windows.
+            time.sleep(2)
+
+        except VirtualBoxError:
+            raise
+
+    raise VirtualBoxError(
+        "Usługi Guest Additions w VM nie uruchomiły się w wyznaczonym czasie."
+    )
 
 
 def copy_file_to_guest(host_path: str, guest_path: str = "C:\\Temp\\"):
     """Kopiuje badaną próbkę z hosta do maszyny wirtualnej."""
+    source = Path(host_path)
+
+    if not source.is_file():
+        raise FileNotFoundError(f"Nie znaleziono pliku: {host_path}")
+
     wait_for_guest_additions(timeout=60)
+
     run_vbox_command(
         "guestcontrol", VM_NAME, "copyto",
         "--username", GUEST_USER,
         "--password", GUEST_PASS,
         "--target-directory", guest_path,
-        host_path
+        str(source.resolve())
     )
 
 
 def run_sample_in_guest(guest_exe_path: str):
-    """Uruchamia badaną próbkę wewnątrz VM w tle."""
-    cmd = [
-        str(VBOXMANAGE), "guestcontrol", VM_NAME, "start",
+    """Uruchamia badaną próbkę wewnątrz VM."""
+    if not guest_exe_path:
+        raise ValueError("Ścieżka do pliku wykonywalnego w VM nie może być pusta.")
+
+    run_vbox_command(
+        "guestcontrol", VM_NAME, "start",
         "--username", GUEST_USER,
         "--password", GUEST_PASS,
         "--exe", guest_exe_path
-    ]
-    subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    )
+
 
 
 def export_and_fetch_sysmon_json(host_dest_json: str):
     """Uruchamia Export-Sysmon.ps1 w VM i kopiuje wynikowy plik JSON na hosta."""
-    # 1. Uruchomienie skryptu PowerShell w VM (tworzy JSON w E:\AnalysisResults\Sysmon)
+    
+    destination = Path(host_dest_json)
+
+    if not destination.exists():
+        destination.mkdir(parents=True, exist_ok=True)
+
+    if not destination.is_dir():
+        raise NotADirectoryError(
+            f"Ścieżka docelowa nie jest katalogiem: {host_dest_json}"
+        )
+
+    # 1. Uruchomienie skryptu eksportującego logi Sysmon
     run_vbox_command(
         "guestcontrol", VM_NAME, "run",
         "--username", GUEST_USER,
@@ -114,24 +168,50 @@ def export_and_fetch_sysmon_json(host_dest_json: str):
         "-File", "C:\\SandboxTools\\Export-Sysmon.ps1"
     )
 
-    # 2. Skopiowanie najnowszego wygenerowanego pliku JSON pod stałą nazwę latest.json
+    # 2. Sprawdzenie, czy istnieją pliki JSON, i wybranie najnowszego
     run_vbox_command(
         "guestcontrol", VM_NAME, "run",
         "--username", GUEST_USER,
         "--password", GUEST_PASS,
         "--exe", "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-        "--", "powershell.exe", "-Command",
-        "Get-ChildItem 'E:\\AnalysisResults\\Sysmon\\*.json' | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | Copy-Item -Destination 'E:\\AnalysisResults\\Sysmon\\latest.json' -Force"
+        "--", "powershell.exe", "-NoProfile", "-Command",
+        """
+        $files = Get-ChildItem 'E:\\AnalysisResults\\Sysmon\\*.json' |
+            Where-Object { $_.Name -ne 'latest.json' }
+
+        if (-not $files) {
+            Write-Error 'Nie znaleziono plików JSON z logami Sysmon.'
+            exit 1
+        }
+
+        $latest = $files |
+            Sort-Object LastWriteTime -Descending |
+            Select-Object -First 1
+
+        Copy-Item $latest.FullName `
+            -Destination 'E:\\AnalysisResults\\Sysmon\\latest.json' -Force
+        """
     )
 
-    # 3. Pobranie latest.json z VM na komputer główny
+    # 3. Pobranie latest.json z VM na komputer hosta
     run_vbox_command(
         "guestcontrol", VM_NAME, "copyfrom",
         "--username", GUEST_USER,
         "--password", GUEST_PASS,
-        "--target-directory", host_dest_json,
+        "--target-directory", str(destination.resolve()),
         "E:\\AnalysisResults\\Sysmon\\latest.json"
     )
+
+    # 4. Sprawdzenie, czy plik został pobrany
+    downloaded_file = destination / "latest.json"
+
+    if not downloaded_file.is_file():
+        raise FileNotFoundError(
+            f"Nie znaleziono pobranego pliku: {downloaded_file}"
+        )
+
+    return str(downloaded_file.resolve())
+
 
 
 def get_vm_info() -> dict:
@@ -160,17 +240,23 @@ def get_vm_state() -> str:
     return str(state)
 
 
-def wait_for_vm_state(expected_state: str, timeout: int = 120) -> bool:
+def wait_for_vm_state(expected_state: str, timeout: int = VM_STATE_TIMEOUT) -> bool:
     """Czeka, aż maszyna osiągnie określony stan."""
     deadline = time.monotonic() + timeout
+
     while time.monotonic() < deadline:
-        if get_vm_state() == expected_state:
-            return True
+        try:
+            if get_vm_state() == expected_state:
+                return True
+        except VirtualBoxError:
+            pass
+
         time.sleep(2)
-    return get_vm_state() == expected_state
+
+    return False
 
 
-def start_vm(timeout: int = 180) -> str:
+def start_vm(timeout: int = VM_START_TIMEOUT) -> str:
     """Uruchamia maszynę wirtualną."""
     state = get_vm_state()
     if state == "running":
@@ -185,7 +271,7 @@ def start_vm(timeout: int = 180) -> str:
     return "Maszyna wirtualna została uruchomiona."
 
 
-def shutdown_vm(timeout: int = 180) -> str:
+def shutdown_vm(timeout: int = VM_SHUTDOWN_TIMEOUT) -> str:
     """Wysyła do VM sygnał ACPI (miękkie zamknięcie)."""
     state = get_vm_state()
     if state == "poweroff":
