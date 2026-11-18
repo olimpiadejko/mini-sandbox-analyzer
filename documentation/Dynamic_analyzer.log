@@ -1,39 +1,39 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.10.7)  16 NOV 2026 14:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.11)  18 NOV 2026 21:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **./Dynamic_analyzer.tex
 (Dynamic_analyzer.tex
-LaTeX2e <2026-06-01>
-L3 programming layer <2026-09-09>
-(C:\Program Files\MiKTeX\tex/latex/base\article.cls
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-12-24>
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
-(C:\Program Files\MiKTeX\tex/latex/base\size10.clo
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
 File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count276
-\c@section=\count277
-\c@subsection=\count278
-\c@subsubsection=\count279
-\c@paragraph=\count280
-\c@subparagraph=\count281
-\c@figure=\count282
-\c@table=\count283
+\c@part=\count275
+\c@section=\count276
+\c@subsection=\count277
+\c@subsubsection=\count278
+\c@paragraph=\count279
+\c@subparagraph=\count280
+\c@figure=\count281
+\c@table=\count282
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
-\bibindent=\dimen150
+\bibindent=\dimen148
 )
-(C:\Program Files\MiKTeX\tex/latex/base\inputenc.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
 )
-(C:\Program Files\MiKTeX\tex/latex/polski\polski.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/polski\polski.sty
 Package: polski 2021/08/25 v1.3.6 Polish language package
 
    Inputenc package detected. Catcodes not changed.
    Switching to Polish text encoding and Polish maths fonts.
-(C:\Program Files\MiKTeX\tex/latex/base\ot4enc.def
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/base\ot4enc.def
 File: ot4enc.def 2025/07/18 v2.1d Standard LaTeX file
 Now handling font encoding OT4 ...
 ... no UTF-8 mapping file for font encoding OT4
@@ -41,7 +41,7 @@ Now handling font encoding OT4 ...
 LaTeX Font Info:    Trying to load font information for OT4+cmr on input line 3
 62.
 
-(C:\Program Files\MiKTeX\tex/latex/polski\ot4cmr.fd
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/polski\ot4cmr.fd
 File: ot4cmr.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
@@ -76,34 +76,34 @@ LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/cmsy/b/n --> OMS/plsy/b/n on input line 362.
 )
-(C:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
-Package: amsmath 2026/05/19 v2.18d AMS math features
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2025/07/09 v2.17z AMS math features
 \@mathmargin=\skip51
 
 For additional information on amsmath, use the `?' option.
-(C:\Program Files\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
 Package: amstext 2024/11/17 v2.01 AMS text
 
-(C:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks19
-\ex@=\dimen151
+\ex@=\dimen149
 ))
-(C:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen152
+\pmbraise@=\dimen150
 )
-(C:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count284
+\inf@bad=\count283
 LaTeX Info: Redefining \frac on input line 233.
-\uproot@=\count285
-\leftroot@=\count286
+\uproot@=\count284
+\leftroot@=\count285
 LaTeX Info: Redefining \overline on input line 398.
 LaTeX Info: Redefining \colon on input line 409.
-\classnum@=\count287
-\DOTSCASE@=\count288
+\classnum@=\count286
+\DOTSCASE@=\count287
 LaTeX Info: Redefining \ldots on input line 495.
 LaTeX Info: Redefining \dots on input line 498.
 LaTeX Info: Redefining \cdots on input line 619.
@@ -113,162 +113,170 @@ LaTeX Info: Redefining \big on input line 721.
 LaTeX Info: Redefining \Big on input line 722.
 LaTeX Info: Redefining \bigg on input line 723.
 LaTeX Info: Redefining \Bigg on input line 724.
-\big@size=\dimen153
+\big@size=\dimen151
 LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
-\macc@depth=\count289
+\macc@depth=\count288
 LaTeX Info: Redefining \bmod on input line 904.
 LaTeX Info: Redefining \pmod on input line 909.
 LaTeX Info: Redefining \smash on input line 939.
 LaTeX Info: Redefining \relbar on input line 969.
 LaTeX Info: Redefining \Relbar on input line 970.
-\c@MaxMatrixCols=\count290
+\c@MaxMatrixCols=\count289
 \dotsspace@=\muskip17
-\c@parentequation=\count291
-\dspbrk@lvl=\count292
+\c@parentequation=\count290
+\dspbrk@lvl=\count291
 \tag@help=\toks20
-\row@=\count293
-\column@=\count294
-\maxfields@=\count295
+\row@=\count292
+\column@=\count293
+\maxfields@=\count294
 \andhelp@=\toks21
-\eqnshift@=\dimen154
-\alignsep@=\dimen155
-\tagshift@=\dimen156
-\tagwidth@=\dimen157
-\totwidth@=\dimen158
-\lineht@=\dimen159
+\eqnshift@=\dimen152
+\alignsep@=\dimen153
+\tagshift@=\dimen154
+\tagwidth@=\dimen155
+\totwidth@=\dimen156
+\lineht@=\dimen157
 \@envbody=\toks22
 \multlinegap=\skip52
 \multlinetaggap=\skip53
 \mathdisplay@stack=\toks23
-LaTeX Info: Redefining \[ on input line 2965.
-LaTeX Info: Redefining \] on input line 2966.
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
 )
-(C:\Program Files\MiKTeX\tex/latex/hyperref\hyperref.sty
-Package: hyperref 2026-06-17 v7.01r Hypertext links for LaTeX
-
-(C:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2025-07-12 v7.01o Hypertext links for LaTeX
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 )
-(C:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty
-Package: keyval 2026-05-17 v1.15 key=value parser (DPC)
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks24
 )
-(C:\Program Files\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.s
+ty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 )
-(C:\Program Files\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefi
+nekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 )
-(C:\Program Files\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape
+.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
 
-(C:\Program Files\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 )
-(C:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcm
+ds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(C:\Program Files\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr
+.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 ))
-(C:\Program Files\MiKTeX\tex/latex/hycolor\hycolor.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-(C:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty
-Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+Package: nameref 2025-06-21 v2.57 Cross-referencing by name of section
 
-(C:\Program Files\MiKTeX\tex/latex/refcount\refcount.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-(C:\Program Files\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gett
+itlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 
-(C:\Program Files\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.s
+ty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count296
+\c@section@level=\count295
 )
-(C:\Program Files\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count297
+\etb@tempcnta=\count296
 )
-(C:\Program Files\MiKTeX\tex/generic/stringenc\stringenc.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc
+.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 )
 )
-\@linkdim=\dimen160
-\Hy@linkcounter=\count298
-\Hy@pagecounter=\count299
+\@linkdim=\dimen158
+\Hy@linkcounter=\count297
+\Hy@pagecounter=\count298
 
-(C:\Program Files\MiKTeX\tex/latex/hyperref\pd1enc.def
-File: pd1enc.def 2026-06-17 v7.01r Hyperref: PDFDocEncoding definition (HO)
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2025-07-12 v7.01o Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-(C:\Program Files\MiKTeX\tex/generic/intcalc\intcalc.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count300
-
-(C:\Program Files\MiKTeX\tex/latex/hyperref\puenc.def
-File: puenc.def 2026-06-17 v7.01r Hyperref: PDF Unicode definition (HO)
+\Hy@SavedSpaceFactor=\count299
+ (C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
+File: puenc.def 2025-07-12 v7.01o Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Hyper figures OFF on input line 4199.
-Package hyperref Info: Link nesting OFF on input line 4204.
-Package hyperref Info: Hyper index ON on input line 4207.
-Package hyperref Info: Plain pages OFF on input line 4214.
-Package hyperref Info: Backreferencing OFF on input line 4219.
+Package hyperref Info: Hyper figures OFF on input line 4195.
+Package hyperref Info: Link nesting OFF on input line 4200.
+Package hyperref Info: Hyper index ON on input line 4203.
+Package hyperref Info: Plain pages OFF on input line 4210.
+Package hyperref Info: Backreferencing OFF on input line 4215.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4466.
-\c@Hy@tempcnt=\count301
-
-(C:\Program Files\MiKTeX\tex/latex/url\url.sty
+Package hyperref Info: Bookmarks ON on input line 4462.
+\c@Hy@tempcnt=\count300
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4805.
-\XeTeXLinkMargin=\dimen161
+LaTeX Info: Redefining \url on input line 4801.
+\XeTeXLinkMargin=\dimen159
 
-(C:\Program Files\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 
-(C:\Program Files\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintca
+lc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count302
-\Field@Width=\dimen162
-\Fld@charsize=\dimen163
-Package hyperref Info: Hyper figures OFF on input line 6091.
-Package hyperref Info: Link nesting OFF on input line 6096.
-Package hyperref Info: Hyper index ON on input line 6099.
-Package hyperref Info: backreferencing OFF on input line 6106.
-Package hyperref Info: Link coloring OFF on input line 6111.
-Package hyperref Info: Link coloring with OCG OFF on input line 6116.
-Package hyperref Info: PDF/A mode OFF on input line 6121.
-\Hy@abspage=\count303
-\c@Item=\count304
-\c@Hfootnote=\count305
+\Fld@menulength=\count301
+\Field@Width=\dimen160
+\Fld@charsize=\dimen161
+Package hyperref Info: Hyper figures OFF on input line 6078.
+Package hyperref Info: Link nesting OFF on input line 6083.
+Package hyperref Info: Hyper index ON on input line 6086.
+Package hyperref Info: backreferencing OFF on input line 6093.
+Package hyperref Info: Link coloring OFF on input line 6098.
+Package hyperref Info: Link coloring with OCG OFF on input line 6103.
+Package hyperref Info: PDF/A mode OFF on input line 6108.
+\Hy@abspage=\count302
+\c@Item=\count303
+\c@Hfootnote=\count304
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
-(C:\Program Files\MiKTeX\tex/latex/hyperref\hpdftex.def
-File: hpdftex.def 2026-06-17 v7.01r Hyperref driver for pdfTeX
-\Fld@listcount=\count306
-\c@bookmark@seq@number=\count307
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2025-07-12 v7.01o Hyperref driver for pdfTeX
+\Fld@listcount=\count305
+\c@bookmark@seq@number=\count306
 
-(C:\Program Files\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunf
+ilecheck.sty
 Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
 
-(C:\Program Files\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniqu
+ecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
@@ -276,18 +284,21 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip54
 )
-(C:\Program Files\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
 
-(C:\Program Files\MiKTeX\tex/latex/graphics-cfg\color.cfg
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cf
+g
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 274.
 
-(C:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.d
+ef
 File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 )
-(C:\Program Files\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.lt
+x)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
 Package xcolor Info: Model `RGB' extended on input line 1365.
@@ -298,11 +309,11 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 )
-(C:\Program Files\MiKTeX\tex/latex/l3kernel\l3backend-pdftex.def
-File: l3backend-pdftex.def 2026-09-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count308
-)
-(Dynamic_analyzer.aux)
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-p
+dftex.def
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count307
+) (Dynamic_analyzer.aux)
 \openout1 = `Dynamic_analyzer.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
@@ -331,27 +342,53 @@ Package hyperref Info: Link coloring OFF on input line 17.
 \openout3 = `Dynamic_analyzer.out'.
 
 
-(C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.
+mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count309
-\scratchdimen=\dimen164
+\scratchcounter=\count308
+\scratchdimen=\dimen162
 \scratchbox=\box55
-\nofMPsegments=\count310
-\nofMParguments=\count311
+\nofMPsegments=\count309
+\nofMParguments=\count310
 \everyMPshowfont=\toks25
-\MPscratchCnt=\count312
-\MPscratchDim=\dimen165
-\MPnumerator=\count313
-\makeMPintoPDFobject=\count314
+\MPscratchCnt=\count311
+\MPscratchDim=\dimen163
+\MPnumerator=\count312
+\makeMPintoPDFobject=\count313
 \everyMPtoPDFconversion=\toks26
-) (Dynamic_analyzer.toc)
+)
+LaTeX Font Info:    Trying to load font information for OML+plm on input line 1
+9.
+ (C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/polski\omlplm.fd
+File: omlplm.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
+)
+LaTeX Font Info:    Trying to load font information for OMS+plsy on input line 
+19.
+
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/polski\omsplsy.fd
+File: omsplsy.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
+)
+LaTeX Font Info:    Trying to load font information for OMX+plex on input line 
+19.
+
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/polski\omxplex.fd
+File: omxplex.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
+)
+LaTeX Font Info:    External font `plex10' loaded for size
+(Font)              <12> on input line 19.
+LaTeX Font Info:    External font `plex10' loaded for size
+(Font)              <8> on input line 19.
+LaTeX Font Info:    External font `plex10' loaded for size
+(Font)              <6> on input line 19.
+
+(Dynamic_analyzer.toc)
 \tf@toc=\write4
 \openout4 = `Dynamic_analyzer.toc'.
 
  [1
 
-{C:/Users/48730/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Program Fi
-les/MiKTeX/fonts/enc/dvips/pl/plrm.enc}]
+{C:/Users/Olimpia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Ol
+impia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plrm.enc}]
 Overfull \hbox (0.38945pt too wide) in paragraph at lines 25--27
 \OT4/cmr/m/n/10 Projekt po-le-ga na stwo-rze-niu za-awan-so-wa-nej apli-ka-cji 
 in-ter-ne-to-wej o cha-rak-te-rze
@@ -402,31 +439,16 @@ ro-lo-wa-ne-go wy-ko-na-nia wy-bra-ne-go
 
 LaTeX Font Info:    Trying to load font information for OT4+cmtt on input line 
 46.
-(C:\Program Files\MiKTeX\tex/latex/polski\ot4cmtt.fd
+(C:\Users\Olimpia\AppData\Local\Programs\MiKTeX\tex/latex/polski\ot4cmtt.fd
 File: ot4cmtt.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
-) [2{C:/Program Files/MiKTeX/fonts/enc/dvips/pl/plit.enc}]
+)
+[2{C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plit.enc}]
+
 Overfull \hbox (29.83452pt too wide) in paragraph at lines 47--48
 []\OT4/cmr/bx/n/10 Monitorowanie pro-ce-sów: \OT4/cmr/m/n/10 zbie-ra-nie pod-st
 a-wo-wych in-for-ma-cji o ana-li-zo-wa-nym
  []
 
-LaTeX Font Info:    Trying to load font information for OML+plm on input line 4
-9.
-(C:\Program Files\MiKTeX\tex/latex/polski\omlplm.fd
-File: omlplm.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
-)
-LaTeX Font Info:    Trying to load font information for OMS+plsy on input line 
-49.
-
-(C:\Program Files\MiKTeX\tex/latex/polski\omsplsy.fd
-File: omsplsy.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
-)
-LaTeX Font Info:    Trying to load font information for OMX+plex on input line 
-49.
-
-(C:\Program Files\MiKTeX\tex/latex/polski\omxplex.fd
-File: omxplex.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
-)
 LaTeX Font Info:    External font `plex10' loaded for size
 (Font)              <10> on input line 49.
 LaTeX Font Info:    External font `plex10' loaded for size
@@ -471,9 +493,10 @@ Overfull \hbox (21.25067pt too wide) in paragraph at lines 64--65
 wym za-po-bie-ga-j¡-cym
  []
 
-[3{C:/Program Files/MiKTeX/fonts/enc/dvips/pl/pltt.enc}{C:/Program Files/MiKTeX
-/fonts/enc/dvips/pl/plmi.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips/pl/plms.e
-nc}{C:/Program Files/MiKTeX/fonts/enc/dvips/pl/plme.enc}]
+[3{C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/pltt.enc}{
+C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plmi.enc}{C:/
+Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plms.enc}{C:/Use
+rs/Olimpia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plme.enc}]
 Overfull \hbox (23.76431pt too wide) in paragraph at lines 76--77
 []\OT4/cmr/bx/n/10 Python \OT4/cmr/m/n/10 - im-ple-men-ta-cj¦ lo-gi-ki ana-li-z
 a-to-ra, uru-cha-mia-nie pro-gra-mów te-sto-wych
@@ -504,219 +527,284 @@ o kon-tro-lo-wa-ne-go, dy-na-micz-ne-go
  []
 
 
-Overfull \hbox (23.77846pt too wide) in paragraph at lines 92--93
+Overfull \hbox (6.36179pt too wide) in paragraph at lines 88--89
+\OT4/cmr/m/n/10 au-to-ma-ty-za-cj¦ za-rz¡-dza-nia ma-szy-n¡ wir-tu-al-n¡, w tym
+-spraw-dza-nie jej sta-nu,
+ []
+
+
+Overfull \hbox (7.36166pt too wide) in paragraph at lines 89--90
+\OT4/cmr/m/n/10 wy-bra-nych zda-rze« sys-te-mo-wych w ±ro-do-wi-sku Win-dows. Z
+e-bra-ne zda-rze-nia
+ []
+
+
+Overfull \hbox (17.44495pt too wide) in paragraph at lines 90--91
+\OT4/cmr/m/n/10 cza-sie rze-czy-wi-stym, w szcze-gól-no-±ci ope-ra-cji na pli-k
+ach, re-je-strze sys-te-mo-wym
+ []
+
+
+Overfull \hbox (14.2328pt too wide) in paragraph at lines 91--92
+[]\OT4/cmr/bx/n/10 Guest Ad-di-tions / Gu-est Con-trol \OT4/cmr/m/n/10 - me-cha
+-nizm Vir-tu-al-Box umo»-li-wia-j¡-cy
+ []
+
+
+Overfull \hbox (11.00067pt too wide) in paragraph at lines 91--92
+\OT4/cmr/m/n/10 ko-mu-ni-ka-cj¦ po-mi¦-dzy sys-te-mem ho-sta a sys-te-mem go-±c
+ia, w tym prze-sy-ªa-nie
+ []
+
+[4]
+Overfull \hbox (23.77846pt too wide) in paragraph at lines 99--100
 \OT4/cmr/m/n/10 wa-li-da-cj¦ stru-mie-nia pli-ków, za-rz¡-dza-nie bez-piecz-nym
  ka-ta-lo-giem tym-cza-so-wym
  []
 
 
-Overfull \hbox (30.05623pt too wide) in paragraph at lines 98--99
+Overfull \hbox (30.05623pt too wide) in paragraph at lines 105--106
 []\OT4/cmr/m/n/10 Analiza dy-na-micz-na: wy-wo-ªa-nie sub-pro-cess.run(timeout=
 3) i prze-chwy-ce-nie
  []
 
 
-Overfull \hbox (44.74246pt too wide) in paragraph at lines 102--103
+Overfull \hbox (44.74246pt too wide) in paragraph at lines 109--110
 []\OT4/cmr/bx/n/10 Frontend (HTML/CSS/JavaScript): \OT4/cmr/m/n/10 Od-po-wia-da
  za in-te-rak-cj¦ z u»yt-kow-ni-kiem,
  []
 
-[4]
-Overfull \hbox (9.19499pt too wide) in paragraph at lines 107--108
+
+Overfull \hbox (9.19499pt too wide) in paragraph at lines 114--115
 \OT4/cmr/m/n/10 na-zw¡ UUID, eli-mi-nu-j¡c ry-zy-ko bª¦-dów ±cie-»ek wy-ni-ka-j
 ¡-cych ze zna-ków
  []
 
 
-Overfull \hbox (35.77763pt too wide) in paragraph at lines 110--111
+Overfull \hbox (35.77763pt too wide) in paragraph at lines 117--118
 []\OT4/cmr/m/n/10 Uruchamiany jest pro-ces te-sto-wy w try-bie kon-tro-lo-wa-ny
 m (\OT4/cmtt/m/n/10 subprocess.run\OT4/cmr/m/n/10 ),
  []
 
 
-Overfull \hbox (26.11119pt too wide) in paragraph at lines 111--112
+Overfull \hbox (26.11119pt too wide) in paragraph at lines 118--119
 []\OT4/cmr/m/n/10 Plik tym-cza-so-wy jest au-to-ma-tycz-nie usu-wa-ny z dys-ku 
 ser-we-ra (\OT4/cmtt/m/n/10 os.remove\OT4/cmr/m/n/10 ),
  []
 
 
-Overfull \hbox (33.16617pt too wide) in paragraph at lines 111--112
+Overfull \hbox (33.16617pt too wide) in paragraph at lines 118--119
 \OT4/cmr/m/n/10 a wy-nik w for-ma-cie JSON jest zwra-ca-ny do fron-ten-du w ce-
 lu na-tych-mia-sto-wej
  []
 
-
-Overfull \hbox (10.2588pt too wide) in paragraph at lines 119--122
+[5]
+Overfull \hbox (10.2588pt too wide) in paragraph at lines 126--129
 \OT4/cmr/bx/n/10 Opis: \OT4/cmr/m/n/10 Prze-sªa-nie skraj-nie du-»e-go pli-ku m
 o-gªo-by do-pro-wa-dzi¢ do wy-czer-pa-nia
  []
 
 
-Overfull \hbox (26.91618pt too wide) in paragraph at lines 119--122
+Overfull \hbox (26.91618pt too wide) in paragraph at lines 126--129
 \OT4/cmr/m/n/10 pa-mi¦-ci RAM ser-we-ra lub nad-mier-ne-go ob-ci¡-»e-nia pro-ce
 -so-ra pod-czas par-so-wa-nia
  []
 
 
-Overfull \hbox (7.021pt too wide) in paragraph at lines 119--122
+Overfull \hbox (7.021pt too wide) in paragraph at lines 126--129
 \OT4/cmr/bx/n/10 Rozwi¡zanie: \OT4/cmr/m/n/10 Wpro-wa-dzo-no re-stryk-cyj-n¡ wa
 -li-da-cj¦ roz-mia-ru prze-sy-ªa-ne-go
  []
 
 
-Overfull \hbox (6.77849pt too wide) in paragraph at lines 119--122
+Overfull \hbox (6.77849pt too wide) in paragraph at lines 126--129
 \OT4/cmr/m/n/10 stru-mie-nia da-nych po stro-nie bac-ken-du (mak-sy-mal-nie 150
  MB), od-rzu-ca-j¡-c¡
  []
 
 
-Overfull \hbox (36.80228pt too wide) in paragraph at lines 123--126
+Overfull \hbox (36.80228pt too wide) in paragraph at lines 130--133
 []\OT4/cmr/bx/n/10 Znikanie przy-ci-sku wy-bo-ru pli-ku po bª¦d-nej wa-li-da-cj
 i lub nie-po-wo-dze-niu
  []
 
 
-Overfull \hbox (6.24501pt too wide) in paragraph at lines 123--126
+Overfull \hbox (6.24501pt too wide) in paragraph at lines 130--133
 \OT4/cmr/bx/n/10 Opis: \OT4/cmr/m/n/10 Gdy u»yt-kow-nik prze-sªaª plik nie-b¦-d
 ¡-cy pli-kiem .exe lub gdy wy-st¡-piª
  []
 
 
-Overfull \hbox (10.86172pt too wide) in paragraph at lines 123--126
+Overfull \hbox (10.86172pt too wide) in paragraph at lines 130--133
 \OT4/cmr/m/n/10 bª¡d ko-mu-ni-ka-cji z ser-we-rem, klu-czo-we ele-men-ty in-ter
 -fej-su (ta-kie jak przy-cisk
  []
 
-[5]
-Overfull \hbox (38.90984pt too wide) in paragraph at lines 127--130
+
+Overfull \hbox (38.90984pt too wide) in paragraph at lines 134--137
 \OT4/cmr/bx/n/10 Rozwi¡zanie: \OT4/cmr/m/n/10 Za-sto-so-wa-no ge-ne-ro-wa-nie l
 o-so-wych, uni-kal-nych nazw tym-cza-so-wych
  []
 
 
-Overfull \hbox (29.2433pt too wide) in paragraph at lines 131--134
+Overfull \hbox (29.2433pt too wide) in paragraph at lines 138--141
 \OT4/cmr/bx/n/10 Rozwi¡zanie: \OT4/cmr/m/n/10 Za-im-ple-men-to-wa-no de-dy-ko-w
 a-ny kom-po-nent ba-ne-ru po-wia-do-mie«
  []
 
 
-Overfull \hbox (8.75073pt too wide) in paragraph at lines 131--134
+Overfull \hbox (8.75073pt too wide) in paragraph at lines 138--141
 \OT4/cmr/m/n/10 dzi¦-ki cze-mu bª¦-dy zni-ka-j¡ sa-mo-czyn-nie po kil-ku se-kun
 -dach lub po klik-ni¦-ciu
  []
 
 
-Overfull \hbox (46.99779pt too wide) in paragraph at lines 136--136
+Overfull \hbox (46.99779pt too wide) in paragraph at lines 143--143
 []\OT4/cmr/bx/n/14.4 Bezpiecze«stwo, wa-li-da-cja i ar-chi-tek-tu-ra pro-ak-tyw
 -na 
  []
 
 
-Overfull \hbox (19.11171pt too wide) in paragraph at lines 138--139
+Overfull \hbox (19.11171pt too wide) in paragraph at lines 145--146
 \OT4/cmr/m/n/10 Opis me-cha-ni-zmów chro-ni¡-cych apli-ka-cj¦ i ser-wer przed n
 ie-po-»¡-da-nym za-cho-wa-niem: 
  []
 
 
-Overfull \hbox (7.3759pt too wide) in paragraph at lines 140--141
+Overfull \hbox (7.3759pt too wide) in paragraph at lines 147--148
 []\OT4/cmr/bx/n/10 Walidacja roz-sze-rze« i ty-pów: \OT4/cmr/m/n/10 Re-stryk-cy
 j-ne spraw-dze-nie, czy prze-sy-ªa-ny
  []
 
-
-Overfull \hbox (12.74329pt too wide) in paragraph at lines 141--142
+[6]
+Overfull \hbox (12.74329pt too wide) in paragraph at lines 148--149
 []\OT4/cmr/bx/n/10 Ochrona przed Path Tra-ver-sal i ko-li-zja-mi nazw: \OT4/cmr
 /m/n/10 Za-sto-so-wa-nie lo-so-wych
  []
 
 
-Overfull \hbox (5.36166pt too wide) in paragraph at lines 141--142
+Overfull \hbox (5.36166pt too wide) in paragraph at lines 148--149
 \OT4/cmr/m/n/10 ser-we-ra, co unie-za-le»-nia sys-tem od zna-ków spe-cjal-nych 
 i spa-cji w ory-gi-nal-nej
  []
 
 
-Overfull \hbox (8.47061pt too wide) in paragraph at lines 150--151
+Overfull \hbox (1.52989pt too wide) in paragraph at lines 150--151
+[]\OT4/cmr/bx/n/10 Izolacja ±ro-do-wi-ska ana-li-tycz-ne-go: \OT4/cmr/m/n/10 Wy
+-ko-rzy-sta-nie ma-szy-ny wir-tu-al-nej
+ []
+
+
+Overfull \hbox (3.58405pt too wide) in paragraph at lines 151--152
+\OT4/cmr/m/n/10 Con-trol do kon-tro-lo-wa-ne-go prze-sy-ªa-nia pli-ków po-mi¦-d
+zy kom-pu-te-rem ho-sta
+ []
+
+
+Overfull \hbox (2.25064pt too wide) in paragraph at lines 152--153
+\OT4/cmr/m/n/10 wspóª-dzie-lo-ne-go oraz fol-de-rów wspóª-dzie-lo-nych, w ce-lu
+ zmniej-sze-nia ry-zy-ka
+ []
+
+
+Overfull \hbox (8.47061pt too wide) in paragraph at lines 159--160
 \OT4/cmr/m/n/10 HTML oraz sty-lów CSS dla mo-ty-wu ciem-ne-go, uwzgl¦d-nia-j¡c 
 re-spon-syw-no±¢
  []
 
-[6]
-Overfull \hbox (6.33792pt too wide) in paragraph at lines 154--155
+
+Overfull \hbox (7.83792pt too wide) in paragraph at lines 163--164
 []\OT4/cmr/bx/n/10 Moduª ana-li-zy dy-na-micz-nej i pia-skow-ni-cy: \OT4/cmr/m/
-n/10 Wdro-»e-nie kon-tro-lo-wa-ne-go
+n/10 Przy-go-to-wa-nie izo-lo-wa-ne-go
  []
 
 
-Overfull \hbox (0.75012pt too wide) in paragraph at lines 154--155
-\OT4/cmr/m/n/10 uru-cha-mia-nia pro-ce-su za po-mo-c¡ mo-du-ªu \OT4/cmtt/m/n/10
- subprocess \OT4/cmr/m/n/10 z li-mi-tem cza-so-wym
+Overfull \hbox (19.30516pt too wide) in paragraph at lines 163--164
+\OT4/cmr/m/n/10 ±ro-do-wi-ska Win-dows w Orac-le VM Vir-tu-al-Box oraz im-ple-m
+en-ta-cja ko-mu-ni-ka-cji
  []
 
 
-Overfull \hbox (43.7145pt too wide) in paragraph at lines 155--156
-[]\OT4/cmr/bx/n/10 Silnik oce-ny ry-zy-ka i po-wia-do-mie-nia UI: \OT4/cmr/m/n/
-10 Stwo-rze-nie al-go-ryt-mu wy-zna-cza-j¡-ce-go
+Overfull \hbox (4.70671pt too wide) in paragraph at lines 164--165
+\OT4/cmr/m/n/10 wy-zna-cza-j¡-ce-go po-ziom za-gro-»e-nia (\OT4/cmr/m/it/10 Ni-
+skie\OT4/cmr/m/n/10 , \OT4/cmr/m/it/10 ‘red-nie\OT4/cmr/m/n/10 , \OT4/cmr/m/it/
+10 Wy-so-kie\OT4/cmr/m/n/10 ) na pod-sta-wie
+ []
+
+[7]
+Overfull \hbox (8.25076pt too wide) in paragraph at lines 165--166
+[]\OT4/cmr/bx/n/10 Testy, do-ku-men-ta-cja i fi-na-li-za-cja: \OT4/cmr/m/n/10 K
+on-fi-gu-ra-cja i wy-ko-rzy-sta-nie na-rz¦-dzi
  []
 
 
-Overfull \hbox (23.37337pt too wide) in paragraph at lines 155--156
-\OT4/cmr/m/n/10 po-ziom za-gro-»e-nia (\OT4/cmr/m/it/10 Ni-skie\OT4/cmr/m/n/10 
-, \OT4/cmr/m/it/10 ‘red-nie\OT4/cmr/m/n/10 , \OT4/cmr/m/it/10 Wy-so-kie\OT4/cmr
-/m/n/10 ) oraz za-pro-jek-to-wa-nie no-wo-cze-snej
+Overfull \hbox (13.3895pt too wide) in paragraph at lines 165--166
+\OT4/cmr/m/n/10 sys-te-mu Win-dows, przy-go-to-wa-nie me-cha-ni-zmu eks-por-to-
+wa-nia i prze-twa-rza-nia
  []
 
 
-Overfull \hbox (13.94513pt too wide) in paragraph at lines 156--157
-[]\OT4/cmr/bx/n/10 Testy, do-ku-men-ta-cja i fi-na-li-za-cja: \OT4/cmr/m/n/10 P
-rze-pro-wa-dze-nie te-stów in-te-gra-cyj-nych
+Overfull \hbox (19.05618pt too wide) in paragraph at lines 165--166
+\OT4/cmr/m/n/10 te-stów in-te-gra-cyj-nych oraz przy-go-to-wa-nie do-ku-men-ta-
+cji tech-nicz-nej w for-ma-cie
  []
 
 
-Overfull \hbox (1.44514pt too wide) in paragraph at lines 156--157
-\OT4/cmr/m/n/10 na pli-kach wy-ko-ny-wal-nych, przy-go-to-wa-nie peª-nej do-ku-
-men-ta-cji tech-nicz-nej
+Overfull \hbox (37.25075pt too wide) in paragraph at lines 171--173
+\OT4/cmr/m/n/10 Rezultatem pro-jek-tu ma by¢ dzia-ªa-j¡-ca apli-ka-cja z in-ter
+-fej-sem gra-ficz-nym, umo»-li-wia-j¡-ca
  []
 
 
-Overfull \hbox (14.50081pt too wide) in paragraph at lines 161--163
-\OT4/cmr/m/n/10 pod-staw dy-na-micz-nej ana-li-zy opro-gra-mo-wa-nia i spo-so-b
-ów wy-ko-rzy-sta-nia in-for-ma-cji
+Overfull \hbox (8.55614pt too wide) in paragraph at lines 171--173
+\OT4/cmr/m/n/10 oce-ny po-zio-mu ry-zy-ka i pre-zen-to-wa-ne w in-ter-fej-sie g
+ra-ficz-nym w po-sta-ci czy-tel-ne-go
  []
 
-[7] (Dynamic_analyzer.aux)
+
+Overfull \hbox (11.25063pt too wide) in paragraph at lines 171--173
+\OT4/cmr/m/n/10 ze-sta-wie-nia zda-rze« oraz ra-por-tu pod-su-mo-wu-j¡-ce-go. P
+ro-jekt ma rów-nie» umo»-li-wi¢
+ []
+
+
+Overfull \hbox (41.16742pt too wide) in paragraph at lines 171--173
+\OT4/cmr/m/n/10 prak-tycz-ne za-pre-zen-to-wa-nie me-tod ana-li-zy opro-gra-mo-
+wa-nia oraz spo-so-bów wy-ko-rzy-sta-nia
+ []
+
+[8] (Dynamic_analyzer.aux)
  ***********
-LaTeX2e <2026-06-01>
-L3 programming layer <2026-09-09>
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-12-24>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `Dynamic_analyzer.out' has not changed.
 (rerunfilecheck)             Checksum: 8FD8B27ED107EF8B2142A1F50ABED371;1580.
  ) 
 Here is how much of TeX's memory you used:
- 9623 strings out of 467392
- 146443 string characters out of 5415748
- 577605 words of memory out of 5000000
- 38815 multiletter control sequences out of 15000+600000
- 636329 words of font info for 59 fonts, out of 8000000 for 9000
+ 9599 strings out of 467871
+ 147509 string characters out of 5417407
+ 567555 words of memory out of 5000000
+ 38306 multiletter control sequences out of 15000+600000
+ 638531 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 74i,5n,79p,370b,567s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\48730\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
-1000.pk><C:/Program Files/MiKTeX/fonts/type1/public/pl/plbx10.pfb><C:/Program F
-iles/MiKTeX/fonts/type1/public/pl/plbx12.pfb><C:/Program Files/MiKTeX/fonts/typ
-e1/public/pl/plex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/pl/plmi10.p
-fb><C:/Program Files/MiKTeX/fonts/type1/public/pl/plmi7.pfb><C:/Program Files/M
-iKTeX/fonts/type1/public/pl/plr10.pfb><C:/Program Files/MiKTeX/fonts/type1/publ
-ic/pl/plr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/pl/plr7.pfb><C:/Pro
-gram Files/MiKTeX/fonts/type1/public/pl/plsy10.pfb><C:/Program Files/MiKTeX/fon
-ts/type1/public/pl/plti10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/pl/pl
-tt10.pfb>
-Output written on Dynamic_analyzer.pdf (7 pages, 127970 bytes).
+ 75i,6n,79p,688b,541s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\Olimpia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tc
+rm1000.pk><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl
+/plbx10.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+pl/plbx12.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type1/publi
+c/pl/plex10.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/pl/plmi10.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/pl/plmi7.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type1/
+public/pl/plr10.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/pl/plr12.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/pl/plr7.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/pl/plsy10.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/pl/plti10.pfb><C:/Users/Olimpia/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/pl/pltt10.pfb>
+Output written on Dynamic_analyzer.pdf (8 pages, 130836 bytes).
 PDF statistics:
- 201 PDF objects out of 1000 (max. 8388607)
- 57 named destinations out of 1000 (max. 500000)
+ 205 PDF objects out of 1000 (max. 8388607)
+ 58 named destinations out of 1000 (max. 500000)
  73 words of extra memory for PDF output out of 10000 (max. 10000000)
 

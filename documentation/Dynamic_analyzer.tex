@@ -82,6 +82,13 @@ Do realizacji projektu planujemy wykorzystać:
 \item \textbf{math} - wykorzystywany do obliczania entropii Shannona ($\log_2$).   
 \item \textbf{subprocess} - wbudowany moduł służący do kontrolowanego, dynamicznego uruchamiania procesów w odizolowanym środowisku. 
 \end{itemize}
+\item \textbf{Oracle VM VirtualBox} - oprogramowanie do tworzenia
+i uruchamiania maszyn wirtualnych, wykorzystywane do przygotowania
+odizolowanego środowiska Windows na potrzeby analizy dynamicznej.
+\item \textbf{VBoxManage} - narzędzie wiersza poleceń VirtualBox, umożliwiające automatyzację zarządzania maszyną wirtualną, w tymsprawdzanie jej stanu, uruchamianie i zamykanie.
+\item \textbf{Sysmon} - narzędzie systemowe firmy Microsoft służące do rejestrowania wybranych zdarzeń systemowych w środowisku Windows. Zebrane zdarzenia będą wykorzystywane podczas analizy dynamicznej.
+\item \textbf{Process Monitor (Procmon)} - narzędzie firmy Microsoft z pakietu Sysinternals, służące do monitorowania aktywności systemu Windows w czasie rzeczywistym, w szczególności operacji na plikach, rejestrze systemowym oraz procesach i wątkach.
+\item \textbf{Guest Additions / Guest Control} - mechanizm VirtualBox umożliwiający komunikację pomiędzy systemem hosta a systemem gościa, w tym przesyłanie plików do maszyny wirtualnej i odbieranie wyników analizy.
 \item \textbf{Git i GitHub} - wersjonowanie kodu oraz współpracę nad projektem. 
 \end{itemize}
 
@@ -140,8 +147,10 @@ Opis mechanizmów chroniących aplikację i serwer przed niepożądanym zachowan
 \item \textbf{Walidacja rozszerzeń i typów:} Restrykcyjne sprawdzenie, czy przesyłany plik posiada rozszerzenie .exe zarówno po stronie klienta, jak i serwera.
 \item \textbf{Ochrona przed Path Traversal i kolizjami nazw:} Zastosowanie losowych identyfikatorów UUID do nadawania nazw plikom w folderze roboczym serwera, co uniezależnia system od znaków specjalnych i spacji w oryginalnej nazwie pliku.
 \item \textbf{Kontrola rozmiaru danych:} Wprowadzenie twardego limitu rozmiaru pliku (maksymalnie 150 MB), zapobiegającego wyczerpaniu pamięci RAM serwera.
+\item \textbf{Izolacja środowiska analitycznego:} Wykorzystanie maszyny wirtualnej Oracle VM VirtualBox z systemem Windows do uruchamiania badanych plików poza głównym systemem operacyjnym komputera hosta.
+\item \textbf{Kontrola komunikacji host--gość:} Wykorzystanie mechanizmu Guest Control do kontrolowanego przesyłania plików pomiędzy komputerem hosta a maszyną wirtualną.
+\item \textbf{Ograniczenie dostępu do zasobów hosta:} Odpowiednia konfiguracja maszyny wirtualnej, obejmująca ograniczenie dostępu do sieci, schowka współdzielonego oraz folderów współdzielonych, w celu zmniejszenia ryzyka niepożądanego oddziaływania badanej próbki na system hosta.
 \end{itemize}
-
 
 \section{Plan realizacji}
 \label{sec:plan}
@@ -151,15 +160,16 @@ Harmonogram prac nad projektem obejmuje następujące etapy:
 \item \textbf{Implementacja rdzenia backendu:} Uruchomienie serwera opartego o framework FastAPI w języku Python oraz konfiguracja bezpiecznego katalogu tymczasowego z obsługą identyfikatorów UUID.
 \item \textbf{Moduł analizy statycznej PE:} Integracja biblioteki \texttt{pefile} w celu odczytu nagłówków, sekcji, daty kompilacji oraz tabeli importów.
 \item \textbf{Zaawansowana detekcja statyczna:} Implementacja obliczania entropii Shannona dla sekcji pliku ($H(X) > 7.2$) oraz wykrywania podejrzanych funkcji API (iniekcje pamięci, dynamiczne ładowanie).
-\item \textbf{Moduł analizy dynamicznej i piaskownicy:} Wdrożenie kontrolowanego uruchamiania procesu za pomocą modułu \texttt{subprocess} z limitem czasowym (\textit{timeout}) zapobiegającym blokowaniu serwera.
-\item \textbf{Silnik oceny ryzyka i powiadomienia UI:} Stworzenie algorytmu wyznaczającego poziom zagrożenia (\textit{Niskie}, \textit{Średnie}, \textit{Wysokie}) oraz zaprojektowanie nowoczesnej karty ryzyka i powiadomień typu \textit{toast}.
-\item \textbf{Testy, dokumentacja i finalizacja:} Przeprowadzenie testów integracyjnych na plikach wykonywalnych, przygotowanie pełnej dokumentacji technicznej w formacie LaTeX oraz finalizacja aplikacji.
+\item \textbf{Moduł analizy dynamicznej i piaskownicy:} Przygotowanie izolowanego środowiska Windows w Oracle VM VirtualBox oraz implementacja komunikacji pomiędzy hostem a maszyną wirtualną z wykorzystaniem \texttt{VBoxManage} i mechanizmu Guest Control. Etap obejmuje przesyłanie badanych plików do maszyny wirtualnej, ich kontrolowane uruchamianie oraz pobieranie wyników analizy.
+\item \textbf{Silnik oceny ryzyka i powiadomienia UI:} Rozbudowa algorytmu wyznaczającego poziom zagrożenia (\textit{Niskie}, \textit{Średnie}, \textit{Wysokie}) na podstawie wyników analizy statycznej i dynamicznej oraz prezentacja rezultatów w postaci karty ryzyka i powiadomień typu \textit{toast}.
+\item \textbf{Testy, dokumentacja i finalizacja:} Konfiguracja i wykorzystanie narzędzi Sysmon oraz Process Monitor (Procmon) do rejestrowania aktywności systemu Windows, przygotowanie mechanizmu eksportowania i przetwarzania logów, implementacja prezentacji zdarzeń w interfejsie, przeprowadzenie testów integracyjnych oraz przygotowanie dokumentacji technicznej w formacie LaTeX.
 \end{enumerate}
+
 
 \section{Oczekiwany rezultat}
 \label{sec:rezultat}
-Rezultatem projektu ma być działająca aplikacja z interfejsem graficznym, która umożliwi uruchamianie przygotowanych programów testowych, rejestrowanie wybranych zdarzeń podczas ich działania oraz prezentowanie wyników w postaci czytelnego raportu. 
-Projekt ma również umożliwić praktyczne zaprezentowanie podstaw dynamicznej analizy oprogramowania i sposobów wykorzystania informacji o zachowaniu programu w kontekście cyberbezpieczeństwa.
+Rezultatem projektu ma być działająca aplikacja z interfejsem graficznym, umożliwiająca przeprowadzanie hybrydowej analizy plików wykonywalnych systemu Windows, obejmującej analizę statyczną oraz dynamiczną w odizolowanym środowisku maszyny wirtualnej. Aplikacja będzie umożliwiać badanie struktury plików PE, obliczanie sum kontrolnych, analizę entropii oraz identyfikację podejrzanych funkcji API. W ramach analizy dynamicznej przewidziane jest kontrolowane uruchamianie badanych programów w maszynie wirtualnej oraz rejestrowanie wybranych zdarzeń systemowych z wykorzystaniem narzędzi Sysmon i Process Monitor (Procmon).
+Wyniki obu rodzajów analizy będą wykorzystywane do oceny poziomu ryzyka i prezentowane w interfejsie graficznym w postaci czytelnego zestawienia zdarzeń oraz raportu podsumowującego. Projekt ma również umożliwić praktyczne zaprezentowanie metod analizy oprogramowania oraz sposobów wykorzystania informacji o jego strukturze i zachowaniu w kontekście cyberbezpieczeństwa.
 
 
 \end{document}
