@@ -20,7 +20,7 @@
       padding: 30px;
       color: var(--text-main);
       background-color: var(--bg-main);
-      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     .report-container {
@@ -228,7 +228,7 @@
     </header>
 
     <div class="risk-box {risk_class}">
-      <span class="risk-title">📊 Podsumowanie Zagrożenia</span>
+      <span class="risk-title">📈 Podsumowanie Zagrożenia</span>
       Badany plik: <strong>{filename}</strong> ({size_mb} MB)<br>
       Ocena poziomu ryzyka: <span class="risk-text">{risk_level}</span>
     </div>

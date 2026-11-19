@@ -188,8 +188,9 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("file", selectedFile);
         formData.append("custom_apis", localStorage.getItem("analyzer_apis") || "");
         formData.append("timeout", localStorage.getItem("analyzer_timeout") || "5");
+        formData.append("autodelete", localStorage.getItem("analyzer_autodelete") || "true");
 
-        updateProgress(40, `Status: 🟡 Przesyłanie pliku ${selectedFile.name} na serwer...`);
+        updateProgress(45, `Status: 🟡 Analiza statyczna i uruchomienie próbki ${selectedFile.name} w piaskownicy VM...`);
 
         const response = await fetch("/api/analyze", {
           method: "POST",
@@ -207,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(data.detail || `Błąd serwera (status: ${response.status})`);
         }
 
-        updateProgress(75, "Status: 🟡 Wykonywanie analizy statycznej i nagłówka PE...");
+        updateProgress(90, "Status: 🟡 Przetwarzanie wyników i logów Sysmon...");
 
         const riskBox = document.getElementById("risk-card-box");
         const riskLevelText = document.getElementById("risk-card-level");
@@ -277,7 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (localStorage.getItem("analyzer_autoreport") === "true" && data.id) {
-          window.open(`/api/report/${data.id}`, "_blank");
+          window.location.href = `/api/report/${data.id}`;
         }
 
         startButton.hidden = true;
@@ -302,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
               if (histData.history && histData.history.length > 0) {
                 const latestId = histData.history[0].id;
-                window.open(`/api/report/${latestId}`, "_blank");
+                window.location.href = `/api/report/${latestId}`;
               } else {
                 showError("Nie znaleziono żadnej historii analiz.");
               }
@@ -514,3 +515,12 @@ function playNotificationSound() {
     console.warn("Przeglądarka zablokowała dźwięk:", e);
   }
 }
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModals();
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === historyModal || e.target === settingsModal) {
+    closeModals();
+  }
+});

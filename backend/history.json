@@ -1,0 +1,209 @@
+[
+  {
+    "id": "cb69937b",
+    "filename": "autorunsc.exe",
+    "timestamp": "2026-11-19 17:47:31",
+    "size_mb": 1.26,
+    "risk_level": "Wysokie",
+    "events": [
+      {
+        "time": "17:46:13",
+        "message": "Wgrano plik (autorunsc.exe). SHA-256: a2394a11272ae38e7fb6ea862e783daa6d704a3d9c73a51dfe978b7692df6b1f",
+        "type": "Plik"
+      },
+      {
+        "time": "17:46:13",
+        "message": "MD5: 3fae7e14f8956b19283140c69499eb47",
+        "type": "Plik"
+      },
+      {
+        "time": "17:46:13",
+        "message": "🔍 Wykryte adresy URL w pliku (10): http://crl.microsoft.com/pki/crl/products/MicRooCerAut2011_2011_03_22.crl0, http://crl.microsoft.com/pki/crl/products/MicRooCerAut_2010-06-23.crl0Z, http://www.microsoft.com/pki/certs/MicRooCerAut2011_2011_03_22.crt0",
+        "type": "Sieć"
+      },
+      {
+        "time": "17:46:13",
+        "message": "🔍 Wykryte adresy IP w pliku (10): 1.3.6.1, 2.0.0.0, 2.16.840.1, 4.1.311.10, 4.1.311.20",
+        "type": "Sieć"
+      },
+      {
+        "time": "17:46:13",
+        "message": "🚨 Podejrzane ciągi znaków w pliku: currentversion\\run (Ścieżka autostartu w rejestrze), isdebuggerpresent (Wykrywanie debuggera (Anti-Debug))",
+        "type": "Proces"
+      },
+      {
+        "time": "17:46:13",
+        "message": "✅ Plik zawiera certyfikat podpisu cyfrowego (Authenticode).",
+        "type": "Plik"
+      },
+      {
+        "time": "17:46:13",
+        "message": "Przeanalizowano nagłówek PE. Liczba sekcji: 5",
+        "type": "Proces"
+      },
+      {
+        "time": "17:46:13",
+        "message": "⚠️ Wykryte podejrzane funkcje API (3): KERNEL32.dll: LoadLibraryExW, KERNEL32.dll: GetProcAddress, KERNEL32.dll: LoadLibraryW",
+        "type": "Proces"
+      },
+      {
+        "time": "17:46:13",
+        "message": "Liczba wykrytych importów łącznie: 222",
+        "type": "Plik"
+      },
+      {
+        "time": "17:46:14",
+        "message": "Przywracanie czystego stanu maszyny wirtualnej (snapshot 'CzystyStan_Sysmon')...",
+        "type": "Proces"
+      },
+      {
+        "time": "17:47:27",
+        "message": "Ostrzeżenie piaskownicy VM: VBoxManage.exe: error: File copy failed\nVBoxManage.exe: error: Guest file \"C:\\Temp\\fe9eace4-44c4-4545-a6ad-06925d72ca66.exe\" could not be created or replaced: Path to guest file \"C:\\Temp\\fe9eace4-44c4-4545-a6ad-06925d72ca66.exe\" not found\nVBoxManage.exe: error: Details: code VBOX_E_IPRT_ERROR (0x80bb0005), component GuestSessionWrap, interface IGuestSession\nVBoxManage.exe: error: Context: \"enum RTEXITCODE __cdecl gctlHandleCopy(struct GCTLCMDCTX *,int,char **,bool)\" at line 1838 of file VBoxManageGuestCtrl.cpp\nVBoxManage.exe: error: Guest file \"C:\\Temp\\fe9eace4-44c4-4545-a6ad-06925d72ca66.exe\" could not be created or replaced: Path to guest file \"C:\\Temp\\fe9eace4-44c4-4545-a6ad-06925d72ca66.exe\" not found.",
+        "type": "Zasoby"
+      },
+      {
+        "time": "17:47:31",
+        "message": "Podsumowanie sesji: Całkowity czas analizy: 78.6s | Punkty ryzyka: 9",
+        "type": "Zasoby"
+      }
+    ]
+  },
+  {
+    "id": "5853bec3",
+    "filename": "autorunsc64.exe",
+    "timestamp": "2026-11-19 17:42:39",
+    "size_mb": 1.39,
+    "risk_level": "Wysokie",
+    "events": [
+      {
+        "time": "17:41:27",
+        "message": "Wgrano plik (autorunsc64.exe). SHA-256: 093d1c6b91d280c9644635c667753e0aa0e78c656eb4082147bf30364787d96f",
+        "type": "Plik"
+      },
+      {
+        "time": "17:41:27",
+        "message": "MD5: 09046c002255641a77dee5d88f77f14b",
+        "type": "Plik"
+      },
+      {
+        "time": "17:41:27",
+        "message": "🔍 Wykryte adresy URL w pliku (10): http://crl.microsoft.com/pki/crl/products/MicRooCerAut2011_2011_03_22.crl0, http://crl.microsoft.com/pki/crl/products/MicRooCerAut_2010-06-23.crl0Z, http://www.microsoft.com/pki/certs/MicRooCerAut2011_2011_03_22.crt0",
+        "type": "Sieć"
+      },
+      {
+        "time": "17:41:27",
+        "message": "🔍 Wykryte adresy IP w pliku (10): 1.3.6.1, 2.0.0.0, 2.16.840.1, 4.1.311.10, 4.1.311.20",
+        "type": "Sieć"
+      },
+      {
+        "time": "17:41:27",
+        "message": "🚨 Podejrzane ciągi znaków w pliku: currentversion\\run (Ścieżka autostartu w rejestrze), isdebuggerpresent (Wykrywanie debuggera (Anti-Debug))",
+        "type": "Proces"
+      },
+      {
+        "time": "17:41:27",
+        "message": "✅ Plik zawiera certyfikat podpisu cyfrowego (Authenticode).",
+        "type": "Plik"
+      },
+      {
+        "time": "17:41:27",
+        "message": "Przeanalizowano nagłówek PE. Liczba sekcji: 6",
+        "type": "Proces"
+      },
+      {
+        "time": "17:41:27",
+        "message": "⚠️ Wykryte podejrzane funkcje API (3): KERNEL32.dll: LoadLibraryExW, KERNEL32.dll: GetProcAddress, KERNEL32.dll: LoadLibraryW",
+        "type": "Proces"
+      },
+      {
+        "time": "17:41:27",
+        "message": "Liczba wykrytych importów łącznie: 230",
+        "type": "Plik"
+      },
+      {
+        "time": "17:41:28",
+        "message": "Przywracanie czystego stanu maszyny wirtualnej (snapshot 'CzystyStan_Sysmon')...",
+        "type": "Proces"
+      },
+      {
+        "time": "17:42:36",
+        "message": "Ostrzeżenie piaskownicy VM: VBoxManage.exe: error: File copy failed\nVBoxManage.exe: error: Guest file \"C:\\Temp\\8abb7c11-adae-4256-837a-103ea88bec24.exe\" could not be created or replaced: Path to guest file \"C:\\Temp\\8abb7c11-adae-4256-837a-103ea88bec24.exe\" not found\nVBoxManage.exe: error: Details: code VBOX_E_IPRT_ERROR (0x80bb0005), component GuestSessionWrap, interface IGuestSession\nVBoxManage.exe: error: Context: \"enum RTEXITCODE __cdecl gctlHandleCopy(struct GCTLCMDCTX *,int,char **,bool)\" at line 1838 of file VBoxManageGuestCtrl.cpp\nVBoxManage.exe: error: Guest file \"C:\\Temp\\8abb7c11-adae-4256-837a-103ea88bec24.exe\" could not be created or replaced: Path to guest file \"C:\\Temp\\8abb7c11-adae-4256-837a-103ea88bec24.exe\" not found.",
+        "type": "Zasoby"
+      },
+      {
+        "time": "17:42:39",
+        "message": "Podsumowanie sesji: Całkowity czas analizy: 71.8s | Punkty ryzyka: 9",
+        "type": "Zasoby"
+      }
+    ]
+  },
+  {
+    "id": "afe3ebd6",
+    "filename": "autorunsc.exe",
+    "timestamp": "2026-11-19 17:37:58",
+    "size_mb": 1.26,
+    "risk_level": "Wysokie",
+    "events": [
+      {
+        "time": "17:36:34",
+        "message": "Wgrano plik (autorunsc.exe). SHA-256: a2394a11272ae38e7fb6ea862e783daa6d704a3d9c73a51dfe978b7692df6b1f",
+        "type": "Plik"
+      },
+      {
+        "time": "17:36:34",
+        "message": "MD5: 3fae7e14f8956b19283140c69499eb47",
+        "type": "Plik"
+      },
+      {
+        "time": "17:36:34",
+        "message": "🔍 Wykryte adresy URL w pliku (10): http://crl.microsoft.com/pki/crl/products/MicRooCerAut2011_2011_03_22.crl0, http://crl.microsoft.com/pki/crl/products/MicRooCerAut_2010-06-23.crl0Z, http://www.microsoft.com/pki/certs/MicRooCerAut2011_2011_03_22.crt0",
+        "type": "Sieć"
+      },
+      {
+        "time": "17:36:34",
+        "message": "🔍 Wykryte adresy IP w pliku (10): 1.3.6.1, 2.0.0.0, 2.16.840.1, 4.1.311.10, 4.1.311.20",
+        "type": "Sieć"
+      },
+      {
+        "time": "17:36:34",
+        "message": "🚨 Podejrzane ciągi znaków w pliku: currentversion\\run (Ścieżka autostartu w rejestrze), isdebuggerpresent (Wykrywanie debuggera (Anti-Debug))",
+        "type": "Proces"
+      },
+      {
+        "time": "17:36:34",
+        "message": "✅ Plik zawiera certyfikat podpisu cyfrowego (Authenticode).",
+        "type": "Plik"
+      },
+      {
+        "time": "17:36:34",
+        "message": "Przeanalizowano nagłówek PE. Liczba sekcji: 5",
+        "type": "Proces"
+      },
+      {
+        "time": "17:36:34",
+        "message": "⚠️ Wykryte podejrzane funkcje API (3): KERNEL32.dll: LoadLibraryExW, KERNEL32.dll: GetProcAddress, KERNEL32.dll: LoadLibraryW",
+        "type": "Proces"
+      },
+      {
+        "time": "17:36:34",
+        "message": "Liczba wykrytych importów łącznie: 222",
+        "type": "Plik"
+      },
+      {
+        "time": "17:36:35",
+        "message": "Przywracanie czystego stanu maszyny wirtualnej (snapshot 'CzystyStan_Sysmon')...",
+        "type": "Proces"
+      },
+      {
+        "time": "17:37:54",
+        "message": "Ostrzeżenie piaskownicy VM: VBoxManage.exe: error: File copy failed\nVBoxManage.exe: error: Guest file \"C:\\Temp\\6b4f027a-b0b6-4672-b784-6aeacab431a5.exe\" could not be created or replaced: Path to guest file \"C:\\Temp\\6b4f027a-b0b6-4672-b784-6aeacab431a5.exe\" not found\nVBoxManage.exe: error: Details: code VBOX_E_IPRT_ERROR (0x80bb0005), component GuestSessionWrap, interface IGuestSession\nVBoxManage.exe: error: Context: \"enum RTEXITCODE __cdecl gctlHandleCopy(struct GCTLCMDCTX *,int,char **,bool)\" at line 1838 of file VBoxManageGuestCtrl.cpp\nVBoxManage.exe: error: Guest file \"C:\\Temp\\6b4f027a-b0b6-4672-b784-6aeacab431a5.exe\" could not be created or replaced: Path to guest file \"C:\\Temp\\6b4f027a-b0b6-4672-b784-6aeacab431a5.exe\" not found.",
+        "type": "Zasoby"
+      },
+      {
+        "time": "17:37:58",
+        "message": "Podsumowanie sesji: Całkowity czas analizy: 83.6s | Punkty ryzyka: 9",
+        "type": "Zasoby"
+      }
+    ]
+  }
+]
